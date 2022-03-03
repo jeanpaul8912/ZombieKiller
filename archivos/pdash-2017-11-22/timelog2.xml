@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<timeLogEntries>
+  <time path="/new&#10;/ProyectoFinal_Muñoz_Luis" flag="R" />
+  <time id="36" path="/ProyectoFinal_Muñoz_Luis/PSP1/Planning" start="@1505747808000" delta="58" flag="A" />
+  <time id="37" path="/ProyectoFinal_Muñoz_Luis/PSP1/Planning" start="@1506719842000" delta="29" flag="A" />
+  <time id="38" path="/ProyectoFinal_Muñoz_Luis/PSP1/Planning" start="@1508098880000" delta="49" flag="A" />
+  <time id="39" path="/ProyectoFinal_Muñoz_Luis/PSP1/Planning" start="@1511407446371" delta="30" flag="A" />
+  <time id="40" path="/ProyectoFinal_Muñoz_Luis/PSP1/Design" start="@1505948046000" delta="180" flag="A" />
+  <time id="41" path="/ProyectoFinal_Muñoz_Luis/PSP1/Design" start="@1508471673000" delta="83" flag="A" />
+  <time id="42" path="/ProyectoFinal_Muñoz_Luis/PSP1/Code" start="@1507229694000" delta="243" flag="A" />
+  <time id="43" path="/ProyectoFinal_Muñoz_Luis/PSP1/Code" start="@1507780517000" delta="342" flag="A" />
+  <time id="44" path="/ProyectoFinal_Muñoz_Luis/PSP1/Code" start="@1508172947000" delta="245" flag="A" />
+  <time id="45" path="/ProyectoFinal_Muñoz_Luis/PSP1/Test" start="@1511322988000" delta="391" flag="A" />
+  <time id="46" flag="D" />
+  <time id="47" path="/ProyectoFinal_Muñoz_Luis/PSP1/Code" start="@1509685027000" delta="241" flag="A" />
+  <time id="48" path="/ProyectoFinal_Muñoz_Luis/PSP1/Code" start="@1510181853000" delta="315" flag="A" />
+  <time id="49" path="/ProyectoFinal_Muñoz_Luis/PSP1/Design" start="@1511409481000" flag="A" />
+</timeLogEntries>

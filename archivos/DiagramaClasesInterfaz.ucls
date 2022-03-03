@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.0" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="interfaz.PanelDatosCuriosos" project="ProyectoFinalZombieKiller" 
+    file="/ProyectoFinalZombieKiller/src/interfaz/PanelDatosCuriosos.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="152" width="161" x="520" y="242"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="interfaz.PanelComoJugar" project="ProyectoFinalZombieKiller" 
+    file="/ProyectoFinalZombieKiller/src/interfaz/PanelComoJugar.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="152" width="220" x="957" y="49"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="interfaz.PanelMenu" project="ProyectoFinalZombieKiller" 
+    file="/ProyectoFinalZombieKiller/src/interfaz/PanelMenu.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="530" width="220" x="447" y="1411"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="interfaz.PanelCamp" project="ProyectoFinalZombieKiller" 
+    file="/ProyectoFinalZombieKiller/src/interfaz/PanelCamp.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="638" width="212" x="706" y="1411"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="interfaz.PanelCreditos" project="ProyectoFinalZombieKiller" 
+    file="/ProyectoFinalZombieKiller/src/interfaz/PanelCreditos.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="152" width="192" x="957" y="1411"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="interfaz.PanelPuntajes" project="ProyectoFinalZombieKiller" 
+    file="/ProyectoFinalZombieKiller/src/interfaz/PanelPuntajes.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="458" width="255" x="1188" y="1411"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="interfaz.PanelAtributos" project="ProyectoFinalZombieKiller" 
+    file="/ProyectoFinalZombieKiller/src/interfaz/PanelAtributos.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="116" width="155" x="747" y="519"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="interfaz.InterfazZombieKiller" project="ProyectoFinalZombieKiller" 
+    file="/ProyectoFinalZombieKiller/src/interfaz/InterfazZombieKiller.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="854" width="182" x="957" y="519"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="interfaz.PanelArmas" project="ProyectoFinalZombieKiller" 
+    file="/ProyectoFinalZombieKiller/src/interfaz/PanelArmas.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="242" width="190" x="747" y="239"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="10">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="11" name="panelAtributos"/>      
+      <multiplicity id="12" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="13">    
+    <bendpoint x="740" y="1212"/>    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="14" name="principal"/>      
+      <multiplicity id="15" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="16">    
+    <bendpoint x="1123" y="1393"/>    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="17" name="panelCreditos"/>      
+      <multiplicity id="18" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="19">    
+    <bendpoint x="1159" y="1369"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="20" name="principal"/>      
+      <multiplicity id="21" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="22">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="23" name="panelCampo"/>      
+      <multiplicity id="24" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="25">    
+    <bendpoint x="1105" y="255"/>    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="26" name="panelComoJugar"/>      
+      <multiplicity id="27" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="28">    
+    <bendpoint x="770" y="1253"/>    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="29" name="panelMenu"/>      
+      <multiplicity id="30" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="31">    
+    <bendpoint x="1241" y="1299"/>    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="32" name="panelPuntajes"/>      
+      <multiplicity id="33" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="34">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="35" name="principal"/>      
+      <multiplicity id="36" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="37">    
+    <bendpoint x="714" y="210"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="38" name="panelDatosC"/>      
+      <multiplicity id="39" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="40">    
+    <bendpoint x="924" y="517"/>    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="41" name="principal"/>      
+      <multiplicity id="42" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="43">    
+    <bendpoint x="990" y="215"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="44" name="principal"/>      
+      <multiplicity id="45" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="46">    
+    <bendpoint x="1017" y="1394"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="47" name="principal"/>      
+      <multiplicity id="48" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="49">    
+    <bendpoint x="941" y="221"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="50" name="panelArmas"/>      
+      <multiplicity id="51" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

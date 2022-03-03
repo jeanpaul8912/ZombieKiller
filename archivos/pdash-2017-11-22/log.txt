@@ -1,0 +1,28 @@
+Process Dashboard - logging started at Wed Nov 22 22:13:16 COT 2017
+Oracle Corporation JRE 1.8.0_121; Windows 10
+Using LocalWorkingDirectory[C:\pspdata]
+2017-11-22 22:13:16.895:INFO:oejs.Server:jetty-8.y.z-SNAPSHOT
+2017-11-22 22:13:16.925:INFO:oejs.AbstractConnector:Started LocalConnector@0.0.0.0:0
+2017-11-22 22:13:16.998:INFO:oejs.AbstractConnector:Started SelectChannelConnector@127.0.0.1:2468
+Created default translation engine.
+[Ljava.lang.Object;@5dadd366=>PropertyKey<><top>
+Saved C:\pspdata\global.dat
+Saved C:\pspdata\18.dat
+Saved C:\pspdata\global.dat
+Saved C:\pspdata\18.dat
+Saved C:\pspdata\18.dat
+Saved C:\pspdata\18.dat
+Saved C:\pspdata\18.dat
+Saved C:\pspdata\18.dat
+Saved C:\pspdata\18.dat
+Saved C:\pspdata\18.dat
+Saved C:\pspdata\18.dat
+Saved C:\pspdata\18.dat
+Saved C:\pspdata\18.dat
+Saved C:\pspdata\18.dat
+Saved C:\pspdata\18.dat
+Saved C:\pspdata\18.dat
+Saved C:\pspdata\18.dat
+Saved C:\pspdata\18.dat
+Saved C:\pspdata\18.dat
+Saved C:\pspdata\global.dat

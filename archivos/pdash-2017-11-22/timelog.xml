@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<timeLogEntries>
+  <time id="1" path="/U6_Lab1_Muñoz_Luis" start="@1493395766000" delta="200" />
+  <time id="2" path="/U6_Lab1_Muñoz_Luis" start="@1493504461000" delta="46" />
+  <time id="3" path="/U6_Lab1_Muñoz_Luis" start="@1493579499000" delta="226" />
+  <time id="4" path="/FinalProject_MuñozLuis_BolivarDavid/PSP0/Planning" start="@1493577351000" delta="40" />
+  <time id="5" path="/FinalProject_MuñozLuis_BolivarDavid/PSP0/Design" start="@1493666205000" delta="112" />
+  <time id="6" path="/FinalProject_MuñozLuis_BolivarDavid/PSP0/Code" start="@1493858263000" delta="157" />
+  <time id="7" path="/FinalProject_MuñozLuis_BolivarDavid/PSP0/Code" start="@1493933933000" delta="54" />
+  <time id="8" path="/U6_Lab2_MuñozLuis/PSP0/Planning" start="@1494108320059" delta="24" />
+  <time id="9" path="/U6_Lab2_MuñozLuis/PSP0/Design" start="@1494109732627" delta="9" />
+  <time id="10" path="/U6_Lab2_MuñozLuis/PSP0/Code" start="@1494110290715" delta="62" />
+  <time id="11" path="/U3Lab1_MuñozLuis/PSP1/Planning" start="@1505362292909" delta="22" interrupt="4" />
+  <time id="12" path="/U3Lab1_MuñozLuis/PSP1/Design" start="@1505363908937" delta="51" />
+  <time id="13" path="/U3Lab1_MuñozLuis/PSP1/Code" start="@1505366993834" delta="61" />
+  <time id="14" path="/U4_Lab1_Muñoz_Luis/PSP1/Planning" start="@1506701373000" delta="20" />
+  <time id="15" path="/U4_Lab1_Muñoz_Luis/PSP1/Design" start="@1506702738000" delta="68" />
+  <time id="16" path="/U4_Lab1_Muñoz_Luis/PSP1/Code" start="@1506706356000" delta="86" />
+  <time id="17" path="/U4_Lab1_Muñoz_Luis/PSP1/Code" start="@1506784650000" delta="212" />
+  <time id="18" path="/U4_Lab1_Muñoz_Luis/PSP1/Code" start="@1506806289000" delta="145" />
+  <time id="19" path="/U4_Lab1_Muñoz_Luis/PSP1/Test" start="@1506827940012" delta="35" />
+  <time id="20" path="/U4_Lab2_Muñoz_&amp;_Urbano/PSP1/Planning" start="@1507210690000" delta="32" />
+  <time id="21" path="/U4_Lab2_Muñoz_&amp;_Urbano/PSP1/Design" start="@1507212350000" delta="41" />
+  <time id="22" path="/U4_Lab2_Muñoz_&amp;_Urbano/PSP1/Code" start="@1507306168000" delta="173" />
+  <time id="23" path="/U4_Lab2_Muñoz_&amp;_Urbano/PSP1/Code" start="@1507412418000" delta="42" />
+  <time id="24" path="/U5_Lab2_Muñoz_luis/PSP1/Planning" start="@1509124234000" delta="15" />
+  <time id="25" path="/U5_Lab2_Muñoz_luis/PSP1/Design" start="@1509125465000" delta="10" />
+  <time id="26" path="/U5_Lab2_Muñoz_luis/PSP1/Code" start="@1509126092000" delta="42" />
+  <time id="27" path="/U5_Lab2_Muñoz_luis/PSP1/Code" start="@1509217920000" delta="68" />
+  <time id="28" path="/U6_lab_1_Muñoz_Luis/PSP1/Planning" start="@1509725064000" delta="38" />
+  <time id="29" path="/U6_lab_1_Muñoz_Luis/PSP1/Design" start="@1509729912000" delta="78" />
+  <time id="30" path="/U6_lab_1_Muñoz_Luis/PSP1/Code" start="@1509828950000" delta="211" />
+  <time id="31" path="/U6_lab_1_Muñoz_Luis/PSP1/Code" start="@1509839807000" delta="121" />
+  <time id="32" path="/U6_L2_Muñoz_Luis/PSP1/Planning" start="@1510425808000" delta="28" />
+  <time id="33" path="/U6_L2_Muñoz_Luis/PSP1/Design" start="@1510427634000" delta="34" />
+  <time id="34" path="/U6_L2_Muñoz_Luis/PSP1/Code" start="@1510428253000" delta="211" />
+  <time id="35" path="/U6_L2_Muñoz_Luis/PSP1/Code" start="@1510440762000" delta="135" />
+</timeLogEntries>
