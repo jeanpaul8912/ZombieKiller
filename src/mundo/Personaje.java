@@ -51,10 +51,10 @@ public class Personaje implements SerViviente, Serializable {
 	 */
 	public Personaje() {
 		salud = SALUD;
-		granadas = new Granada();
-		armaPrincipal = new M1911();
-		armaSecundaria = new Remington();
-		cuchillo = new Cuchillo();
+		granadas = (Granada) FactoryProvider.getFactory("armaConMunicion").createWeapon("granada");
+		armaPrincipal = (ArmaDeFuego) FactoryProvider.getFactory("armaConMunicion").createWeapon("m1911");
+		armaSecundaria = (ArmaDeFuego) FactoryProvider.getFactory("armaConMunicion").createWeapon("remington");
+		cuchillo = (Cuchillo) FactoryProvider.getFactory("armaSinMunicion").createWeapon("cuchillo");
 		// municion = principal.getLimBalas();
 	}
 
