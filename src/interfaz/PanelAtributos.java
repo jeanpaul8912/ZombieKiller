@@ -40,7 +40,7 @@ public class PanelAtributos extends JPanel {
 			barValores[i].setBackground(Color.WHITE);
 			add(barValores[i]);
 			
-			if (atributos[i].equals("Daño"))
+			if (atributos[i].equals("Danio"))
 				barValores[i].setMaximum(Granada.DANIO);
 			else if (atributos[i].equals("Salud"))
 				barValores[i].setMaximum(Boss.SALUD);

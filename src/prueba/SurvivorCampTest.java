@@ -13,7 +13,7 @@ public class SurvivorCampTest extends TestCase{
 	private SurvivorCamp sC;
 	
 	/**
-	 * crea un campo vacío
+	 * crea un campo vacio
 	 */
 	private void setupEscenario1 () {
 		sC = new SurvivorCamp();
@@ -62,7 +62,7 @@ public class SurvivorCampTest extends TestCase{
 		try {
 			sC.cargarPuntajes();
 		} catch (ClassNotFoundException | IOException e1) {
-			fail("No se están cargando los puntajes");
+			fail("No se estan cargando los puntajes");
 		}
 		// 5 bajas, de ellas 2 son de tiro a la cabeza y un total de 300 puntos
 		sC.getPersonaje().aumentarScore(60);
@@ -81,7 +81,7 @@ public class SurvivorCampTest extends TestCase{
 		try {
 			sC.cargarPuntajes();
 		} catch (ClassNotFoundException | IOException e1) {
-			fail("No se están cargando los puntajes");
+			fail("No se estan cargando los puntajes");
 		}
 		// 6 bajas, de ellas 1 son de tiro a la cabeza y un total de 305 puntos
 		sC.getPersonaje().aumentarScore(60);
@@ -115,8 +115,8 @@ public class SurvivorCampTest extends TestCase{
 	}
 
 	/**
-	 * Comprueba que al lanzar una granada, no vaya a aumentar más puntos de los que ya estaban muertos
-	 * y que los que ya se están muriendo no cambien su estado
+	 * Comprueba que al lanzar una granada, no vaya a aumentar mas puntos de los que ya estaban muertos
+	 * y que los que ya se estan muriendo no cambien su estado
 	 */
 	public void testseLanzoGranada2() {
 		setupEscenario3();
@@ -134,7 +134,7 @@ public class SurvivorCampTest extends TestCase{
 	}
 
 	/**
-	 * comprueba que se ordenen los puntajes según la cantidad de tiros a la cabeza, de mayor a menor
+	 * comprueba que se ordenen los puntajes segun la cantidad de tiros a la cabeza, de mayor a menor
 	 */
 	public void testOrdenarPorTirosALaCabeza() {
 		setupEscenario4();
@@ -145,7 +145,7 @@ public class SurvivorCampTest extends TestCase{
 		}
 	}
 	/**
-	 * Comprueba que ordene los puntajes según la cantidad de bajas, de mayor a menor
+	 * Comprueba que ordene los puntajes segun la cantidad de bajas, de mayor a menor
 	 */
 	public void testOrdenarPorBajas() {
 		setupEscenario4();
@@ -157,7 +157,7 @@ public class SurvivorCampTest extends TestCase{
 	}
 
 	/**
-	 * Comprueba que ordene los puntajes según el score, de mayor a menor
+	 * Comprueba que ordene los puntajes segun el score, de mayor a menor
 	 */
 	public void testOrdenarPorScore() {
 		setupEscenario4();
@@ -168,7 +168,7 @@ public class SurvivorCampTest extends TestCase{
 		}
 	}
 	/**
-	 * comprueba que busque correctamente el mejor puntaje del nombre ingresado por parámetro
+	 * comprueba que busque correctamente el mejor puntaje del nombre ingresado por parametro
 	 */
 	public void testBuscarPuntajeDe1 () {
 		setupEscenario4();

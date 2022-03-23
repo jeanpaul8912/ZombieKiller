@@ -3,7 +3,7 @@ package mundo;
 public interface SeMueveEnZigzag {
 
 	/**
-	 * hace que varíe la velocidad en Y con respecto a la de X
+	 * hace que varie la velocidad en Y con respecto a la de X
 	 */
 	void moverEnDireccion();
 	/**
@@ -12,7 +12,7 @@ public interface SeMueveEnZigzag {
 	 */
 	int getDireccionX();
 	/**
-	 * obtiene la dirección o velocidad en el eje Y
+	 * obtiene la direccion o velocidad en el eje Y
 	 * @return direccionY
 	 */
 	int getDireccionY();

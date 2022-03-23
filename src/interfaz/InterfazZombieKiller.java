@@ -39,8 +39,8 @@ public class InterfazZombieKiller extends JFrame {
 	 */
 	private ArmaDeFuego armaActual;
 	/**
-	 * Panel del menú principal cualquier botón muestra otro panel
-	 * representatitvo a él
+	 * Panel del menu principal cualquier boton muestra otro panel
+	 * representatitvo a el
 	 */
 	private PanelMenu panelMenu;
 	/**
@@ -48,7 +48,7 @@ public class InterfazZombieKiller extends JFrame {
 	 */
 	private PanelCamp panelCampo;
 	/**
-	 * Panel que muestra las instrucciones de juego Muestra las estadísticas de
+	 * Panel que muestra las instrucciones de juego Muestra las estadisticas de
 	 * las armas
 	 */
 	private PanelComoJugar panelComoJugar;
@@ -57,7 +57,7 @@ public class InterfazZombieKiller extends JFrame {
 	 */
 	private PanelPuntajes panelPuntajes;
 	/**
-	 * Panel que muestra los créditos de las personas que participaron
+	 * Panel que muestra los creditos de las personas que participaron
 	 */
 	private PanelCreditos panelCreditos;
 	/**
@@ -74,42 +74,31 @@ public class InterfazZombieKiller extends JFrame {
 	private Cursor cursorCuchillo;
 
 	/**
-	 * Constructor de la clase principal del juego Aquí se inicializan todos los
+	 * Constructor de la clase principal del juego Aqui se inicializan todos los
 	 * componentes necesarios para empezar a jugar
 	 */
 	public InterfazZombieKiller() {
+		long start = System.currentTimeMillis();
+		
 		BorderLayout custom = new BorderLayout();
 		setLayout(custom);
 		ImageIcon laterales = new ImageIcon(getClass().getResource("/img/Fondo/iconozombie.png"));
 		ImageIcon fondo = new ImageIcon(getClass().getResource("/img/Fondo/fondoMenu.png"));
 
-		ImageIcon cursorP = new ImageIcon(getClass().getResource("/img/Fondo/mira1p.png"));
-		miraM1911 = Toolkit.getDefaultToolkit().createCustomCursor(cursorP.getImage(), new Point(16, 16), "C");
-		cursorP = new ImageIcon(getClass().getResource("/img/Fondo/mira1.png"));
-		miraRemington = Toolkit.getDefaultToolkit().createCustomCursor(cursorP.getImage(), new Point(16, 16), "C2");
-		cursorP = new ImageIcon(getClass().getResource("/img/Fondo/Cuchillo.png"));
-		cursorCuchillo = Toolkit.getDefaultToolkit().createCustomCursor(cursorP.getImage(), new Point(1, 1), "C2");
+		miraM1911 = CursorObjectPool.getCursor("/img/Fondo/mira1p.png");
 		setCursor(miraM1911);
-		panelCampo = new PanelCamp(this);
 		panelMenu = new PanelMenu(this);
-		panelComoJugar = new PanelComoJugar(this);
-		panelPuntajes = new PanelPuntajes(this);
-		panelCreditos = new PanelCreditos(this);
-
 		add(panelMenu, BorderLayout.CENTER);
-
-		campo = new SurvivorCamp();
-		try {
-			campo.cargarPuntajes();
-		} catch (ClassNotFoundException e) {
-			JOptionPane.showMessageDialog(this, "Hubo un error al guardar los últimos puntajes");
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(this, "No se han encontrado puntajes anteriores");
-		}
-		setSize(campo.ANCHO_PANTALLA, campo.ALTO_PANTALLA);
+		setSize(SurvivorCamp.ANCHO_PANTALLA, SurvivorCamp.ALTO_PANTALLA);
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
+		setVisible(true);
+		setLocationRelativeTo(null);
+		
+		long finish = System.currentTimeMillis();
+		double elapsed = (finish - start) / 1000.0;
+		System.out.println(String.format("Elapsed: %1$f, Start = %2$d, Finish = %3$d", elapsed, start, finish));
 	}
 
 	/**
@@ -118,6 +107,10 @@ public class InterfazZombieKiller extends JFrame {
 	 * @return estado
 	 */
 	public char getEstadoPartida() {
+		if (campo == null) {
+			return SurvivorCamp.SIN_PARTIDA;
+		}
+		
 		return campo.getEstadoJuego();
 	}
 
@@ -139,7 +132,7 @@ public class InterfazZombieKiller extends JFrame {
 	}
 
 	/**
-	 * Método auxiliar que inicializa y actualiza la información en los
+	 * Metodo auxiliar que inicializa y actualiza la informacion en los
 	 * componentes visibles
 	 */
 	private void partidaIniciada() {
@@ -164,9 +157,9 @@ public class InterfazZombieKiller extends JFrame {
 	}
 
 	/**
-	 * pregunta si en el PanelCamp se están cargando las imágenes
+	 * pregunta si en el PanelCamp se estan cargando las imagenes
 	 * 
-	 * @return true si aún se están cargando
+	 * @return true si aun se estan cargando
 	 */
 	public boolean estaCargando() {
 		boolean pintando = false;
@@ -216,7 +209,7 @@ public class InterfazZombieKiller extends JFrame {
 	}
 
 	/**
-	 * Guarda la partida que está en curso
+	 * Guarda la partida que esta en curso
 	 */
 	public void guardarJuego() {
 		try {
@@ -243,8 +236,8 @@ public class InterfazZombieKiller extends JFrame {
 	/**
 	 * <pre></pre>
 	 * 
-	 * el juego no se encuentra pausado dispara el arma principal en la posición
-	 * pasada por parámetro
+	 * el juego no se encuentra pausado dispara el arma principal en la posicion
+	 * pasada por parametro
 	 * 
 	 * @param posX
 	 * @param posY
@@ -346,7 +339,7 @@ public class InterfazZombieKiller extends JFrame {
 	}
 
 	/**
-	 * cambia el arma del personaje y actualiza aquí
+	 * cambia el arma del personaje y actualiza aqui
 	 */
 	public void cambiarArma() {
 		campo.cambiarArma();
@@ -394,7 +387,7 @@ public class InterfazZombieKiller extends JFrame {
 
 	/**
 	 * <pre>
-	 * la posición en el eje Y está por debajo de la que el zombie ataca
+	 * la posicion en el eje Y esta por debajo de la que el zombie ataca
 	 * </pre>
 	 * 
 	 * intenta acuchillar
@@ -423,7 +416,7 @@ public class InterfazZombieKiller extends JFrame {
 	}
 
 	/**
-	 * Muestra el Panel de Cómo jugar / Lo oculta
+	 * Muestra el Panel de Como jugar / Lo oculta
 	 */
 	public void mostrarComoJugar() {
 		if (panelMenu.isVisible()) {
@@ -452,7 +445,7 @@ public class InterfazZombieKiller extends JFrame {
 	}
 
 	/**
-	 * Muestra el Panel donde se encuentran los créditos / lo oculta
+	 * Muestra el Panel donde se encuentran los creditos / lo oculta
 	 */
 	public void mostrarCreditos() {
 		if (panelMenu.isVisible()) {
@@ -466,34 +459,34 @@ public class InterfazZombieKiller extends JFrame {
 	}
 
 	/**
-	 * obtiene el número de referencia al arma que se muestra en el panelArmas
+	 * obtiene el numero de referencia al arma que se muestra en el panelArmas
 	 * 
-	 * @return número de referencia
+	 * @return numero de referencia
 	 */
 	public int darArmaMostrada() {
 		return campo.getArmaMostrada();
 	}
 
 	/**
-	 * Cambia el arma que se está viendo por el de la derecha
+	 * Cambia el arma que se esta viendo por el de la derecha
 	 * 
-	 * @return número de referencia al arma de la derecha
+	 * @return numero de referencia al arma de la derecha
 	 */
 	public int cambiarArmaVisibleDerecha() {
 		return campo.moverArmaVisibleDerecha();
 	}
 
 	/**
-	 * Cambia el arma que se está viendo por el de la izquierda
+	 * Cambia el arma que se esta viendo por el de la izquierda
 	 * 
-	 * @return número de referencia al arma de la izquierda
+	 * @return numero de referencia al arma de la izquierda
 	 */
 	public int cambiarArmaVisibleIzquierda() {
 		return campo.moverArmaVisibleIzquierda();
 	}
 
 	/**
-	 * Método llamado cuando el personaje muere para verificar si el jugador
+	 * Metodo llamado cuando el personaje muere para verificar si el jugador
 	 * desea seguir o no
 	 */
 	public void juegoTerminado() {
@@ -510,7 +503,7 @@ public class InterfazZombieKiller extends JFrame {
 					campo.aniadirMejoresPuntajes(nombrePlayer);
 				} catch (IOException e) {
 					JOptionPane.showMessageDialog(this,
-							"Error al guardar el puntaje, es posible que haya abierto el juego desde \"Acceso rápido\"");
+							"Error al guardar el puntaje, es posible que haya abierto el juego desde \"Acceso rapido\"");
 				} catch (NombreInvalidoException e) {
 					JOptionPane.showMessageDialog(this, e.getMessage());
 					juegoTerminado();
@@ -534,7 +527,7 @@ public class InterfazZombieKiller extends JFrame {
 	}
 
 	/**
-	 * Método que se ejecuta cuando el Boss muere
+	 * Metodo que se ejecuta cuando el Boss muere
 	 */
 	public void victoria() {
 		String nombrePlayer = JOptionPane.showInputDialog(this,
@@ -546,7 +539,7 @@ public class InterfazZombieKiller extends JFrame {
 			campo.aniadirMejoresPuntajes(nombrePlayer);
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(this,
-					"Error al guardar el puntaje, es posible que haya abierto el juego desde \"Acceso rápido\"");
+					"Error al guardar el puntaje, es posible que haya abierto el juego desde \"Acceso rapido\"");
 		} catch (NombreInvalidoException e) {
 			JOptionPane.showMessageDialog(this, e.getMessage());
 			victoria();
@@ -560,14 +553,14 @@ public class InterfazZombieKiller extends JFrame {
 	}
 
 	/**
-	 * Llama al método de ordenar por bajas
+	 * Llama al metodo de ordenar por bajas
 	 */
 	public void ordenarPorBajas() {
 		panelPuntajes.actualizarPuntajes(campo.ordenarPuntajePorBajas());
 	}
 
 	/**
-	 * Llama al método de ordenar por bajas con tiro a la cabeza
+	 * Llama al metodo de ordenar por bajas con tiro a la cabeza
 	 */
 	public void ordenarPorHeadshot() {
 		panelPuntajes.actualizarPuntajes(campo.ordenarPuntajePorTirosALaCabeza());
@@ -585,10 +578,82 @@ public class InterfazZombieKiller extends JFrame {
 	}
 
 	/**
-	 * Llama al método de ordenar por puntaje
+	 * Llama al metodo de ordenar por puntaje
 	 */
 	public void ordenarPorScore() {
 		panelPuntajes.actualizarPuntajes(campo.ordenarPuntajePorScore());
+	}
+	
+	public PanelCamp getPanelCampo() {
+		return panelCampo;
+	}
+
+	public void setPanelCampo(PanelCamp panelCampo) {
+		this.panelCampo = panelCampo;
+	}
+
+	public PanelComoJugar getPanelComoJugar() {
+		return panelComoJugar;
+	}
+
+	public void setPanelComoJugar(PanelComoJugar panelComoJugar) {
+		this.panelComoJugar = panelComoJugar;
+	}
+
+	public PanelMenu getPanelMenu() {
+		return panelMenu;
+	}
+
+	public void setPanelMenu(PanelMenu panelMenu) {
+		this.panelMenu = panelMenu;
+	}
+
+	public PanelPuntajes getPanelPuntajes() {
+		return panelPuntajes;
+	}
+
+	public void setPanelPuntajes(PanelPuntajes panelPuntajes) {
+		this.panelPuntajes = panelPuntajes;
+	}
+
+	public PanelCreditos getPanelCreditos() {
+		return panelCreditos;
+	}
+
+	public void setPanelCreditos(PanelCreditos panelCreditos) {
+		this.panelCreditos = panelCreditos;
+	}
+
+	public SurvivorCamp getCampo() {
+		return campo;
+	}
+
+	public void setCampo(SurvivorCamp campo) {
+		this.campo = campo;
+	}
+
+	public Cursor getMiraM1911() {
+		return miraM1911;
+	}
+
+	public void setMiraM1911(Cursor miraM1911) {
+		this.miraM1911 = miraM1911;
+	}
+
+	public Cursor getMiraRemington() {
+		return miraRemington;
+	}
+
+	public void setMiraRemington(Cursor miraRemington) {
+		this.miraRemington = miraRemington;
+	}
+
+	public Cursor getCursorCuchillo() {
+		return cursorCuchillo;
+	}
+
+	public void setCursorCuchillo(Cursor cursorCuchillo) {
+		this.cursorCuchillo = cursorCuchillo;
 	}
 
 }

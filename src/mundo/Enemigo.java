@@ -9,7 +9,7 @@ public abstract class Enemigo implements SerViviente{
 	public static final String ATACANDO = "atacando";
 	
 	/**
-	 * todo enemigo se rige por posiciones representativas de aparición
+	 * todo enemigo se rige por posiciones representativas de aparicion
 	 */
 	public static final short POS_INICIAL = 140;
 	/**
@@ -18,7 +18,7 @@ public abstract class Enemigo implements SerViviente{
 	public static final short POS_ATAQUE = 460;
 	
 	/**
-	 * todo enemigo tiene una posición en el eje Y
+	 * todo enemigo tiene una posicion en el eje Y
 	 */
 	private int posY;
 	/**
@@ -26,7 +26,7 @@ public abstract class Enemigo implements SerViviente{
 	 */
 	private short lentitud;
 	/**
-	 * número representativo de la imágen actual con corde al estado
+	 * numero representativo de la imagen actual con corde al estado
 	 */
 	private byte frameActual;
 	/**
@@ -34,19 +34,19 @@ public abstract class Enemigo implements SerViviente{
 	 */
 	private String estadoActual;
 	/**
-	 * número que representa la salud del enemigo
+	 * numero que representa la salud del enemigo
 	 */
 	private byte salud;
 	
 	/**
-	 * constructor básico que inicializa unicamente la posición en Y
+	 * constructor basico que inicializa unicamente la posicion en Y
 	 */
 	public Enemigo () {
 		posY = POS_INICIAL;
 	}
 	
 	/**
-	 * Constructor compuesto para cargar información
+	 * Constructor compuesto para cargar informacion
 	 * @param posY
 	 * @param estadoActual
 	 * @param frameActual
@@ -75,7 +75,7 @@ public abstract class Enemigo implements SerViviente{
 	}
 
 	/**
-	 * obtiene el valor numérico de la imagen actual con corde al estado
+	 * obtiene el valor numerico de la imagen actual con corde al estado
 	 * @return frameActual
 	 */
 	public byte getFrameActual() {
@@ -83,7 +83,7 @@ public abstract class Enemigo implements SerViviente{
 	}
 
 	/**
-	 * cambia el frame o número de la imagen con respecto al estado actual
+	 * cambia el frame o numero de la imagen con respecto al estado actual
 	 * @param frameActual
 	 */
 	protected void setFrameActual(byte frameActual) {
@@ -91,13 +91,13 @@ public abstract class Enemigo implements SerViviente{
 	}
 
 	/**
-	 * obtiene la posición X del enemigo
+	 * obtiene la posicion X del enemigo
 	 * @return posicionX
 	 */
 	public abstract int getPosX();
 
 	/**
-	 * obtiene la posición Y del enemigo
+	 * obtiene la posicion Y del enemigo
 	 * @return posY
 	 */
 	public int getPosY() {
@@ -105,7 +105,7 @@ public abstract class Enemigo implements SerViviente{
 	}
 
 	/**
-	 * cambia la posición en el eje Y
+	 * cambia la posicion en el eje Y
 	 * @param posY
 	 */
 	protected void setPosY(int posY) {
@@ -136,12 +136,12 @@ public abstract class Enemigo implements SerViviente{
 		this.salud = salud;
 	}
 	/**
-	 * ejecuta la respectiva reacción del enemigo que recibe una granada
+	 * ejecuta la respectiva reaccion del enemigo que recibe una granada
 	 * @return true si es afectado por la granada
 	 */
 	public abstract boolean recibeGranada();
 	/**
-	 * crea una posición aleatoria en el eje X para la aparición del enemigo
+	 * crea una posicion aleatoria en el eje X para la aparicion del enemigo
 	 * @return posAleatoria
 	 */
 	protected short posAleatoriaX() {
@@ -150,12 +150,12 @@ public abstract class Enemigo implements SerViviente{
 	}
 	
 	/**
-	 * ejecuta cierta acción al terminar de atacar al personaje
+	 * ejecuta cierta accion al terminar de atacar al personaje
 	 */
 	public abstract void terminaDeAtacar();
 	
 	/**
-	 * comprueba que las posiciones de la bala coincidan con la posición del enemigo
+	 * comprueba que las posiciones de la bala coincidan con la posicion del enemigo
 	 * y reduzca su salud en caso de ser afectado
 	 * @param x
 	 * @param y

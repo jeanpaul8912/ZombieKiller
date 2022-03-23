@@ -1,7 +1,6 @@
 package interfaz;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -12,14 +11,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.net.URL;
 
-import javax.swing.DebugGraphics;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
 import mundo.SurvivorCamp;
 
@@ -29,8 +28,8 @@ public class PanelMenu extends JPanel implements KeyListener, ActionListener, Mo
 	private static final String INICIAR = "Iniciar Nuevo Juego";
 	private static final String CARGAR = "Cargar Partida";
 	private static final String GUARDAR = "Guardar Partida";
-	private static final String COMO_JUGAR = "Cómo jugar";
-	private static final String CREDITOS = "Créditos";
+	private static final String COMO_JUGAR = "Como jugar";
+	private static final String CREDITOS = "Creditos";
 	private static final String MEJORES_PUNTAJES = "Mejores Puntajes";
 
 	private InterfazZombieKiller principal;
@@ -145,20 +144,71 @@ public class PanelMenu extends JPanel implements KeyListener, ActionListener, Mo
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		String cmnd = arg0.getActionCommand();
-		if (cmnd.equals(INICIAR))
+		
+		switch (cmnd) {
+		case INICIAR:
+			startGame();
 			principal.iniciarNuevaPartida();
-		else if (cmnd.equals(CONTINUAR))
+			break;
+		case CONTINUAR:
 			principal.pausarJuego();
-		else if (cmnd.equals(CARGAR))
+			break;
+		case CARGAR:
+			startGame();
 			principal.cargarJuego();
-		else if(cmnd.equals(GUARDAR))
+			break;
+		case GUARDAR:
 			principal.guardarJuego();
-		else if(cmnd.equals(COMO_JUGAR))
+			break;
+		case COMO_JUGAR:
+			PanelComoJugar panelComoJugar = PanelComoJugar.getPanel();
+			panelComoJugar.setPrincipal(principal);
+			principal.setPanelComoJugar(panelComoJugar);
 			principal.mostrarComoJugar();
-		else if(cmnd.equals(MEJORES_PUNTAJES))
-			principal.mostrarPuntajes();
-		else if(cmnd.equals(CREDITOS))
+			break;
+		case MEJORES_PUNTAJES:
+			try {
+				PanelPuntajes panelPuntajes = PanelPuntajes.getPanel();
+				panelPuntajes.setPrincipal(principal);
+				principal.setPanelPuntajes(panelPuntajes);
+				SurvivorCamp camp = principal.getCampo();
+
+				if (camp == null) {
+					camp = new SurvivorCamp();
+					principal.setCampo(camp);
+				}
+
+				camp.cargarPuntajes();
+				principal.mostrarPuntajes();
+			} catch (ClassNotFoundException e) {
+				JOptionPane.showMessageDialog(this, "Hubo un error al guardar los ultimos puntajes");
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(this, "No se han encontrado puntajes anteriores");
+			}
+			break;
+		case CREDITOS:
+			PanelCreditos panelCreditos = PanelCreditos.getPanel();
+			panelCreditos.setPrincipal(principal);
+			principal.setPanelCreditos(panelCreditos);
 			principal.mostrarCreditos();
+			break;
+		default:
+			break;
+		}
+	}
+	
+	private void startGame() {
+		PanelCamp panelCamp = PanelCamp.getPanel();
+		panelCamp.setPrincipal(principal);
+		principal.setPanelCampo(panelCamp);
+		SurvivorCamp survivorCamp = new SurvivorCamp();
+		principal.setCampo(survivorCamp);
+
+		Cursor remingtonCursor = CursorObjectPool.getCursor("/img/Fondo/mira1.png");
+		principal.setMiraRemington(remingtonCursor);
+
+		Cursor knifeCursor = CursorObjectPool.getCursor("/img/Fondo/Cuchillo.png");
+		principal.setCursorCuchillo(knifeCursor);
 	}
 
 	@Override

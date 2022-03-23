@@ -8,11 +8,11 @@ public abstract class ArmaDeFuego extends Arma implements ArmaConMunicion{
 	public static final String RECARGANDO = "recarga";
 
 	/**
-	 * valor numérico que representa el tiempo de bombeo o recarga
+	 * valor numerico que representa el tiempo de bombeo o recarga
 	 */
 	private short tBombeo;
 	/**
-	 * valor numérico que representa la cantidad de balas disponible
+	 * valor numerico que representa la cantidad de balas disponible
 	 */
 	private byte limBalas;
 	/**
@@ -20,7 +20,7 @@ public abstract class ArmaDeFuego extends Arma implements ArmaConMunicion{
 	 */
 	private boolean ensangrentada;
 	/**
-	 * valor numérico que representa la munición del arma
+	 * valor numerico que representa la municion del arma
 	 */
 	private byte municion;
 
@@ -42,7 +42,7 @@ public abstract class ArmaDeFuego extends Arma implements ArmaConMunicion{
 		return descanso;
 	}
 	/**
-	 * cambia el límite de balas del arma en cuestión
+	 * cambia el limite de balas del arma en cuestion
 	 * @param limBalas
 	 */
 	protected void setLimBalas(byte limBalas) {
@@ -50,7 +50,7 @@ public abstract class ArmaDeFuego extends Arma implements ArmaConMunicion{
 	}
 
 	/**
-	 * obtiene el límite de balas del arma presente
+	 * obtiene el limite de balas del arma presente
 	 * @return limBalas
 	 */
 	public byte getLimBalas() {
@@ -74,7 +74,7 @@ public abstract class ArmaDeFuego extends Arma implements ArmaConMunicion{
 	}
 
 	/**
-	 * pregunta si el arma presente acaba de darle a algún enemigo
+	 * pregunta si el arma presente acaba de darle a algun enemigo
 	 * @return ensangrentada
 	 */
 	public boolean isEnsangrentada() {

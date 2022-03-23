@@ -2,17 +2,17 @@ package mundo;
 
 public class Caminante extends Zombie implements SeMueveEnZigzag {
 
-	public static final String GRUNIENDO = "gruñendo";
+	public static final String GRUNIENDO = "gruniendo";
 
 	private int direccionX;
 	/**
-	 * posición en el ejeX
+	 * posicion en el ejeX
 	 */
 	private int posHorizontal;
 	private int direccionY;
 
 	/**
-	 * Constructor del zombie caminante con sus características con corde a la ronda
+	 * Constructor del zombie caminante con sus caracteristicas con corde a la ronda
 	 * @param ronda
 	 * @param siguiente
 	 */
@@ -23,7 +23,7 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
 	}
 
 	/**
-	 * Constructor que carga las características que se guardaron en texto plano
+	 * Constructor que carga las caracteristicas que se guardaron en texto plano
 	 * @param posX
 	 * @param posY
 	 * @param direccionX

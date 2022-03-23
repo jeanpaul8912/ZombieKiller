@@ -2,7 +2,7 @@ package mundo;
 
 public interface SerViviente {
 	/**
-	 * todo ser viviente en el juego realiza un ataque característico
+	 * todo ser viviente en el juego realiza un ataque caracteristico
 	 * @return
 	 */
 	String ataco();
@@ -12,7 +12,7 @@ public interface SerViviente {
 	 */
 	void setSalud(byte nuevaSalud);
 	/**
-	 * todo ser viviente contiene salud, representado por un valor numérico
+	 * todo ser viviente contiene salud, representado por un valor numerico
 	 * @return
 	 */
 	byte getSalud();

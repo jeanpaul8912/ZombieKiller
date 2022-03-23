@@ -22,7 +22,7 @@ public class Puntaje implements Serializable, Comparable<Puntaje> {
 	 */
 	private String nombreKiller;
 	/**
-	 * Puntaje mayor que el presente, esta referencia para ordenar en forma de árbol binario
+	 * Puntaje mayor que el presente, esta referencia para ordenar en forma de arbol binario
 	 */
 	private Puntaje mayor;
 	/**
@@ -76,7 +76,7 @@ public class Puntaje implements Serializable, Comparable<Puntaje> {
 	}
 
 	/**
-	 * método que se encarga de agregar un puntaje en el árbol binario con el score(puntaje en números) como criterio de ordenamiento
+	 * metodo que se encarga de agregar un puntaje en el arbol binario con el score(puntaje en numeros) como criterio de ordenamiento
 	 * @param score
 	 */
 	public void aniadirPorPuntaje(Puntaje score) {
@@ -125,7 +125,7 @@ public class Puntaje implements Serializable, Comparable<Puntaje> {
 	}
 
 	/**
-	 * agrega elementos a la lista pasada por parámetro de manera ordenada en forma ascendente
+	 * agrega elementos a la lista pasada por parametro de manera ordenada en forma ascendente
 	 * @param lista
 	 */
 	public void generarListaInOrden(ArrayList lista) {

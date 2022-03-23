@@ -2,8 +2,6 @@ package interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.URL;
@@ -22,10 +20,11 @@ public class PanelComoJugar extends JPanel {
 	private JButton butSalir;
 	private InterfazZombieKiller principal;
 	
-	public PanelComoJugar (InterfazZombieKiller inter) {
+	private static PanelComoJugar panelSingleton;
+	
+	public PanelComoJugar () {
 		setBackground(Color.BLACK);
 		setLayout(new BorderLayout());
-		principal = inter;
 		panelDatosC = new PanelDatosCuriosos();
 		panelArmas = new PanelArmas(principal);
 		butSalir = new JButton();
@@ -40,6 +39,18 @@ public class PanelComoJugar extends JPanel {
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		add(scroll, BorderLayout.CENTER);
 		add(butSalir, BorderLayout.SOUTH);
+	}
+	
+	public static PanelComoJugar getPanel() {
+		if (panelSingleton == null) {
+			panelSingleton = new PanelComoJugar();
+		}
+
+		return panelSingleton;
+	}
+	
+	public void setPrincipal(InterfazZombieKiller interfazZombieKiller) {
+		principal = interfazZombieKiller;
 	}
 	
 	public void configurarBoton (JButton aEditar, URL rutaImagen, String comando) {

@@ -25,7 +25,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	 */
 	public static final int ALTO_PANTALLA = 720;
 	/**
-	 * entero incambiable que representa el número de zombies que aparecen en
+	 * entero incambiable que representa el numero de zombies que aparecen en
 	 * una ronda
 	 */
 	public static final int NUMERO_ZOMBIES_RONDA = 16;
@@ -49,16 +49,16 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 
 	/**
 	 * Zombie que no aparece en el juego pero sirve como nodo para modificar la
-	 * lista facilmente nodo más cercano al personaje (abajo)
+	 * lista facilmente nodo mas cercano al personaje (abajo)
 	 */
 	private Zombie zombNodoLejano;
 	/**
 	 * Zombie que no aparece en el juego pero sirve como nodo para modificar la
-	 * lista facilmente nodo más lejano al personaje (arriba)
+	 * lista facilmente nodo mas lejano al personaje (arriba)
 	 */
 	private Zombie zombNodoCercano;
 	/**
-	 * Personaje en el campo de batalla que está disparando
+	 * Personaje en el campo de batalla que esta disparando
 	 */
 	private Personaje personaje;
 	/**
@@ -71,16 +71,16 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	 */
 	private char estadoJuego;
 	/**
-	 * ronda en la que se encuentra la partida actual, varía desde 1 a 10, en la
-	 * 10 sólo puede estar el jefe
+	 * ronda en la que se encuentra la partida actual, varia desde 1 a 10, en la
+	 * 10 solo puede estar el jefe
 	 */
 	private byte rondaActual;
 	/**
-	 * número de zombies que han salido a dar la cara en todo el juego
+	 * numero de zombies que han salido a dar la cara en todo el juego
 	 */
 	private int cantidadZombiesGenerados;
 	/**
-	 * número que representa el arma que se está mostrando en las
+	 * numero que representa el arma que se esta mostrando en las
 	 * especificaciones del arma (panelArmas)
 	 */
 	private int armaMostrada;
@@ -90,7 +90,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	private ArrayList<Puntaje> mejoresPuntajes;
 	/**
 	 * raiz del arbol binario de puntajes, tiene los mismos datos del arreglo
-	 * mejoresPuntajes pero están ordenados por Score
+	 * mejoresPuntajes pero estan ordenados por Score
 	 */
 	private Puntaje raizPuntajes;
 
@@ -102,7 +102,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 		// aEliminar = new ArrayList<Zombie>();
 		estadoJuego = SIN_PARTIDA;
 		rondaActual = 0;
-		// son caminantes auxiliares, sólo necesito las instancias del anterior
+		// son caminantes auxiliares, solo necesito las instancias del anterior
 		// y el de al frente
 		zombNodoLejano = new Caminante();
 		zombNodoCercano = new Caminante();
@@ -131,7 +131,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	}
 
 	/**
-	 * obtiene la ronda en el instante en que se llama el método, 0 si el estado
+	 * obtiene la ronda en el instante en que se llama el metodo, 0 si el estado
 	 * es sin partida
 	 * 
 	 * @return ronda actual
@@ -158,7 +158,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	}
 
 	/**
-	 * obtiene el personaje que está disparando
+	 * obtiene el personaje que esta disparando
 	 * 
 	 * @return personaje en juego
 	 */
@@ -167,7 +167,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	}
 
 	/**
-	 * cambia el personaje que está disparando, ocurre cuando se carga una
+	 * cambia el personaje que esta disparando, ocurre cuando se carga una
 	 * partida
 	 */
 	public void setPersonaje(Personaje personaje) {
@@ -215,9 +215,9 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	}
 
 	/**
-	 * verifica el número de zombies que se encuentra en la partida
+	 * verifica el numero de zombies que se encuentra en la partida
 	 * 
-	 * @return número de zombies
+	 * @return numero de zombies
 	 */
 	public int contarZombies() {
 		Zombie actual = zombNodoCercano.getAtras();
@@ -231,13 +231,13 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	}
 
 	/**
-	 * verifica por cada zombie la posición del disparo hasta que lo encuentre
+	 * verifica por cada zombie la posicion del disparo hasta que lo encuentre
 	 * 
 	 * @param posX
 	 *            del disparo
 	 * @param posY
 	 *            del disparo
-	 * @return true si le dio a alguno, false si falló el disparo
+	 * @return true si le dio a alguno, false si fallo el disparo
 	 */
 	public boolean leDio(int posX, int posY) {
 		personaje.ataco();
@@ -272,7 +272,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	}
 
 	/**
-	 * cambia los estados del personaje con corde a que recibe un arañazo
+	 * cambia los estados del personaje con corde a que recibe un araniazo
 	 * zombie, termina el juego si muere
 	 */
 	public void enemigoAtaca() {
@@ -312,7 +312,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	}
 
 	/**
-	 * obtiene el zombie nodo más lejano al personaje
+	 * obtiene el zombie nodo mas lejano al personaje
 	 * 
 	 * @return zombie nodo de arriba
 	 */
@@ -321,7 +321,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	}
 
 	/**
-	 * obtiene el zombie nodo más cercano al personaje
+	 * obtiene el zombie nodo mas cercano al personaje
 	 * 
 	 * @return zombie nodo de abajo
 	 */
@@ -333,7 +333,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	 * carga el Puntaje que se guarda en forma de raiz de AB
 	 * 
 	 * @throws IOException
-	 *             en caso de que no se haya guardado algún puntaje
+	 *             en caso de que no se haya guardado algun puntaje
 	 * @throws ClassNotFoundException
 	 *             en caso de que haya ocurrido un error al guardar los datos
 	 */
@@ -359,10 +359,10 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	}
 
 	/**
-	 * carga la última partida guardada devuelve la partida clonada porque la
-	 * actual pasa a estar sin juego y así elimina los hilos en ejecución
+	 * carga la ultima partida guardada devuelve la partida clonada porque la
+	 * actual pasa a estar sin juego y asi elimina los hilos en ejecucion
 	 * 
-	 * @return una partida con las características de la nueva partida
+	 * @return una partida con las caracteristicas de la nueva partida
 	 * @throws Exception
 	 *             de cualquier tipo para mostrar en pantalla
 	 */
@@ -376,11 +376,11 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 			cargarDatosCampo(carpeta, personaje);
 		} catch (IOException e) {
 			throw new Exception(
-					"No se ha encontrado una partida guardada o es posible que haya abierto el juego desde \"Acceso rápido\"");
+					"No se ha encontrado una partida guardada o es posible que haya abierto el juego desde \"Acceso rapido\"");
 		} catch (DatosErroneosException e) {
 			throw new Exception(e.getMessage());
 		} catch (NumberFormatException e) {
-			throw new Exception("En el archivo hay caracteres donde deberían haber números");
+			throw new Exception("En el archivo hay caracteres donde deberian haber numeros");
 		}
 		return (SurvivorCamp) clone();
 	}
@@ -390,9 +390,9 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	 * 
 	 * @param carpeta
 	 * @param personaje
-	 *            para asignarselo a la partida si todos los datos son válidos
+	 *            para asignarselo a la partida si todos los datos son validos
 	 * @throws Exception
-	 *             si hay información inválida
+	 *             si hay informacion invalida
 	 */
 	private void cargarDatosCampo(File carpeta, Personaje personaje) throws Exception {
 		File datosZombie = new File(carpeta.getAbsolutePath() + "/zombies.txt");
@@ -461,8 +461,8 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	}
 
 	/**
-	 * método auxiliar para generar un boss con respecto a la salud que le entra
-	 * por parámetro
+	 * metodo auxiliar para generar un boss con respecto a la salud que le entra
+	 * por parametro
 	 * 
 	 * @param ronda
 	 * @param salud
@@ -492,7 +492,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	}
 
 	/**
-	 * método auxiliar que verifica las direcciones a las que se mueven los
+	 * metodo auxiliar que verifica las direcciones a las que se mueven los
 	 * caminantes la suma de sus direcciones no puede ser menor a 4
 	 * 
 	 * @param direccionX
@@ -505,8 +505,8 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	}
 
 	/**
-	 * verifica que los datos generales de loz zombies estén dentro de los
-	 * límites del juego
+	 * verifica que los datos generales de loz zombies estan dentro de los
+	 * limites del juego
 	 * 
 	 * @param posX
 	 * @param posY
@@ -528,7 +528,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	 * 
 	 * @throws IOException
 	 *             en caso de que el jugador abra el ejecutable desde una
-	 *             carpeta inválida
+	 *             carpeta invalida
 	 */
 	public void guardarPartida() throws IOException {
 		File carpeta = new File(System.getProperty("user.dir") + "/PartidasGuardadas");
@@ -542,7 +542,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 			guardarDatosCampo(carpeta);
 		} catch (IOException e) {
 			throw new IOException(
-					"Error al guardar el archivo, es posible que haya abierto el juego desde \"Acceso rápido\"");
+					"Error al guardar el archivo, es posible que haya abierto el juego desde \"Acceso rapido\"");
 		}
 	}
 
@@ -572,7 +572,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	 * 
 	 * @param datos
 	 * @param actual
-	 * @return el texto con la información de los zombies
+	 * @return el texto con la informacion de los zombies
 	 */
 	private String escribirDatosZombie(String datos, Zombie actual) {
 		if (actual.getEstadoActual().equals(Zombie.NODO))
@@ -587,14 +587,14 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	}
 
 	/**
-	 * cambia el arma del personaje, en esta versión solo tiene 2 armas em total
+	 * cambia el arma del personaje, en esta version solo tiene 2 armas em total
 	 */
 	public void cambiarArma() {
 		personaje.cambiarArma();
 	}
 
 	/**
-	 * el enemigo hace lo que le pertenece después de terminar su golpe
+	 * el enemigo hace lo que le pertenece despues de terminar su golpe
 	 * 
 	 * @param enemy
 	 *            el enemigo que acaba de atacar
@@ -651,10 +651,10 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	}
 
 	/**
-	 * devuelve el número de referencia al arma que se encuentra a la derecha de
+	 * devuelve el numero de referencia al arma que se encuentra a la derecha de
 	 * la actual
 	 * 
-	 * @return número del arma Mostrada
+	 * @return numero del arma Mostrada
 	 */
 	public int moverArmaVisibleDerecha() {
 		if (armaMostrada == 3)
@@ -665,10 +665,10 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	}
 
 	/**
-	 * devuelve el número de referencia al arma que se encuentra a la izquierda
+	 * devuelve el numero de referencia al arma que se encuentra a la izquierda
 	 * de la actual
 	 * 
-	 * @return número del arma Mostrada
+	 * @return numero del arma Mostrada
 	 */
 	public int moverArmaVisibleIzquierda() {
 		if (armaMostrada == 0)
@@ -681,14 +681,14 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	/**
 	 * obtiene el arma que se muestra actualmente en el panelArmas
 	 * 
-	 * @return número del arma mostrada
+	 * @return numero del arma mostrada
 	 */
 	public int getArmaMostrada() {
 		return armaMostrada;
 	}
 
 	/**
-	 * añade un puntaje obtenido por el jugador
+	 * aniade un puntaje obtenido por el jugador
 	 * 
 	 * @param nombreJugador
 	 * @throws IOException
@@ -707,10 +707,10 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	}
 
 	/**
-	 * guarda el Puntaje raíz en la carpeta
+	 * guarda el Puntaje raiz en la carpeta
 	 * 
 	 * @throws IOException
-	 *             en caso de que ocurra un problema al guardar la raíz con las
+	 *             en caso de que ocurra un problema al guardar la raiz con las
 	 *             nuevas asociaciones
 	 */
 	private void guardarPuntajes() throws IOException {
@@ -771,7 +771,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	}
 
 	/**
-	 * crea un arreglo con el árbol binario usando el método inOrden
+	 * crea un arreglo con el arbol binario usando el metodo inOrden
 	 * 
 	 * @return arreglo de puntajes
 	 */
@@ -783,7 +783,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	}
 
 	/**
-	 * obtiene la raíz del árbol binario de Puntajes
+	 * obtiene la raiz del arbol binario de Puntajes
 	 * 
 	 * @return raizPuntajes
 	 */
@@ -800,7 +800,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	}
 
 	/**
-	 * busca el puntaje del nombre ingresado por parámetro con búsqueda binaria
+	 * busca el puntaje del nombre ingresado por parametro con busqueda binaria
 	 * 
 	 * @param nombre
 	 * @return mejor puntaje del nombre buscado
@@ -833,7 +833,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	}
 
 	/**
-	 * Verifica que el nombre pasado por parámetro sea completamente alfabético
+	 * Verifica que el nombre pasado por parametro sea completamente alfabetico
 	 * @param nombrePlayer
 	 * @throws NombreInvalidoException
 	 */

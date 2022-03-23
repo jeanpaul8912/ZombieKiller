@@ -3,7 +3,7 @@ package mundo;
 public class Remington extends ArmaDeFuego{
 	
 	/**
-	 * valor incambiable del daño que genera el arma
+	 * valor incambiable del danio que genera el arma
 	 */
 	public static final byte DANIO = 3;
 	/**
@@ -16,7 +16,7 @@ public class Remington extends ArmaDeFuego{
 	public static final short TIEMPO_CARGA = 1400;
 	public static final short RETROCESO = 400;
 	/**
-	 * Constructor del arma de fuego Remington con sus características
+	 * Constructor del arma de fuego Remington con sus caracteristicas
 	 */
 	public Remington () {
 		super();

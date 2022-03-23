@@ -12,14 +12,27 @@ public class PanelCreditos extends JPanel implements KeyListener{
 	private JLabel labCreditos;
 	private InterfazZombieKiller principal;
 	
-	public PanelCreditos(InterfazZombieKiller interfazZombieKiller) {
+	private static PanelCreditos panelSingleton;
+	
+	public PanelCreditos() {
 		addKeyListener(this);
 		setFocusable(true);
 		setBackground(Color.black);
-		principal = interfazZombieKiller;
 		labCreditos = new JLabel("En proceso, presiona \"Esc\" para volver");
 		labCreditos.setForeground(Color.white);
 		add(labCreditos);
+	}
+	
+	public static PanelCreditos getPanel() {
+		if (panelSingleton == null) {
+			panelSingleton = new PanelCreditos();
+		}
+		
+		return panelSingleton;
+	}
+	
+	public void setPrincipal(InterfazZombieKiller interfazZombieKiller) {
+		principal = interfazZombieKiller;
 	}
 
 	@Override

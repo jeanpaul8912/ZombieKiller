@@ -21,7 +21,7 @@ public class Personaje implements SerViviente, Serializable {
 	 */
 	private int score;
 	/**
-	 * cantidad de bajas con el último disparo en la cabeza
+	 * cantidad de bajas con el ultimo disparo en la cabeza
 	 */
 	private int headShots;
 	/**
@@ -29,7 +29,7 @@ public class Personaje implements SerViviente, Serializable {
 	 */
 	private ArmaDeFuego armaPrincipal;
 	/**
-	 * Arma que está guardada
+	 * Arma que esta guardada
 	 */
 	private ArmaDeFuego armaSecundaria;
 	/**
@@ -76,14 +76,14 @@ public class Personaje implements SerViviente, Serializable {
 
 	/**
 	 * pregunta si el personaje se encuentra herido
-	 * @return true si acaba de ser arañado
+	 * @return true si acaba de ser araniado
 	 */
 	public boolean isEnsangrentado() {
 		return ensangrentado;
 	}
 
 	/**
-	 * cambia el estado de herida (sólo sirve para mostrar temporalmente el daño causado)
+	 * cambia el estado de herida (solo sirve para mostrar temporalmente el danio causado)
 	 * @param ensangrentado
 	 */
 	public void setEnsangrentado(boolean ensangrentado) {
@@ -148,7 +148,7 @@ public class Personaje implements SerViviente, Serializable {
 	}
 
 	/**
-	 * se encarga de restaurar la munición del arma principal al máximo
+	 * se encarga de restaurar la municion del arma principal al maximo
 	 */
 	public void cargo() {
 		armaPrincipal.setMunicion(armaPrincipal.getLimBalas());

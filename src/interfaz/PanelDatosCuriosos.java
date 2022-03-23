@@ -25,11 +25,11 @@ public class PanelDatosCuriosos extends JPanel {
 		instrucciones = new JLabel[5];
 		titulos[0] = new JLabel("Datos curiosos");
 		titulos[1] = new JLabel("Controles");
-		datos[0] = new JLabel("*No siempre matar de tiro a la cabeza da más puntos. Que el último tiro sea el que le vuele los sesos!");
-		datos[1] = new JLabel("*Puedes acuchillar a un enemigo en posición de ataque, sólo dispara...");
-		datos[2] = new JLabel("*El daño de la escopeta varía según la distancia, úsala sabiamente");
+		datos[0] = new JLabel("*No siempre matar de tiro a la cabeza da mas puntos. Que el altimo tiro sea el que le vuele los sesos!");
+		datos[1] = new JLabel("*Puedes acuchillar a un enemigo en posicion de ataque, solo dispara...");
+		datos[2] = new JLabel("*El danio de la escopeta varia segun la distancia, usala sabiamente");
 
-		instrucciones[0] = new JLabel("Presiona \"SHIFT\" para ver las estadísticas de la partida");
+		instrucciones[0] = new JLabel("Presiona \"SHIFT\" para ver las estadisticas de la partida");
 		instrucciones[1] = new JLabel("Presiona \"C\" para cambiar de arma");
 		instrucciones[2] = new JLabel("Presiona \"SPACE\" para lanzar granada");
 		instrucciones[3] = new JLabel("Presiona \"Click Izquierdo\" para disparar el arma equipada");

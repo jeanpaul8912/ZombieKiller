@@ -24,15 +24,15 @@ public class Boss extends Enemigo implements SeMueveEnZigzag {
 	public static final int ANCHO_IMAGEN = 294;
 	
 	/**
-	 * valor numérico entero que representa la dirección o velocidad en el eje X
+	 * valor numerico entero que representa la direccion o velocidad en el eje X
 	 */
 	private int direccionX;
 	/**
-	 * valor numérico entero que representa la dirección o velocidad en el eje Y
+	 * valor numerico entero que representa la direccion o velocidad en el eje Y
 	 */	
 	private int direccionY;
 	/**
-	 * valor que representa la posición en el eje X del jefe
+	 * valor que representa la posicion en el eje X del jefe
 	 */
 	private int posHorizontal;
 

@@ -3,11 +3,11 @@ package mundo;
 public class Cuchillo extends Arma{
 
 	/**
-	 * valor incambiable del daño que causa el cuchillo
+	 * valor incambiable del danio que causa el cuchillo
 	 */
 	public static final byte DANIO = 4;
 	/**
-	 * Constructor del cuchillo con su respectivo daño
+	 * Constructor del cuchillo con su respectivo danio
 	 */
 	public Cuchillo() {
 		setTiempoCarga((short) 200);

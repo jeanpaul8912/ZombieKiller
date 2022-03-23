@@ -3,7 +3,7 @@ package mundo;
 public class Granada extends Arma  implements ArmaConMunicion{
 
 	/**
-	 * valor incambiable que representa el daño causado por la granada
+	 * valor incambiable que representa el danio causado por la granada
 	 */
 	public static final byte DANIO = 6;
 	/**
@@ -12,7 +12,7 @@ public class Granada extends Arma  implements ArmaConMunicion{
 	private byte cantidad;
 
 	/**
-	 * Constructor de la granada con su respectiva cantidad y daño
+	 * Constructor de la granada con su respectiva cantidad y danio
 	 */
 	public Granada() {
 		super();

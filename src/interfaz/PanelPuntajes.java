@@ -11,7 +11,6 @@ import java.awt.event.MouseListener;
 import java.net.URL;
 import java.util.ArrayList;
 
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -39,9 +38,10 @@ public class PanelPuntajes extends JPanel implements ActionListener {
 	private JButton butFiltroScore;
 	private JButton butSalir;
 	private InterfazZombieKiller principal;
+	
+	private static PanelPuntajes panelSingleton;
 
-	public PanelPuntajes(InterfazZombieKiller inter) {
-		principal = inter;
+	public PanelPuntajes() {
 		setBackground(Color.black);
 		Font f = new Font("Chiller", Font.BOLD, 26);
 		titulo = new JLabel("Puntajes");
@@ -68,6 +68,18 @@ public class PanelPuntajes extends JPanel implements ActionListener {
 		add(titulo, BorderLayout.NORTH);
 		add(texto, BorderLayout.CENTER);
 		add(butSalir, BorderLayout.SOUTH);
+	}
+	
+	public static PanelPuntajes getPanel() {
+		if (panelSingleton == null) {
+			panelSingleton = new PanelPuntajes();
+		}
+		
+		return panelSingleton;
+	}
+	
+	public void setPrincipal(InterfazZombieKiller interfazZombieKiller) {
+		principal = interfazZombieKiller;
 	}
 
 	public void actualizarPuntajes(ArrayList<Puntaje> scores) {
@@ -147,7 +159,7 @@ public class PanelPuntajes extends JPanel implements ActionListener {
 			generaryAgregarLabels(aMostrar);
 			updateUI();
 		} else
-			JOptionPane.showMessageDialog(this, "No se encontró el nombre buscado en los puntajes");
+			JOptionPane.showMessageDialog(this, "No se encontro el nombre buscado en los puntajes");
 	}
 
 	@Override
