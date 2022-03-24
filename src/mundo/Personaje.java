@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Personaje implements SerViviente, Serializable {
 
+	private static final long serialVersionUID = -9073363089990894813L;
 	/**
 	 * valor incambiable de la salud total del personaje
 	 */
@@ -51,11 +52,11 @@ public class Personaje implements SerViviente, Serializable {
 	 */
 	public Personaje() {
 		salud = SALUD;
-		granadas = (Granada) FactoryProvider.getFactory("armaConMunicion").createWeapon("granada");
-		armaPrincipal = (ArmaDeFuego) FactoryProvider.getFactory("armaConMunicion").createWeapon("m1911");
-		armaSecundaria = (ArmaDeFuego) FactoryProvider.getFactory("armaConMunicion").createWeapon("remington");
-		cuchillo = (Cuchillo) FactoryProvider.getFactory("armaSinMunicion").createWeapon("cuchillo");
-		// municion = principal.getLimBalas();
+		WeaponFactory armaFactory = new WeaponFactoryImpl();
+		granadas = (Granada) armaFactory.createWeapon("granada");
+		armaPrincipal = (ArmaDeFuego) armaFactory.createWeapon("m1911");
+		armaSecundaria = (ArmaDeFuego) armaFactory.createWeapon("remington");
+		cuchillo = (Cuchillo) armaFactory.createWeapon("cuchillo");
 	}
 
 	/**

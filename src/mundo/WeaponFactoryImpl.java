@@ -1,15 +1,17 @@
 package mundo;
 
-public class ArmaConMunicionFactory implements AbstractFactoryWeapon {
+public class WeaponFactoryImpl implements WeaponFactory {
 
 	@Override
 	public Arma createWeapon(String typeWeapon) {
 		if (typeWeapon.equalsIgnoreCase("granada")) {
-			return new Granada();
+			return Granada.getInstancia();
 		} else if (typeWeapon.equalsIgnoreCase("remington")) {
-			return new Remington();
+			return Remington.getInstancia();
 		} else if (typeWeapon.equalsIgnoreCase("m1911")) {
-			return new M1911();
+			return M1911.getInstancia();
+		} else if (typeWeapon.equalsIgnoreCase("cuchillo")) {
+			return Cuchillo.getInstancia();
 		} else {
 			throw new IllegalStateException("Unexpected value: " + typeWeapon);
 		}

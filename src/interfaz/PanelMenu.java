@@ -142,8 +142,8 @@ public class PanelMenu extends JPanel implements KeyListener, ActionListener, Mo
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		String cmnd = arg0.getActionCommand();
+	public void actionPerformed(ActionEvent actionEvent) {
+		String cmnd = actionEvent.getActionCommand();
 		
 		switch (cmnd) {
 		case INICIAR:

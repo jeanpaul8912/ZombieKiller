@@ -2,6 +2,7 @@ package mundo;
 
 public class DatosErroneosException extends Exception {
 
+	private static final long serialVersionUID = -1454590013618632518L;
 	/**
 	 * Constructor de la excepcion lanzada por no tener los datos correctos
 	 */

@@ -5,12 +5,10 @@ import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.io.IOException;
-
 import javax.swing.DebugGraphics;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
 import hilo.HiloArma;
 import hilo.HiloBoss;
 import hilo.HiloEnemigo;

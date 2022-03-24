@@ -1,7 +1,6 @@
 package hilo;
 
 import interfaz.InterfazZombieKiller;
-import mundo.Boss;
 import mundo.Caminante;
 import mundo.Enemigo;
 import mundo.Rastrero;

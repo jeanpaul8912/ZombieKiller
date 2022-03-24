@@ -2,6 +2,7 @@ package mundo;
 
 public abstract class ArmaDeFuego extends Arma implements ArmaConMunicion{
 
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Cadena de caracteres incambaible que representa el estado de recalentamiento o recarga de un arma de efuego
 	 */

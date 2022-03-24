@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public abstract class Arma implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	/**
 	 * cadena de caracteres que representa el estado del arma cargandose
 	 */

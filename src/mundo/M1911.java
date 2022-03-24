@@ -2,6 +2,7 @@ package mundo;
 
 public class M1911 extends ArmaDeFuego{
 
+	private static final long serialVersionUID = 1L;
 	/**
 	 * valor incambiable que representa el danio que causa la pistola M1911
 	 */
@@ -15,6 +16,8 @@ public class M1911 extends ArmaDeFuego{
 	 */
 	public static final short RETROCESO = 10;
 	
+	private static M1911 m1911;
+	
 	/**
 	 * Constructor del arma M1911 con sus caracteristicas
 	 */
@@ -25,5 +28,13 @@ public class M1911 extends ArmaDeFuego{
 		setDanio(DANIO);
 		setLimBalas((byte) 108);
 		setMunicion(getLimBalas());
+	}
+	
+	public static M1911 getInstancia() {
+		if(m1911 == null) {
+			m1911 = new M1911();
+		}
+		
+		return m1911;
 	}
 }

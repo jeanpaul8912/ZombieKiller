@@ -1,6 +1,6 @@
 package mundo;
 
-public interface AbstractFactoryWeapon {
+public interface WeaponFactory {
+	
 	Arma createWeapon(String typeWeapon);
-
 }

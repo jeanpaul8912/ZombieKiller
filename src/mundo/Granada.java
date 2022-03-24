@@ -2,6 +2,7 @@ package mundo;
 
 public class Granada extends Arma  implements ArmaConMunicion{
 
+	private static final long serialVersionUID = 1L;
 	/**
 	 * valor incambiable que representa el danio causado por la granada
 	 */
@@ -10,6 +11,8 @@ public class Granada extends Arma  implements ArmaConMunicion{
 	 * valor que representa la cantidad de granadas
 	 */
 	private byte cantidad;
+	
+	private static Granada granada;
 
 	/**
 	 * Constructor de la granada con su respectiva cantidad y danio
@@ -35,6 +38,14 @@ public class Granada extends Arma  implements ArmaConMunicion{
 	@Override
 	public void setMunicion(byte municion) {
 		cantidad = municion;
+	}
+	
+	public static Granada getInstancia() {
+		if(granada == null) {
+			granada = new Granada();
+		}
+		
+		return granada;
 	}
 
 }

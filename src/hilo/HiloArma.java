@@ -3,14 +3,10 @@ package hilo;
 import interfaz.InterfazZombieKiller;
 import mundo.Arma;
 import mundo.ArmaDeFuego;
-import mundo.Cuchillo;
-import mundo.Granada;
 import mundo.Remington;
 
 public class HiloArma extends Thread {
 
-	// private ArmaDeFuego weapon;
-	// private Granada granade;
 	private Arma weapon;
 	private InterfazZombieKiller principal;
 

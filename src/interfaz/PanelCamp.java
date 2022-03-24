@@ -1,22 +1,9 @@
 package interfaz;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.WindowEvent;
-import java.lang.invoke.LambdaMetafactory;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.awt.event.*;
 import java.util.Formatter;
-
-//@SuppressWarnings("serial")
 import javax.swing.*;
-import javax.swing.GroupLayout.Alignment;
-import javax.tools.Tool;
-
 import mundo.*;
 
 public class PanelCamp extends JPanel implements MouseListener, KeyListener {
