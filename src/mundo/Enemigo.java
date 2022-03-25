@@ -2,7 +2,7 @@ package mundo;
 
 import java.util.Formatter;
 
-public abstract class Enemigo implements SerViviente{
+public abstract class Enemigo implements SerViviente, Cloneable {
 	/**
 	 * cadena de caracteres incambiable que representa un estado que posee todo enemigo
 	 */
@@ -169,7 +169,16 @@ public abstract class Enemigo implements SerViviente{
 	 * @return
 	 */
 	public String getURL() {
-		Formatter formato = new Formatter();
-		return "/img/" + getClass().getSimpleName() + "/" + estadoActual + "/" + formato.format("%02d",getFrameActual()) + ".png";
+		try (Formatter formato = new Formatter()){
+			return "/img/" + getClass().getSimpleName() + "/" + estadoActual + "/" + formato.format("%02d",getFrameActual()) + ".png";
+		}
+	}
+	
+	public Enemigo clonar() {
+		try {
+			return (Enemigo) super.clone();
+		} catch (CloneNotSupportedException cloneNotSupportedException) {
+			throw new RuntimeException(cloneNotSupportedException.getMessage());
+		}
 	}
 }
