@@ -11,7 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import facade.ThreadsFacade;
-import hilo.HiloSonido;
 import mundo.ArmaDeFuego;
 import mundo.Boss;
 import mundo.Cuchillo;
@@ -254,7 +253,7 @@ public class InterfazZombieKiller extends JFrame {
 	 * inicia el sonido de los zombies
 	 */
 	public void iniciarGemi2() {
-		facade.initializeSoundThread("zombies");
+		facade.initializeZombieSoundThread("zombies");
 	}
 
 	/**
@@ -330,7 +329,7 @@ public class InterfazZombieKiller extends JFrame {
 	 * @param ruta
 	 */
 	public void reproducir(String ruta) {
-		facade.initializeSoundThread(ruta);
+		facade.initializeGeneralSoundThread(ruta);
 	}
 
 	/**

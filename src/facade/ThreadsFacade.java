@@ -11,7 +11,9 @@ public class ThreadsFacade {
 
 	private HiloArma weaponThread;
 	private HiloEnemigo EnemyThread;
-	private HiloSonido soundThread;
+	private HiloSonido zombieSoundThread;
+	private HiloSonido generalSoundThread;
+	private HiloBoss boss;
 	private HiloGeneradorDeZombies zombieGeneratorThread;
 	private InterfazZombieKiller zombieInterface;
 
@@ -22,19 +24,23 @@ public class ThreadsFacade {
 	public void initializeEnemyThreads() {
 		zombieGeneratorThread = new HiloGeneradorDeZombies(zombieInterface, zombieInterface.getCampo());
 		zombieGeneratorThread.start();
-		EnemyThread = new HiloEnemigo(zombieInterface, zombieInterface.getCampo().getZombNodoCercano(),
-		zombieInterface.getCampo());
+		EnemyThread = new HiloEnemigo(zombieInterface, zombieInterface.getCampo().getZombNodoCercano(),zombieInterface.getCampo());
 		EnemyThread.start();
 	}
 
-	public void initializeSoundThread(String soundType) {
-		soundThread = new HiloSonido(soundType);
-		soundThread.start();
+	public void initializeGeneralSoundThread(String soundType) {
+		generalSoundThread = new HiloSonido(soundType);
+		generalSoundThread.start();
 	}
-	
+
+	public void initializeZombieSoundThread(String soundType) {
+		zombieSoundThread = new HiloSonido(soundType);
+		zombieSoundThread.start();
+	}
+
 	public void soundStop() {
-		if (soundThread != null) {
-			soundThread.detenerSonido();
+		if (zombieSoundThread != null) {
+			zombieSoundThread.detenerSonido();
 		}
 	}
 
@@ -50,7 +56,7 @@ public class ThreadsFacade {
 	}
 
 	public void initializeBossThread() {
-		HiloBoss boss = new HiloBoss(zombieInterface, zombieInterface.getBoss(), zombieInterface.getCampo());
+		boss = new HiloBoss(zombieInterface, zombieInterface.getBoss(), zombieInterface.getCampo());
 		boss.start();
 	}
 }
