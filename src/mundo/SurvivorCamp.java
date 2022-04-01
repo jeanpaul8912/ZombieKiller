@@ -12,6 +12,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 
@@ -92,6 +93,9 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	 * mejoresPuntajes pero estan ordenados por Score
 	 */
 	private Puntaje raizPuntajes;
+	
+	private Enemigo enemigoCaminante;
+	private Enemigo enemigoRastero;
 
 	/**
 	 * Constructor de la clase principal del mundo
@@ -109,6 +113,10 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 		zombNodoLejano.setAlFrente(zombNodoCercano);
 		zombNodoCercano.setAtras(zombNodoLejano);
 		mejoresPuntajes = new ArrayList<>();
+		
+		enemigoCaminante = new Caminante();
+		enemigoRastero = new Rastrero((short)0,zombNodoLejano);
+		jefe = new Boss();
 	}
 
 	/**
@@ -179,8 +187,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	 * @return jefe creado
 	 */
 	public Boss generarBoss() {
-		jefe = new Boss();
-		return jefe;
+		return	(Boss) jefe.clonar();
 	}
 
 	/**
@@ -194,23 +201,25 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	 */
 	public Zombie generarZombie(int nivel) {
 		short level = (short) nivel;
+		Zombie zombie = null;
 		int tipoZombie = 0;
 		
-		if ((level == 3 || level == 4 || level == 8))
+		if ((level == 3 || level == 4 || level == 8)) {
 			tipoZombie = (int) (Math.random() * 2);
-		else if (level == 6 || level == 9)
+		} else if (level == 6 || level == 9) {
 			tipoZombie = 1;
-		
-		Zombie aGenerar;
+		}
 
-		if (tipoZombie == 1)
-			aGenerar = new Rastrero(level, zombNodoLejano);
-		else
-			aGenerar = new Caminante(level, zombNodoLejano);
-
-		aGenerar.introducirse(zombNodoLejano.getAlFrente(), zombNodoLejano);
+		if (tipoZombie == 1) {		
+			zombie = (Zombie) enemigoRastero.clonar();				
+		} else {
+			zombie = (Zombie) enemigoCaminante.clonar();						
+		}
+			
+		zombie.inicializar(level, zombNodoLejano);
+		zombie.introducirse(zombNodoLejano.getAlFrente(), zombNodoLejano);
 		cantidadZombiesGenerados++;
-		return aGenerar;
+		return zombie;
 	}
 
 	/**
@@ -339,9 +348,10 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	public void cargarPuntajes() throws IOException, ClassNotFoundException {
 		File carpeta = new File(System.getProperty("user.dir") + "/PartidasGuardadas");
 		File archivoPuntajes = new File(carpeta.getAbsolutePath() + "/puntajes.txt");
-		ObjectInputStream oIS = new ObjectInputStream(new FileInputStream(archivoPuntajes));
-		Puntaje puntaje = (Puntaje) oIS.readObject();
-		actualizarPuntajes(puntaje);
+		try (ObjectInputStream oIS = new ObjectInputStream(new FileInputStream(archivoPuntajes))) {
+			Puntaje puntaje = (Puntaje) oIS.readObject();
+			actualizarPuntajes(puntaje);
+		}
 	}
 
 	/**
@@ -774,8 +784,8 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	 * 
 	 * @return arreglo de puntajes
 	 */
-	public ArrayList<Puntaje> ordenarPuntajePorScore() {
-		ArrayList ordenados = new ArrayList<>();
+	public List<Puntaje> ordenarPuntajePorScore() {
+		List<Puntaje> ordenados = new ArrayList<>();
 		if (raizPuntajes != null)
 			raizPuntajes.generarListaInOrden(ordenados);
 		return ordenados;

@@ -2,6 +2,7 @@ package prueba;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import junit.framework.TestCase;
 import mundo.Puntaje;
@@ -12,12 +13,6 @@ public class SurvivorCampTest extends TestCase{
 
 	private SurvivorCamp sC;
 	
-	/**
-	 * crea un campo vacio
-	 */
-	private void setupEscenario1 () {
-		sC = new SurvivorCamp();
-	}
 	/**
 	 * Crea un campo con 5 zombies vivos y de la ronda 5
 	 */
@@ -161,7 +156,7 @@ public class SurvivorCampTest extends TestCase{
 	 */
 	public void testOrdenarPorScore() {
 		setupEscenario4();
-		ArrayList<Puntaje> ordenado = sC.ordenarPuntajePorScore();
+		List<Puntaje> ordenado = sC.ordenarPuntajePorScore();
 		for (int i = 1; i < ordenado.size(); i++) {
 			int HSanterior = ordenado.get(i-1).getPuntaje();
 			assertTrue(ordenado.get(i).getPuntaje()<=HSanterior);

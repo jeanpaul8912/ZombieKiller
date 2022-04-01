@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -82,7 +83,7 @@ public class PanelPuntajes extends JPanel implements ActionListener {
 		principal = interfazZombieKiller;
 	}
 
-	public void actualizarPuntajes(ArrayList<Puntaje> scores) {
+	public void actualizarPuntajes(List<Puntaje> scores) {
 		if (scores.size() != 0) {
 			removeAll();
 			add(titulo, BorderLayout.NORTH);
@@ -92,7 +93,7 @@ public class PanelPuntajes extends JPanel implements ActionListener {
 		}
 	}
 
-	private void generaryAgregarLabels(ArrayList<Puntaje> scores) {
+	private void generaryAgregarLabels(List<Puntaje> scores) {
 		labScores = new JLabel[scores.size()];
 		labNombres = new JLabel[scores.size()];
 		labHeadShots = new JLabel[scores.size()];

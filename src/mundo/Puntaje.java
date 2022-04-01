@@ -1,10 +1,11 @@
 package mundo;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 
 public class Puntaje implements Serializable, Comparable<Puntaje> {
 
+	private static final long serialVersionUID = -2214438786931470407L;
 	/**
 	 * valor entero que representa el score del personaje en la partida finalizada
 	 */
@@ -128,7 +129,7 @@ public class Puntaje implements Serializable, Comparable<Puntaje> {
 	 * agrega elementos a la lista pasada por parametro de manera ordenada en forma ascendente
 	 * @param lista
 	 */
-	public void generarListaInOrden(ArrayList lista) {
+	public void generarListaInOrden(List<Puntaje> lista) {
 		if (mayor != null)
 			mayor.generarListaInOrden(lista);
 		lista.add(this);

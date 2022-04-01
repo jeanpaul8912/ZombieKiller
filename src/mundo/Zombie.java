@@ -1,8 +1,5 @@
 package mundo;
 
-import java.io.Serializable;
-import java.util.Formatter;
-
 public abstract class Zombie extends Enemigo {
 	
 	/**
@@ -73,6 +70,8 @@ public abstract class Zombie extends Enemigo {
 	 * zombie que se encuentra atras o fue generado despues que este
 	 */
 	private Zombie atras;
+	
+	public int posX;
 
 	/**
 	 * Constructor de un zombie nodo
@@ -218,5 +217,15 @@ public abstract class Zombie extends Enemigo {
 		zombAlFrente.atras = this;
 		zombAtras.alFrente = this;
 	}
-
+	
+	public void inicializar(short nivel, Zombie atras) {
+		determinarDificultadZombie(nivel);
+		setEstadoActual(CAMINANDO);
+		setPosX();
+		this.atras = atras;
+	}
+	
+	public void setPosX() {
+		this.posX = posAleatoriaX();
+	}
 }

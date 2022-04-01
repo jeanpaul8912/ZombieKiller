@@ -3,18 +3,12 @@ package mundo;
 public class Rastrero extends Zombie {
 
 	/**
-	 * posicion en el ejeX
-	 */
-	private int posX;
-	
-	/**
 	 * Constructor del zombie rastrero con sus caracteristicas con corde a la ronda
 	 * @param ronda
 	 * @param siguiente
 	 */
 	public Rastrero(short ronda, Zombie siguiente) {
 		super(ronda, siguiente);
-		posX = posAleatoriaX();
 	}
 
 	/**

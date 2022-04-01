@@ -8,7 +8,6 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
 	/**
 	 * posicion en el ejeX
 	 */
-	private int posHorizontal;
 	private int direccionY;
 
 	/**
@@ -19,7 +18,6 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
 	public Caminante(short ronda, Zombie siguiente) {
 		super(ronda, siguiente);
 		moverEnDireccion();
-		posHorizontal = posAleatoriaX();
 	}
 
 	/**
@@ -35,7 +33,7 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
 	 */
 	public Caminante(int posX, int posY, int direccionX, int direccionY, String estadoActual, byte frameActual, byte salud, int ronda) {
 		super(posY, estadoActual, frameActual, salud, ronda);
-		posHorizontal = posX;
+		this.posX = posX;
 		this.direccionX = direccionX;
 		this.direccionY = direccionY;
 	}
@@ -61,9 +59,9 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
 			if (getPosY() > POS_ATAQUE) {
 				setEstadoActual(ATACANDO);
 			} else {
-				if (posHorizontal > SurvivorCamp.ANCHO_PANTALLA - ANCHO_IMAGEN || posHorizontal < 0)
+				if (posX > SurvivorCamp.ANCHO_PANTALLA - ANCHO_IMAGEN || posX < 0)
 					moverEnDireccion();
-				posHorizontal = posHorizontal + direccionX;
+				posX = posX + direccionX;
 				setPosY(getPosY() + direccionY);
 
 				if (getFrameActual() == 24)
@@ -99,7 +97,7 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
 	public boolean comprobarDisparo(int x, int y, byte danio) {
 		boolean leDio = false;
 		int danioResultante = danio;
-		if (x > posHorizontal + 36 && x < posHorizontal + 118 && y > getPosY() + 5 && y < getPosY() + 188) {
+		if (x > posX + 36 && x < posX + 118 && y > getPosY() + 5 && y < getPosY() + 188) {
 			if (getEstadoActual() != MURIENDO) {
 				if (y < getPosY() + 54)
 					danioResultante = ((byte) (danio + 2));
@@ -125,7 +123,7 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
 
 	@Override
 	public int getPosX() {
-		return posHorizontal;
+		return this.posX;
 	}
 
 }
