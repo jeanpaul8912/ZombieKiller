@@ -1,6 +1,5 @@
 package interfaz;
 
-import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -11,19 +10,27 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.IOException;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import interfaz.commands.BestScoresCommand;
+import interfaz.commands.Command;
+import interfaz.commands.ContinueGameCommand;
+import interfaz.commands.CreditsCommand;
+import interfaz.commands.HowToPlayCommand;
+import interfaz.commands.LoadGameCommand;
+import interfaz.commands.SaveGameCommand;
+import interfaz.commands.StartGameCommand;
 import mundo.SurvivorCamp;
 
 public class PanelMenu extends JPanel implements KeyListener, ActionListener, MouseListener {
 
+	private static final long serialVersionUID = 6794669918135042094L;
+	
 	private static final String CONTINUAR = "Continuar";
 	private static final String INICIAR = "Iniciar Nuevo Juego";
 	private static final String CARGAR = "Cargar Partida";
@@ -124,96 +131,42 @@ public class PanelMenu extends JPanel implements KeyListener, ActionListener, Mo
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-//		System.out.println(arg0.getKeyCode());
 		if (arg0.getKeyCode() == 80 && principal.getEstadoPartida()==SurvivorCamp.PAUSADO)
 			principal.pausarJuego();
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
-		String cmnd = actionEvent.getActionCommand();
-		
-		switch (cmnd) {
+		String commandName = actionEvent.getActionCommand();
+		Command command;
+
+		switch (commandName) {
 		case INICIAR:
-			startGame();
-			principal.iniciarNuevaPartida();
+			command = new StartGameCommand();
 			break;
 		case CONTINUAR:
-			principal.pausarJuego();
+			command = new ContinueGameCommand();
 			break;
 		case CARGAR:
-			startGame();
-			principal.cargarJuego();
+			command = new LoadGameCommand();
 			break;
 		case GUARDAR:
-			principal.guardarJuego();
+			command = new SaveGameCommand();
 			break;
 		case COMO_JUGAR:
-			PanelComoJugar panelComoJugar = PanelComoJugar.getPanel();
-			panelComoJugar.setPrincipal(principal);
-			principal.setPanelComoJugar(panelComoJugar);
-			principal.mostrarComoJugar();
+			command = new HowToPlayCommand();
 			break;
 		case MEJORES_PUNTAJES:
-			try {
-				PanelPuntajes panelPuntajes = PanelPuntajes.getPanel();
-				panelPuntajes.setPrincipal(principal);
-				principal.setPanelPuntajes(panelPuntajes);
-				SurvivorCamp camp = principal.getCampo();
-
-				if (camp == null) {
-					camp = new SurvivorCamp();
-					principal.setCampo(camp);
-				}
-
-				camp.cargarPuntajes();
-				principal.mostrarPuntajes();
-			} catch (ClassNotFoundException e) {
-				JOptionPane.showMessageDialog(this, "Hubo un error al guardar los ultimos puntajes");
-			} catch (IOException e) {
-				JOptionPane.showMessageDialog(this, "No se han encontrado puntajes anteriores");
-			}
+			command = new BestScoresCommand();
 			break;
 		case CREDITOS:
-			PanelCreditos panelCreditos = PanelCreditos.getPanel();
-			panelCreditos.setPrincipal(principal);
-			principal.setPanelCreditos(panelCreditos);
-			principal.mostrarCreditos();
+			command = new CreditsCommand();
 			break;
 		default:
-			break;
+			throw new RuntimeException("Unknown Command.");
 		}
-	}
-	
-	private void startGame() {
-		PanelCamp panelCamp = PanelCamp.getPanel();
-		panelCamp.setPrincipal(principal);
-		principal.setPanelCampo(panelCamp);
-		SurvivorCamp survivorCamp = new SurvivorCamp();
-		principal.setCampo(survivorCamp);
-
-		Cursor remingtonCursor = CursorObjectPool.getCursor("/img/Fondo/mira1.png");
-		principal.setMiraRemington(remingtonCursor);
-
-		Cursor knifeCursor = CursorObjectPool.getCursor("/img/Fondo/Cuchillo.png");
-		principal.setCursorCuchillo(knifeCursor);
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+		
+		command.execute(principal);
 	}
 
 	@Override
@@ -283,6 +236,18 @@ public class PanelMenu extends JPanel implements KeyListener, ActionListener, Mo
 			butPuntajes.setIcon(defaultIcon);
 		}
 	}
+	
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -295,4 +260,10 @@ public class PanelMenu extends JPanel implements KeyListener, ActionListener, Mo
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+	}
+	
 }
