@@ -1,2 +1,11 @@
+<<<<<<< HEAD
 /interfaz/
 /mundo/
+=======
+/hilo/
+/interfaz/
+/mundo/
+/prueba/
+/img/
+/commands/
+>>>>>>> 9d444b5 (Se agrega el patron command para los eventos en el panel de menu.)
