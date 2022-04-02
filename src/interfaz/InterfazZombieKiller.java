@@ -9,13 +9,12 @@ import javax.swing.DebugGraphics;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import hilo.HiloArma;
-import hilo.HiloBoss;
-import hilo.HiloEnemigo;
-import hilo.HiloGeneradorDeZombies;
-import hilo.HiloSonido;
+
+import facade.ThreadsFacade;
 import mundo.ArmaDeFuego;
 import mundo.Boss;
+import mundo.Cuchillo;
+import mundo.Granada;
 import mundo.NombreInvalidoException;
 import mundo.Puntaje;
 import mundo.Remington;
@@ -24,10 +23,6 @@ import mundo.Zombie;
 
 public class InterfazZombieKiller extends JFrame {
 
-	/**
-	 * Hilo que reproduce el sonido de los zombies
-	 */
-	private HiloSonido sonidoFondo;
 	/**
 	 * Campo de juego que contiene a todo el mundo
 	 */
@@ -70,6 +65,15 @@ public class InterfazZombieKiller extends JFrame {
 	 * Cursor temporal del cuchillo
 	 */
 	private Cursor cursorCuchillo;
+	
+	private Boss boss;
+	
+	private Granada granada;
+	
+	private Cuchillo cuchillo;
+
+	private ThreadsFacade facade;
+
 
 	/**
 	 * Constructor de la clase principal del juego Aqui se inicializan todos los
@@ -97,6 +101,7 @@ public class InterfazZombieKiller extends JFrame {
 		long finish = System.currentTimeMillis();
 		double elapsed = (finish - start) / 1000.0;
 		System.out.println(String.format("Elapsed: %1$f, Start = %2$d, Finish = %3$d", elapsed, start, finish));
+		facade = new ThreadsFacade(this);
 	}
 
 	/**
@@ -148,10 +153,7 @@ public class InterfazZombieKiller extends JFrame {
 		panelCampo.setVisible(true);
 		add(panelCampo, BorderLayout.CENTER);
 		panelCampo.requestFocusInWindow();
-		HiloGeneradorDeZombies generador = new HiloGeneradorDeZombies(this, campo);
-		generador.start();
-		HiloEnemigo hE = new HiloEnemigo(this, campo.getZombNodoCercano(), campo);
-		hE.start();
+		facade.initializeEnemyThreads();
 	}
 
 	/**
@@ -196,10 +198,8 @@ public class InterfazZombieKiller extends JFrame {
 			campo.setEstadoJuego(campo.EN_CURSO);
 			add(panelCampo, BorderLayout.CENTER);
 			panelCampo.requestFocusInWindow();
-			HiloEnemigo hE = new HiloEnemigo(this, campo.getZombNodoCercano(), campo);
-			HiloGeneradorDeZombies generador = new HiloGeneradorDeZombies(this, campo);
-			hE.start();
-			generador.start();
+			panelCampo.requestFocusInWindow();
+			facade.initializeEnemyThreads();
 			iniciarGemi2();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, e.getMessage());
@@ -245,24 +245,22 @@ public class InterfazZombieKiller extends JFrame {
 			reproducir("leDio" + armaActual.getClass().getSimpleName());
 		} else
 			reproducir("disparo" + armaActual.getClass().getSimpleName());
-		HiloArma hA = new HiloArma(this, armaActual);
-		hA.start();
+		panelCampo.incorporarJefe(boss);
+		facade.initializeWeaponsThread("armaDeFuego");
 	}
 
 	/**
 	 * inicia el sonido de los zombies
 	 */
 	public void iniciarGemi2() {
-		sonidoFondo = new HiloSonido("zombies");
-		sonidoFondo.start();
+		facade.initializeZombieSoundThread("zombies");
 	}
 
 	/**
 	 * termina el sonido de los zombies
 	 */
 	public void terminarGemi2() {
-		if (sonidoFondo != null)
-			sonidoFondo.detenerSonido();
+		facade.soundStop();
 	}
 
 	/**
@@ -311,8 +309,8 @@ public class InterfazZombieKiller extends JFrame {
 	 */
 	public void granadaLanzada() {
 		campo.seLanzoGranada();
-		HiloArma hA = new HiloArma(this, campo.getPersonaje().getGranadas());
-		hA.start();
+		setGranada(campo.getPersonaje().getGranadas());
+		facade.initializeWeaponsThread("granada");
 		reproducir("bomba");
 	}
 
@@ -322,8 +320,7 @@ public class InterfazZombieKiller extends JFrame {
 	public void cargarArmaPersonaje() {
 		campo.getPersonaje().cargo();
 		reproducir("carga" + armaActual.getClass().getSimpleName());
-		HiloArma hA = new HiloArma(this, armaActual);
-		hA.start();
+		facade.initializeWeaponsThread("armaDeFuego");
 	}
 
 	/**
@@ -332,8 +329,7 @@ public class InterfazZombieKiller extends JFrame {
 	 * @param ruta
 	 */
 	public void reproducir(String ruta) {
-		HiloSonido efecto = new HiloSonido(ruta);
-		efecto.start();
+		facade.initializeGeneralSoundThread(ruta);
 	}
 
 	/**
@@ -394,11 +390,11 @@ public class InterfazZombieKiller extends JFrame {
 	 * @param y
 	 */
 	public void acuchillar(int x, int y) {
+		setCuchillo(campo.getPersonaje().getCuchillo());
 		if (campo.acuchilla(x, y)) {
 			setCursor(cursorCuchillo);
 			reproducir("leDioCuchillo");
-			HiloArma hA = new HiloArma(this, campo.getPersonaje().getCuchillo());
-			hA.start();
+			facade.initializeWeaponsThread("cuchillo");
 		} else if (armaActual.getMunicion() == 0)
 			reproducir("sin_balas");
 	}
@@ -407,10 +403,9 @@ public class InterfazZombieKiller extends JFrame {
 	 * genera el jefe con su respectivo hilo
 	 */
 	public void generarBoss() {
-		Boss aMatar = campo.generarBoss();
-		panelCampo.incorporarJefe(aMatar);
-		HiloBoss hB = new HiloBoss(this, aMatar, campo);
-		hB.start();
+		boss = campo.generarBoss();
+		panelCampo.incorporarJefe(boss);
+		facade.initializeBossThread();
 	}
 
 	/**
@@ -652,6 +647,37 @@ public class InterfazZombieKiller extends JFrame {
 
 	public void setCursorCuchillo(Cursor cursorCuchillo) {
 		this.cursorCuchillo = cursorCuchillo;
+	}
+	public ArmaDeFuego getArmaActual() {
+		return armaActual;
+	}
+
+	public void setArmaActual(ArmaDeFuego armaActual) {
+		this.armaActual = armaActual;
+	}
+
+	public Boss getBoss() {
+		return boss;
+	}
+
+	public void setBoss(Boss boss) {
+		this.boss = boss;
+	}
+	
+	public Granada getGranada() {
+		return granada;
+	}
+
+	public void setGranada(Granada granada) {
+		this.granada = granada;
+	} 
+	
+	public Cuchillo getCuchillo() {
+		return cuchillo;
+	}
+
+	public void setCuchillo(Cuchillo cuchillo) {
+		this.cuchillo = cuchillo;
 	}
 
 }
