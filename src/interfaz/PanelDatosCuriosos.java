@@ -3,65 +3,76 @@ package interfaz;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.font.FontRenderContext;
 
-import javax.swing.JComponent;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 public class PanelDatosCuriosos extends JPanel {
 
-	private JLabel[] titulos;
-	private JLabel[] datos;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JLabel title;
+	private JLabel[] information;
 	private JLabel[] instrucciones;
+	private JPanel panelIzquierdo;
+	private JPanel panelDerecho;
+	private Font letraTitulos = new Font("Agency FB", Font.BOLD, 30);
 
 	public PanelDatosCuriosos() {
-		setBackground(Color.black);
-		setLayout(new GridLayout(0, 1));
-
-		titulos = new JLabel[2];
-		datos = new JLabel[3];
-		instrucciones = new JLabel[5];
-		titulos[0] = new JLabel("Datos curiosos");
-		titulos[1] = new JLabel("Controles");
-		datos[0] = new JLabel("*No siempre matar de tiro a la cabeza da mas puntos. Que el altimo tiro sea el que le vuele los sesos!");
-		datos[1] = new JLabel("*Puedes acuchillar a un enemigo en posicion de ataque, solo dispara...");
-		datos[2] = new JLabel("*El danio de la escopeta varia segun la distancia, usala sabiamente");
-
-		instrucciones[0] = new JLabel("Presiona \"SHIFT\" para ver las estadisticas de la partida");
-		instrucciones[1] = new JLabel("Presiona \"C\" para cambiar de arma");
-		instrucciones[2] = new JLabel("Presiona \"SPACE\" para lanzar granada");
-		instrucciones[3] = new JLabel("Presiona \"Click Izquierdo\" para disparar el arma equipada");
-		instrucciones[4] = new JLabel("Presiona \"Click Derecho\" para recargar el arma equipada");
-		// instruccion3 = new JLabel("Presiona \"SPACE\" para lanzar granada");
-
-		configurarTipoDeLetra();
-
-		add(titulos[0]);
-		for (int i = 0; i < datos.length; i++) {
-			add(datos[i]);
-		}
-		add(titulos[1]);
-		for (int i = 0; i < instrucciones.length; i++) {
-			add(instrucciones[i]);
-		}
+		     setLayout(new GridLayout(1, 2, 50, 0));
+		     this.setBorder(new EmptyBorder(0,80,0,0));
+	         panelIzquierdo();
+	         panelDerecho();
+	 		 setBackground(Color.BLACK);
+	         this.add(panelIzquierdo);
+	         this.add(panelDerecho);
 	}
-
-	private void configurarTipoDeLetra() {
-		Font letra = new Font("Chiller", Font.ITALIC, 30);
-		for (int i = 0; i < datos.length; i++) {
-			datos[i].setFont(letra);
-			datos[i].setForeground(Color.WHITE);
+	  
+    public void panelIzquierdo() {
+    	panelIzquierdo = new JPanel();
+    	information = new JLabel[4];
+        panelIzquierdo.setLayout(
+        new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
+        title = new JLabel("Datos Curiosos");
+		title.setFont(letraTitulos);
+		title.setForeground(Color.WHITE);
+		information[0] = new JLabel(" No siempre matar de tiro a la cabeza da mas puntos.");
+		information[1] = new JLabel(" Que el último tiro sea el que le vuele los sesos!");
+		information[2] = new JLabel(" Puedes acuchillar a un enemigo en posicion de ataque, solo dispara...");
+		information[3] = new JLabel(" El danio de la escopeta varia segun la distancia, usala sabiamente");
+		panelIzquierdo.add(title);
+		asignarTipoLetra(information, panelIzquierdo);
+		panelIzquierdo.setBackground(Color.BLACK);
+    }
+    
+    public void panelDerecho() {
+    	panelDerecho = new JPanel();
+    	instrucciones = new JLabel[5];
+        panelDerecho.setLayout(new BoxLayout(panelDerecho, BoxLayout.Y_AXIS));
+        title = new JLabel("Controles");
+		title.setFont(letraTitulos);
+		title.setForeground(Color.WHITE);
+        instrucciones[0] = new JLabel("Presiona \"SHIFT\" para ver las estadisticas de la partida");
+        instrucciones[1] = new JLabel("Presiona \"C\" para cambiar de arma");
+        instrucciones[2] = new JLabel("Presiona \"SPACE\" para lanzar granada");
+        instrucciones[3] = new JLabel("Presiona \"Click Izquierdo\" para disparar el arma equipada");
+        instrucciones[4] = new JLabel("Presiona \"Click Derecho\" para recargar el arma equipada");
+        
+        panelDerecho.add(title);
+        asignarTipoLetra(instrucciones, panelDerecho);
+        panelDerecho.setBackground(Color.BLACK);
+    }
+    
+    public void asignarTipoLetra(JLabel[] label, JPanel panel) {
+        for(int i=0; i < label.length; i++ ) {
+        	//label[i].setAlignmentX(Component.RIGHT_ALIGNMENT);
+        	label[i].setFont(new Font("Agency FB", Font.ROMAN_BASELINE, 18));
+        	label[i].setForeground(Color.white);
+        	panel.add(label[i]);
 		}
-		for (int i = 0; i < instrucciones.length; i++) {
-			instrucciones[i].setFont(letra);
-			instrucciones[i].setForeground(Color.WHITE);
-		}
-		for (int i = 0; i < titulos.length; i++) {
-			titulos[i].setFont(letra);
-			titulos[i].setForeground(Color.WHITE);
-			titulos[i].setHorizontalAlignment(SwingConstants.CENTER);
-		}
-	}
+    }
 }

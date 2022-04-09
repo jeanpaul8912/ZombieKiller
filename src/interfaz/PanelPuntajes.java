@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import mundo.Puntaje;
 
@@ -44,7 +45,8 @@ public class PanelPuntajes extends JPanel implements ActionListener {
 
 	public PanelPuntajes() {
 		setBackground(Color.black);
-		Font f = new Font("Chiller", Font.BOLD, 26);
+		this.setBorder(new EmptyBorder(40,30,20,0));
+		Font f = new Font("Agency FB", Font.BOLD, 50);
 		titulo = new JLabel("Puntajes");
 		titulo.setForeground(Color.WHITE);
 		butFiltroHeadShot = new JButton(ORDEN_HEADSHOT);
@@ -99,6 +101,8 @@ public class PanelPuntajes extends JPanel implements ActionListener {
 		labHeadShots = new JLabel[scores.size()];
 		labBajas = new JLabel[scores.size()];
 		JPanel auxPuntajes = new JPanel();
+		auxPuntajes.setBorder(new EmptyBorder(0,150,0,50));
+		Font font = new Font("Agency FB", Font.BOLD, 32);
 		auxPuntajes.setBackground(Color.black);
 		if (scores.size() > 10) {
 			auxPuntajes.setLayout(new GridLayout(11, 4));
@@ -117,6 +121,7 @@ public class PanelPuntajes extends JPanel implements ActionListener {
 		auxPuntajes.add(labScore);
 		auxPuntajes.add(labKills);
 		auxPuntajes.add(labTC);
+
 		for (int i = 0; i < scores.size() && i < 10; i++) {
 			labScores[i] = new JLabel(scores.get(i).getPuntaje() + "");
 			labScores[i].setForeground(Color.WHITE);
@@ -131,25 +136,30 @@ public class PanelPuntajes extends JPanel implements ActionListener {
 			auxPuntajes.add(labBajas[i]);
 			auxPuntajes.add(labHeadShots[i]);
 		}
+		auxPuntajes.setFont(font);
 		add(auxPuntajes, BorderLayout.CENTER);
 	}
 	
 	private void generarYAgregarBotones () {
 		JPanel auxBotones = new JPanel();
+		//setContentPane(auxBotones);
+		
 		auxBotones.setBackground(Color.black);
-		auxBotones.setLayout(new GridLayout(5, 1));
+		//auxBotones.setLayout(new GridLayout(5, 1));
 		auxBotones.add(butFiltroHeadShot);
 		auxBotones.add(butFiltroBajas);
 		auxBotones.add(butFiltroScore);
 		auxBotones.add(butBuscarNombre);
-		auxBotones.add(butSalir);
-		add(auxBotones, BorderLayout.SOUTH);
+		//auxBotones.add(butSalir);
+		setLayout(new GridLayout (5,1,20,50));
+		add(auxBotones, BorderLayout.CENTER);
+		
 	}
 
 	public void mostrarPuntajeDe(Puntaje buscado) {
 		if (buscado != null) {
 			JLabel encontrado = new JLabel("Mejor puntaje del nombre buscado");
-			Font f = new Font("Chiller", Font.BOLD, 26);
+			Font f = new Font("Agency FB", Font.BOLD, 26);
 			encontrado.setFont(f);
 			encontrado.setForeground(Color.WHITE);
 			removeAll();

@@ -1,12 +1,18 @@
 package interfaz;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicRootPaneUI;
 
 import mundo.Boss;
@@ -22,26 +28,28 @@ public class PanelAtributos extends JPanel {
 	// La cantidad de atributos y valores debe ser la misma
 	public PanelAtributos(String[] atributos, int[] valores) {
 		setBackground(Color.BLACK);
-		setLayout(new GridLayout(valores.length, 2));
+		setLayout(new GridLayout(valores.length, 2, 20, 20));
+		this.setBorder(new EmptyBorder(50,30,20,100));
 		
 		labAtributos = new JLabel[atributos.length];
 		barValores = new JProgressBar[valores.length];
-		
-		Font letra = new Font("Chiller", Font.ITALIC, 34);
+		Font letra = new Font("Agency FB", Font.BOLD, 24);
+		//Font letra = new Font("Chiller", Font.ITALIC, 34);
 		for (int i = 0; i < valores.length; i++) {
 
 			labAtributos[i] = new JLabel(atributos[i]);
+			labAtributos[i].setHorizontalAlignment(SwingConstants.RIGHT);
 			labAtributos[i].setFont(letra);
-			labAtributos[i].setForeground(Color.white);
+			labAtributos[i].setForeground(Color.WHITE);
 			add(labAtributos[i]);
-
-			barValores[i] = new JProgressBar();
+			
+			barValores[i] = new JProgressBar(0,20);
 			barValores[i].setForeground(Color.RED);
 			barValores[i].setBackground(Color.WHITE);
 			add(barValores[i]);
 			
-			if (atributos[i].equals("Danio"))
-				barValores[i].setMaximum(Granada.DANIO);
+			if (atributos[i].equals("Danio")) {
+				barValores[i].setMaximum(Granada.DANIO);}
 			else if (atributos[i].equals("Salud"))
 				barValores[i].setMaximum(Boss.SALUD);
 			else if (atributos[i].equals("Lentitud"))

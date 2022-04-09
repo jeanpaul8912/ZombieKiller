@@ -9,14 +9,17 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
 
 public class PanelComoJugar extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final String SALIR = "Salir";
 	private PanelDatosCuriosos panelDatosC;
 	private PanelArmas panelArmas;
-	private JScrollPane scroll;
 	private JButton butSalir;
 	private InterfazZombieKiller principal;
 	
@@ -25,6 +28,7 @@ public class PanelComoJugar extends JPanel {
 	public PanelComoJugar () {
 		setBackground(Color.BLACK);
 		setLayout(new BorderLayout());
+		this.setBorder(new EmptyBorder(50,0,50,0));
 		panelDatosC = new PanelDatosCuriosos();
 		panelArmas = new PanelArmas(principal);
 		butSalir = new JButton();
@@ -34,10 +38,9 @@ public class PanelComoJugar extends JPanel {
 		aux.setLayout(new BorderLayout());
 		aux.add(panelDatosC, BorderLayout.NORTH);
 		aux.add(panelArmas, BorderLayout.CENTER);
-		scroll = new JScrollPane(aux);
-		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		add(scroll, BorderLayout.CENTER);
+		this.add(aux);
+		
+		
 		add(butSalir, BorderLayout.SOUTH);
 	}
 	
