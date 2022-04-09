@@ -211,9 +211,9 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 		}
 
 		if (tipoZombie == 1) {		
-			zombie = (Zombie) enemigoRastero.clonar();				
+			zombie = (Rastrero) enemigoRastero.clonar();				
 		} else {
-			zombie = (Zombie) enemigoCaminante.clonar();						
+			zombie = (Caminante) enemigoCaminante.clonar();						
 		}
 			
 		zombie.inicializar(level, zombNodoLejano);

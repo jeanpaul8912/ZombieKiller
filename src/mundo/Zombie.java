@@ -72,6 +72,10 @@ public abstract class Zombie extends Enemigo {
 	private Zombie atras;
 	
 	public int posX;
+	
+	private int direccionX;
+	
+	private int direccionY;
 
 	/**
 	 * Constructor de un zombie nodo
@@ -221,11 +225,25 @@ public abstract class Zombie extends Enemigo {
 	public void inicializar(short nivel, Zombie atras) {
 		determinarDificultadZombie(nivel);
 		setEstadoActual(CAMINANDO);
+		moverEnDireccion();
 		setPosX();
 		this.atras = atras;
 	}
 	
+	public void moverEnDireccion() {
+		direccionX = (int) (Math.random() * 9) - 4;
+		if (Math.abs(direccionX) < 4)
+			direccionY = 4 - Math.abs(direccionX);
+		else
+			direccionY = 2;
+	}
+	
+	
 	public void setPosX() {
 		this.posX = posAleatoriaX();
+	}
+	
+	public int getPosX() {
+		return this.posX;
 	}
 }
