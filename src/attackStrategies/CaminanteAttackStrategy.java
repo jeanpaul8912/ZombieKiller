@@ -16,6 +16,7 @@ public class CaminanteAttackStrategy extends AttackStrategy  implements IAttackM
 	}
 	
 	public void attack(Caminante caminante) {
+
 		if (caminante.getEstadoActual().equals(Caminante.CAMINANDO)) {
 			if (caminante.getPosY() > Caminante.POS_ATAQUE) {
 				caminante.setEstadoActual(Caminante.ATACANDO);
@@ -49,10 +50,12 @@ public class CaminanteAttackStrategy extends AttackStrategy  implements IAttackM
 
 		Caminante caminanteEnemy = (Caminante)caminante;
 		caminanteEnemy.setDireccionX((int) (Math.random() * 9) - 4);
-		if (Math.abs(caminanteEnemy.getDireccionX()) < 4)
+		if (Math.abs(caminanteEnemy.getDireccionX()) < 4) {
 			caminanteEnemy.setDireccionY(4 - Math.abs(caminanteEnemy.getDireccionX()));
-		else
+		}
+		else {
 			caminanteEnemy.setDireccionY(2);
+			}
 		}
 	
 	public void terminaDeAtacar() {

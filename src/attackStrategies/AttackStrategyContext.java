@@ -15,10 +15,6 @@ public class AttackStrategyContext {
 		this.attackStrategy.executeAttack(enemy);
 	}
 	
-	/*public void moverEnDireccion(Enemigo enemy) {
-		this.attackStrategy.moverEnDireccion(enemy);
-	}*/
-	
 	public void terminaDeAtacar() {
 		this.attackStrategy.terminaDeAtacar();
 	}

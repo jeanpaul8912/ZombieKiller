@@ -90,48 +90,6 @@ public class Boss extends Enemigo implements SeMueveEnZigzag {
 		return leDio;
 	}
 
-	/*@Override
-	public void moverEnDireccion() {}
-	@Override
-	public void ataco() {}
-	
-	@Override
-	public void ataco() {
-		if (getEstadoActual().equals(VOLANDO)) {
-			if (getPosY() > POS_ATAQUE)
-				setEstadoActual(ATACANDO);
-			else {
-				if(posHorizontal>SurvivorCamp.ANCHO_PANTALLA -ANCHO_IMAGEN || posHorizontal<0)
-					moverEnDireccion();
-				posHorizontal = posHorizontal + direccionX;
-				setPosY(getPosY() + direccionY);
-				if (getFrameActual() < 13)
-					setFrameActual((byte) (getFrameActual() + 1));
-				else {
-					setFrameActual((byte) 0);
-				}
-			}
-		}
-		else if(getEstadoActual().equals(ATACANDO)){
-			if(getFrameActual()<21)
-				setFrameActual((byte) (getFrameActual()+1));
-		}
-		//return getEstadoActual();
-	}
-
-	//@Override
-	public void moverEnDireccion() {
-		direccionX = (int) (Math.random() * 13) - 6;
-		if(direccionX>0 && direccionX<6)
-			direccionY = 6 - direccionX;
-			else if(direccionX<=0 && direccionX>-6)
-				direccionY = 6 + direccionX;
-			else
-				direccionY = 2;
-//		System.out.println(direccionX);
-//		System.out.println(direccionY);
-	}*/
-
 	@Override
 	public int getPosX() {
 		return posHorizontal;

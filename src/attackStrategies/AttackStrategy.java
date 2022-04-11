@@ -6,7 +6,7 @@ import mundo.SurvivorCamp;
 public abstract class AttackStrategy {
 
 	public abstract void executeAttack(Enemigo enemy);
-	//public abstract void moverEnDireccion(Enemigo boss);
+
 	public abstract void terminaDeAtacar(); 
 	
 	public void enemigoTerminaSuGolpe(SurvivorCamp campo) {

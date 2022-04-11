@@ -37,7 +37,7 @@ public class HiloEnemigo extends Thread {
 							attackStrategy = new AttackStrategyContext(new RastreroAttackStrategy());
 						}
 					attackStrategy.executeAttack(enMovimiento);
-					//enMovimiento.ataco();
+
 					String estado = enMovimiento.getEstadoActual();
 					if (estado.equals(Enemigo.ATACANDO)) {
 						if (enMovimiento instanceof Caminante) {
@@ -45,12 +45,12 @@ public class HiloEnemigo extends Thread {
 								principal.leDaAPersonaje();
 							else if (enMovimiento.getFrameActual() == 13)
 								attackStrategy.enemigoTerminaSuGolpe(campo);
-								//campo.enemigoTerminaSuGolpe(enMovimiento);
+		
 						} else if (enMovimiento instanceof Rastrero) {
 							if (enMovimiento.getFrameActual() == 13)
 								principal.leDaAPersonaje();
 							else if (enMovimiento.getFrameActual() == 16) {
-								//campo.enemigoTerminaSuGolpe(enMovimiento);
+	
 								attackStrategy.enemigoTerminaSuGolpe(campo);
 							}
 						}

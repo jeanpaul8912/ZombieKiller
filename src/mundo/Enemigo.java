@@ -177,6 +177,4 @@ public abstract class Enemigo implements SerViviente, Cloneable {
 			throw new RuntimeException(cloneNotSupportedException.getMessage());
 		}
 	}
-
-	//public abstract void ataco();
 }

@@ -4,5 +4,5 @@ import mundo.Enemigo;
 
 public interface IAttackMovement {
 
-	public void moverEnDireccion(Enemigo boss);
+	public void moverEnDireccion(Enemigo enemy);
 }

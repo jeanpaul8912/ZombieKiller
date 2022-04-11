@@ -21,13 +21,10 @@ public class BossAttackStrategy extends AttackStrategy implements IAttackMovemen
 			}
 			else {
 				if(boss.getPosX()>SurvivorCamp.ANCHO_PANTALLA -Boss.ANCHO_IMAGEN || boss.getPosX()<0) {
-					System.out.println("EJECUTA MOVIMIENTO");
 					moverEnDireccion(boss);
 					}
 				boss.setPosX(boss.getPosX() + boss.getDireccionX());
 				boss.setPosY(boss.getPosY() + boss.getDireccionY());
-				System.out.println("EJECUTA ATACANDO" + " " + boss.getPosX() + " " + boss.getPosY() );
-				System.out.println("FRAME " + " " + boss.getFrameActual());
 				if (boss.getFrameActual() < 13) {
 					boss.setFrameActual((byte) (boss.getFrameActual() + 1));
 				}
@@ -49,15 +46,12 @@ public class BossAttackStrategy extends AttackStrategy implements IAttackMovemen
 		bossEnemy.setDireccionX((int) (Math.random() * 13) - 6);
 		if(bossEnemy.getDireccionX() >0 && boss.getDireccionX()<6) {
 			bossEnemy.setDireccionY(6 - bossEnemy.getDireccionX());
-			System.out.println("EJECUTA MOVIMIENTO 1" + "  " +bossEnemy.getDireccionY());
 		}
 			else if(bossEnemy.getDireccionX()<=0 && bossEnemy.getDireccionX()>-6) {
 				bossEnemy.setDireccionY(6 + bossEnemy.getDireccionX());
-				System.out.println("EJECUTA MOVIMIENTO 2" + "  " +bossEnemy.getDireccionY());
 			}
 			else {
 				bossEnemy.setDireccionY(2);
-			    System.out.println("EJECUTA MOVIMIENTO 3" + "  " +bossEnemy.getDireccionY());
 			}
 		}
 	

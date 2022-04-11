@@ -21,7 +21,7 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
 	 */
 	public Caminante(short ronda, Zombie siguiente) {
 		super(ronda, siguiente);
-		moverEnDireccion();
+		//moverEnDireccion();
 		this.posX = posAleatoriaX();
 	}
 
@@ -58,48 +58,7 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
 		super();
 	}
 
-	/*@Override
-	public void ataco() {
-		if (getEstadoActual().equals(CAMINANDO)) {
-			if (getPosY() > POS_ATAQUE) {
-				setEstadoActual(ATACANDO);
-			} else {
-				if (posX > SurvivorCamp.ANCHO_PANTALLA - ANCHO_IMAGEN || posX < 0)
-					moverEnDireccion();
-				posX = posX + direccionX;
-				setPosY(getPosY() + direccionY);
-
-				if (getFrameActual() == 24)
-					setFrameActual((byte) 0);
-				else
-					setFrameActual((byte) (getFrameActual() + 1));
-			}
-		} else if (getEstadoActual().equals(ATACANDO)) {
-			if (getFrameActual() < 16)
-				setFrameActual((byte) (getFrameActual() + 1));
-		} else if (getEstadoActual().equals(MURIENDO) || getEstadoActual().equals(MURIENDO_INCENDIADO)) {
-			if (getFrameActual() < 17)
-				setFrameActual((byte) (getFrameActual() + 1));
-		} else if (getEstadoActual().equals(GRUNIENDO)) {
-			if (getFrameActual() < 17)
-				setFrameActual((byte) (getFrameActual() + 1));
-			else
-				setEstadoActual(ATACANDO);
-		}
-		//return getEstadoActual();
-	}*/
-/*
-	@Override
-	public void moverEnDireccion() {
-		System.out.println("Moviendo en direccion Y en caminante");
-		direccionX = (int) (Math.random() * 9) - 4;
-		if (Math.abs(direccionX) < 4)
-			direccionY = 4 - Math.abs(direccionX);
-		else
-			direccionY = 2;
-	}*/
-
-	@Override
+		@Override
 	public boolean comprobarDisparo(int x, int y, byte danio) {
 		boolean leDio = false;
 		int danioResultante = danio;
@@ -121,12 +80,7 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
 		}
 		return leDio;
 	}
-
-	/*@Override
-	public void terminaDeAtacar() {
-		setEstadoActual(GRUNIENDO);
-	}*/
-
+	
 	public void setDireccionX(int direccionX) {
 		this.direccionX = direccionX;
 	}

@@ -141,13 +141,6 @@ public class Personaje implements SerViviente, Serializable {
 		matanza = (short) (matanza + 1);
 	}
 
-	/*@Override
-	public void ataco() {
-			armaPrincipal.setMunicion((byte)(armaPrincipal.getMunicion()-1));
-			armaPrincipal.setEstado(ArmaDeFuego.RECARGANDO);
-			//return armaPrincipal.getEstado();
-	}*/
-
 	/**
 	 * se encarga de restaurar la municion del arma principal al maximo
 	 */

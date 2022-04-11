@@ -105,7 +105,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 		personaje = new Personaje();
 		// aEliminar = new ArrayList<Zombie>();
 		estadoJuego = SIN_PARTIDA;
-		rondaActual = 3;
+		rondaActual = 0;
 		// son caminantes auxiliares, solo necesito las instancias del anterior
 		// y el de al frente
 		zombNodoLejano = new Caminante();

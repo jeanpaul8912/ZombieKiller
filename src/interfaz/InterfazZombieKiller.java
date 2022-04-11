@@ -2,8 +2,6 @@ package interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
-import java.awt.Point;
-import java.awt.Toolkit;
 import java.io.IOException;
 import javax.swing.DebugGraphics;
 import javax.swing.ImageIcon;
@@ -12,11 +10,11 @@ import javax.swing.JOptionPane;
 
 import attackStrategies.AttackStrategyContext;
 import attackStrategies.BossAttackStrategy;
-import defenseStrategies.ShootStrategy;
-import defenseStrategies.StrategyContext;
+import attackStrategies.CaminanteAttackStrategy;
 import facade.ThreadsFacade;
 import mundo.ArmaDeFuego;
 import mundo.Boss;
+import mundo.Caminante;
 import mundo.Cuchillo;
 import mundo.Granada;
 import mundo.NombreInvalidoException;
@@ -27,6 +25,10 @@ import mundo.Zombie;
 
 public class InterfazZombieKiller extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Campo de juego que contiene a todo el mundo
 	 */
@@ -272,6 +274,11 @@ public class InterfazZombieKiller extends JFrame {
 	 */
 	public void generarZombie(int nivel) {
 		Zombie chombi = campo.generarZombie(nivel);
+		if (chombi instanceof Caminante) {
+			attackStrategy = new AttackStrategyContext(new CaminanteAttackStrategy());
+			CaminanteAttackStrategy caminanteAttackStrategy = new CaminanteAttackStrategy();
+			caminanteAttackStrategy.moverEnDireccion(chombi);
+		}
 	}
 
 	/**
