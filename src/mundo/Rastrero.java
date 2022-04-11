@@ -74,9 +74,4 @@ public class Rastrero extends Zombie {
 		setEstadoActual(MURIENDO);
 	}*/
 
-	@Override
-	public int getPosX() {
-		return posX;
-	}
-
 }

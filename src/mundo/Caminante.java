@@ -21,6 +21,8 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
 	 */
 	public Caminante(short ronda, Zombie siguiente) {
 		super(ronda, siguiente);
+		moverEnDireccion();
+		this.posX = posAleatoriaX();
 	}
 
 	/**
@@ -89,6 +91,7 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
 /*
 	@Override
 	public void moverEnDireccion() {
+		System.out.println("Moviendo en direccion Y en caminante");
 		direccionX = (int) (Math.random() * 9) - 4;
 		if (Math.abs(direccionX) < 4)
 			direccionY = 4 - Math.abs(direccionX);
@@ -124,11 +127,6 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
 		setEstadoActual(GRUNIENDO);
 	}*/
 
-	@Override
-	public int getPosX() {
-		return this.posX;
-	}
-	
 	public void setDireccionX(int direccionX) {
 		this.direccionX = direccionX;
 	}
@@ -136,6 +134,4 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
 	public void setDireccionY(int direccionY) {
 		this.direccionY = direccionY;
 	}
-
-
 }

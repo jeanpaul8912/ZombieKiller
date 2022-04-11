@@ -231,12 +231,6 @@ public class InterfazZombieKiller extends JFrame {
 		panelCampo.repaint();
 	}
 
-	public static void main(String[] args) {
-		InterfazZombieKiller inter = new InterfazZombieKiller();
-		inter.setVisible(true);
-		inter.setLocationRelativeTo(null);
-	}
-
 	/**
 	 * <pre></pre>
 	 * 
