@@ -1,5 +1,8 @@
 package hilo;
 
+import attackStrategies.AttackStrategyContext;
+import attackStrategies.CaminanteAttackStrategy;
+import attackStrategies.RastreroAttackStrategy;
 import interfaz.InterfazZombieKiller;
 import mundo.Caminante;
 import mundo.Enemigo;
@@ -24,19 +27,32 @@ public class HiloEnemigo extends Thread {
 		try {
 			while (campo.getEstadoJuego() != SurvivorCamp.SIN_PARTIDA) {
 				Zombie enMovimiento = nodoCercano.getAtras();
-				while (!enMovimiento.getEstadoActual().equals(Zombie.NODO)) {
-					String estado = enMovimiento.ataco();
+				AttackStrategyContext attackStrategy=null;
+				
+				while (!enMovimiento.getEstadoActual().equals(Zombie.NODO)) {	
+					
+					if (enMovimiento instanceof Caminante) {
+							attackStrategy = new AttackStrategyContext(new CaminanteAttackStrategy());	
+						}else if(enMovimiento instanceof Rastrero) {
+							attackStrategy = new AttackStrategyContext(new RastreroAttackStrategy());
+						}
+					attackStrategy.executeAttack(enMovimiento);
+					//enMovimiento.ataco();
+					String estado = enMovimiento.getEstadoActual();
 					if (estado.equals(Enemigo.ATACANDO)) {
 						if (enMovimiento instanceof Caminante) {
 							if (enMovimiento.getFrameActual() == 8)
 								principal.leDaAPersonaje();
 							else if (enMovimiento.getFrameActual() == 13)
-								campo.enemigoTerminaSuGolpe(enMovimiento);
+								attackStrategy.enemigoTerminaSuGolpe(campo);
+								//campo.enemigoTerminaSuGolpe(enMovimiento);
 						} else if (enMovimiento instanceof Rastrero) {
 							if (enMovimiento.getFrameActual() == 13)
 								principal.leDaAPersonaje();
-							else if (enMovimiento.getFrameActual() == 16)
-								campo.enemigoTerminaSuGolpe(enMovimiento);
+							else if (enMovimiento.getFrameActual() == 16) {
+								//campo.enemigoTerminaSuGolpe(enMovimiento);
+								attackStrategy.enemigoTerminaSuGolpe(campo);
+							}
 						}
 					} else if (estado.equals(Zombie.MURIENDO) || estado.equals(Zombie.MURIENDO_INCENDIADO)) {
 						// System.out.println(chombi.getFrameActual());

@@ -86,7 +86,7 @@ public abstract class Enemigo implements SerViviente, Cloneable {
 	 * cambia el frame o numero de la imagen con respecto al estado actual
 	 * @param frameActual
 	 */
-	protected void setFrameActual(byte frameActual) {
+	public void setFrameActual(byte frameActual) {
 		this.frameActual = frameActual;
 	}
 
@@ -108,7 +108,7 @@ public abstract class Enemigo implements SerViviente, Cloneable {
 	 * cambia la posicion en el eje Y
 	 * @param posY
 	 */
-	protected void setPosY(int posY) {
+	public void setPosY(int posY) {
 		this.posY = posY;
 	}
 
@@ -135,16 +135,12 @@ public abstract class Enemigo implements SerViviente, Cloneable {
 	public void setSalud(byte salud) {
 		this.salud = salud;
 	}
-	/**
-	 * ejecuta la respectiva reaccion del enemigo que recibe una granada
-	 * @return true si es afectado por la granada
-	 */
-	public abstract boolean recibeGranada();
+
 	/**
 	 * crea una posicion aleatoria en el eje X para la aparicion del enemigo
 	 * @return posAleatoria
 	 */
-	protected short posAleatoriaX() {
+	public short posAleatoriaX() {
 		int posAleatoria = (int) (Math.random() * SurvivorCamp.ANCHO_PANTALLA/3) + SurvivorCamp.ANCHO_PANTALLA/3 - 75;
 		return (short) posAleatoria;
 	}
@@ -152,7 +148,7 @@ public abstract class Enemigo implements SerViviente, Cloneable {
 	/**
 	 * ejecuta cierta accion al terminar de atacar al personaje
 	 */
-	public abstract void terminaDeAtacar();
+	//public abstract void terminaDeAtacar();
 	
 	/**
 	 * comprueba que las posiciones de la bala coincidan con la posicion del enemigo
@@ -181,4 +177,6 @@ public abstract class Enemigo implements SerViviente, Cloneable {
 			throw new RuntimeException(cloneNotSupportedException.getMessage());
 		}
 	}
+
+	//public abstract void ataco();
 }

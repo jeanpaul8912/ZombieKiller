@@ -1,10 +1,14 @@
 package mundo;
 
+import attackStrategies.AttackStrategyContext;
+import attackStrategies.CaminanteAttackStrategy;
+
 public class Caminante extends Zombie implements SeMueveEnZigzag {
 
 	public static final String GRUNIENDO = "gruniendo";
 
 	private int direccionX;
+	
 	/**
 	 * posicion en el ejeX
 	 */
@@ -17,7 +21,6 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
 	 */
 	public Caminante(short ronda, Zombie siguiente) {
 		super(ronda, siguiente);
-		moverEnDireccion();
 	}
 
 	/**
@@ -53,8 +56,8 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
 		super();
 	}
 
-	@Override
-	public String ataco() {
+	/*@Override
+	public void ataco() {
 		if (getEstadoActual().equals(CAMINANDO)) {
 			if (getPosY() > POS_ATAQUE) {
 				setEstadoActual(ATACANDO);
@@ -81,9 +84,9 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
 			else
 				setEstadoActual(ATACANDO);
 		}
-		return getEstadoActual();
-	}
-
+		//return getEstadoActual();
+	}*/
+/*
 	@Override
 	public void moverEnDireccion() {
 		direccionX = (int) (Math.random() * 9) - 4;
@@ -91,7 +94,7 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
 			direccionY = 4 - Math.abs(direccionX);
 		else
 			direccionY = 2;
-	}
+	}*/
 
 	@Override
 	public boolean comprobarDisparo(int x, int y, byte danio) {
@@ -116,14 +119,23 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
 		return leDio;
 	}
 
-	@Override
+	/*@Override
 	public void terminaDeAtacar() {
 		setEstadoActual(GRUNIENDO);
-	}
+	}*/
 
 	@Override
 	public int getPosX() {
 		return this.posX;
 	}
+	
+	public void setDireccionX(int direccionX) {
+		this.direccionX = direccionX;
+	}
+
+	public void setDireccionY(int direccionY) {
+		this.direccionY = direccionY;
+	}
+
 
 }

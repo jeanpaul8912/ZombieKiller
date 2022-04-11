@@ -1,5 +1,7 @@
 package hilo;
 
+import attackStrategies.AttackStrategyContext;
+import attackStrategies.BossAttackStrategy;
 import interfaz.InterfazZombieKiller;
 import mundo.Boss;
 import mundo.Enemigo;
@@ -21,13 +23,19 @@ public class HiloBoss extends Thread{
 		public void run() {
 			try {
 			int valorJefeCambiaPosicion = 0;
-			while (campo.getEstadoJuego()!=SurvivorCamp.SIN_PARTIDA) {
-					String estado = jefe.ataco();
+			AttackStrategyContext attackStrategy;
+			attackStrategy = new AttackStrategyContext(new BossAttackStrategy());	
+			while (campo.getEstadoJuego()!=SurvivorCamp.SIN_PARTIDA) {			
+				attackStrategy.executeAttack(jefe);
+					String estado = jefe.getEstadoActual();
 					if (estado.equals(Enemigo.ATACANDO)) {
 							if(jefe.getFrameActual()==19)
 								principal.leDaAPersonaje();
-							else if(jefe.getFrameActual()==21)
-								campo.enemigoTerminaSuGolpe(jefe);
+							else if(jefe.getFrameActual()==21) {
+								//campo.enemigoTerminaSuGolpe(jefe);
+								attackStrategy.enemigoTerminaSuGolpe(campo);
+								}
+								
 					}
 				while (campo.getEstadoJuego()==SurvivorCamp.PAUSADO){
 					sleep(500);

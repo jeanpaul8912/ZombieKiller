@@ -24,8 +24,8 @@ public class Rastrero extends Zombie {
 		super(posY, estadoActual, frameActual, salud, ronda);
 		this.posX = posX;
 	}
-	@Override
-	public String ataco() {
+	//@Override
+	/*public void ataco() {
 		if (getEstadoActual().equals(CAMINANDO)) {
 			if (getPosY() > POS_ATAQUE) {
 				setEstadoActual(ATACANDO);
@@ -43,8 +43,8 @@ public class Rastrero extends Zombie {
 			if (getFrameActual() < 11)
 				setFrameActual((byte) (getFrameActual() + 1));
 		}
-		return getEstadoActual();
-	}
+		//return getEstadoActual();
+	}*/
 
 	@Override
 	public boolean comprobarDisparo(int x, int y, byte danio) {
@@ -69,10 +69,10 @@ public class Rastrero extends Zombie {
 		return leDio;
 	}
 
-	@Override
+	/*@Override
 	public void terminaDeAtacar() {
 		setEstadoActual(MURIENDO);
-	}
+	}*/
 
 	@Override
 	public int getPosX() {

@@ -1,5 +1,8 @@
 package mundo;
 
+import attackStrategies.AttackStrategyContext;
+import attackStrategies.BossAttackStrategy;
+
 public class Boss extends Enemigo implements SeMueveEnZigzag {
 
 	/**
@@ -44,7 +47,6 @@ public class Boss extends Enemigo implements SeMueveEnZigzag {
 		setEstadoActual(VOLANDO);
 		setSalud(SALUD);
 		setLentitud(LENTITUD);
-		moverEnDireccion();
 	}
 	/**
 	 * Constructor del jefe al cargar la partida si fue guardada en la ronda del jefe
@@ -55,21 +57,16 @@ public class Boss extends Enemigo implements SeMueveEnZigzag {
 		setEstadoActual(VOLANDO);
 		setSalud(salud);
 		setLentitud(LENTITUD);
-		moverEnDireccion();
-	}
-	@Override
-	public boolean recibeGranada() {
-		setSalud((byte) (getSalud() - Granada.DANIO));
-		return false;
+		//moverEnDireccion();
 	}
 
-	@Override
+	/*@Override
 	public void terminaDeAtacar() {
 		setEstadoActual(VOLANDO);
 		setPosY(POS_INICIAL);
-		moverEnDireccion();
+		//moverEnDireccion();
 		posHorizontal = posAleatoriaX();
-	}
+	}*/
 
 	@Override
 	public boolean comprobarDisparo(int x, int y, byte danio) {
@@ -82,7 +79,7 @@ public class Boss extends Enemigo implements SeMueveEnZigzag {
 					}
 					setSalud((byte) (getSalud() - danioResultante));
 					//hace lo mismo cuando termina de atacar que cuando lo atacan
-					terminaDeAtacar();
+					//terminaDeAtacar();
 				if (getSalud() <= 0) {
 					setEstadoActual(DERROTADO);
 					posHorizontal = 365;
@@ -93,8 +90,13 @@ public class Boss extends Enemigo implements SeMueveEnZigzag {
 		return leDio;
 	}
 
+	/*@Override
+	public void moverEnDireccion() {}
 	@Override
-	public String ataco() {
+	public void ataco() {}
+	
+	@Override
+	public void ataco() {
 		if (getEstadoActual().equals(VOLANDO)) {
 			if (getPosY() > POS_ATAQUE)
 				setEstadoActual(ATACANDO);
@@ -114,10 +116,10 @@ public class Boss extends Enemigo implements SeMueveEnZigzag {
 			if(getFrameActual()<21)
 				setFrameActual((byte) (getFrameActual()+1));
 		}
-		return getEstadoActual();
+		//return getEstadoActual();
 	}
 
-	@Override
+	//@Override
 	public void moverEnDireccion() {
 		direccionX = (int) (Math.random() * 13) - 6;
 		if(direccionX>0 && direccionX<6)
@@ -128,21 +130,30 @@ public class Boss extends Enemigo implements SeMueveEnZigzag {
 				direccionY = 2;
 //		System.out.println(direccionX);
 //		System.out.println(direccionY);
-	}
+	}*/
 
 	@Override
 	public int getPosX() {
 		return posHorizontal;
 	}
 
+	public void setPosX(int posHorizontal) {
+		this.posHorizontal = posHorizontal;
+	}
 	@Override
 	public int getDireccionX() {
 		return direccionX;
 	}
 
+	public void setDireccionX(int direccionX) {
+		this.direccionX = direccionX;
+	}
 	@Override
 	public int getDireccionY() {
 		return direccionY;
+	}
+	public void setDireccionY(int direccionY) {
+		this.direccionY = direccionY;
 	}
 
 }

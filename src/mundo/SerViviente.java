@@ -5,7 +5,7 @@ public interface SerViviente {
 	 * todo ser viviente en el juego realiza un ataque caracteristico
 	 * @return
 	 */
-	String ataco();
+	//void ataco();
 	/**
 	 * cambia la salud del ser viviente
 	 * @param nuevaSalud
