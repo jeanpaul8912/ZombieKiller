@@ -42,6 +42,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	 * iniciada
 	 */
 	public static final char SIN_PARTIDA = 'N';
+
 	/**
 	 * char incambiable que representa el estado del juego iniciando la ronda
 	 */
@@ -247,7 +248,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	 *            del disparo
 	 * @return true si le dio a alguno, false si fallo el disparo
 	 */
-	public boolean leDio(int posX, int posY) {
+	/*public boolean leDio(int posX, int posY) {
 		personaje.ataco();
 		boolean leDio = false;
 		Zombie actual = zombNodoCercano.getAtras();
@@ -277,19 +278,19 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 				}
 			}
 		return leDio;
-	}
+	}*/
 
 	/**
 	 * cambia los estados del personaje con corde a que recibe un araniazo
 	 * zombie, termina el juego si muere
 	 */
-	public void enemigoAtaca() {
+	/*public void enemigoAtaca() {
 		personaje.setEnsangrentado(true);
 		personaje.setSalud((byte) (personaje.getSalud() - 1));
 		if (personaje.getSalud() <= 0) {
 			estadoJuego = SIN_PARTIDA;
 		}
-	}
+	}*/
 
 	/**
 	 * cambia el estado del juego de pausado a en curso o viceversa
@@ -308,7 +309,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	 * Se eliminan todos los zombies que hay en la pantalla, cada uno brinda 50
 	 * puntos al personaje
 	 */
-	public void seLanzoGranada() {
+	/*public void seLanzoGranada() {
 		Zombie actual = zombNodoCercano.getAtras();
 		personaje.setEnsangrentado(false);
 		while (!actual.getEstadoActual().equals(Zombie.NODO)) {
@@ -317,7 +318,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 			actual = actual.getAtras();
 		}
 		personaje.lanzoGranada();
-	}
+	}*/
 
 	/**
 	 * obtiene el zombie nodo mas lejano al personaje
@@ -610,7 +611,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	 */
 	public void enemigoTerminaSuGolpe(Enemigo enemy) {
 		personaje.setEnsangrentado(false);
-		enemy.terminaDeAtacar();
+		//enemy.terminaDeAtacar();
 	}
 
 	/**
@@ -852,5 +853,9 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 			if((caracter > 90 && caracter < 97) || caracter < 65 || caracter > 122)
 			throw new NombreInvalidoException(caracter);
 		}
+	}
+	
+	public char getSinPartida() {
+		return SIN_PARTIDA;
 	}
 }

@@ -193,22 +193,13 @@ public abstract class Zombie extends Enemigo {
 		alFrente.atras = atras;
 	}
 	
-	@Override
-	public abstract void terminaDeAtacar();
+	//@Override
+	//public abstract void terminaDeAtacar();
 	@Override
 	public abstract boolean comprobarDisparo(int x, int y, byte danio);
 
-	@Override
-	public abstract String ataco();
-	@Override
-	public boolean recibeGranada() {
-		boolean afectaGranada = false;
-		if(!getEstadoActual().equals(MURIENDO) && !getEstadoActual().equals(MURIENDO_INCENDIADO)){
-			setEstadoActual(MURIENDO_INCENDIADO);
-			afectaGranada = true;
-		}
-		return afectaGranada;
-	}
+	//@Override
+	//public abstract void ataco();
 
 	/**
 	 * entra en la lista enlazada relacionando los parametros zombie atras y al frente
@@ -225,19 +216,9 @@ public abstract class Zombie extends Enemigo {
 	public void inicializar(short nivel, Zombie atras) {
 		determinarDificultadZombie(nivel);
 		setEstadoActual(CAMINANDO);
-		moverEnDireccion();
 		setPosX();
 		this.atras = atras;
 	}
-	
-	public void moverEnDireccion() {
-		direccionX = (int) (Math.random() * 9) - 4;
-		if (Math.abs(direccionX) < 4)
-			direccionY = 4 - Math.abs(direccionX);
-		else
-			direccionY = 2;
-	}
-	
 	
 	public void setPosX() {
 		this.posX = posAleatoriaX();

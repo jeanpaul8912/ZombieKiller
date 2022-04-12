@@ -4,6 +4,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Formatter;
 import javax.swing.*;
+
+import defenseStrategies.ThrowGrenadeStrategy;
+import defenseStrategies.ShootStrategy;
+import defenseStrategies.SlashStrategy;
+import defenseStrategies.StrategyContext;
 import mundo.*;
 
 public class PanelCamp extends JPanel implements MouseListener, KeyListener {
@@ -24,6 +29,7 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
 	private Personaje matador;	
 	private ArmaDeFuego armaEquipada;
 	private Boss chief;
+	private StrategyContext attackStrategy;
 	
 	private static PanelCamp panelSingleton;
 
@@ -305,16 +311,19 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
+
 		if (principal.getEstadoPartida() == SurvivorCamp.EN_CURSO) {
 			if (arg0.getButton() == MouseEvent.BUTTON1) {
-				int x = arg0.getX();
-				int y = arg0.getY();
+				int xPosition = arg0.getX();
+				int yPosition = arg0.getY();
 				if (armaEquipada.getEstado().equals(Arma.LISTA) && armaEquipada.getMunicion() > 0) {
 					ultimoDisparo = arg0.getPoint();
-					principal.disparar(x, y);
-				} else if (y > Zombie.POS_ATAQUE && matador.getCuchillo().getEstado().equals(Arma.LISTA)) {
+					attackStrategy = new StrategyContext(new ShootStrategy(principal, xPosition, yPosition));				
+					attackStrategy.executeAttack();
+				} else if (yPosition > Zombie.POS_ATAQUE && matador.getCuchillo().getEstado().equals(Arma.LISTA)) {
 					ultimoDisparo = arg0.getPoint();
-					principal.acuchillar(x, y);
+					attackStrategy = new StrategyContext(new SlashStrategy(principal, xPosition, yPosition));
+					attackStrategy.executeAttack();
 				} else if (armaEquipada.getMunicion() == 0)
 					principal.reproducir("sin_balas");
 				labPuntaje.setText("Puntaje: " + matador.getScore());
@@ -344,8 +353,9 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
 				principal.cambiarArma();
 				actualizarEquipada(matador.getPrincipal());
 			} else if (e.getKeyCode() == KeyEvent.VK_SPACE && matador.getGranadas().getMunicion() > 0) {
-				principal.granadaLanzada();
-				labGranadas.setText("" + matador.getGranadas().getMunicion());
+				attackStrategy = new StrategyContext(new ThrowGrenadeStrategy(principal));				
+				attackStrategy.executeAttack();
+				labGranadas.setText("" + principal.getGranada().getMunicion());
 			} 
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SHIFT)
