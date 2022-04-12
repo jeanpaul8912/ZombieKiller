@@ -8,9 +8,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import attackStrategies.AttackStrategyContext;
-import attackStrategies.BossAttackStrategy;
-import attackStrategies.CaminanteAttackStrategy;
 import facade.ThreadsFacade;
 import mundo.ArmaDeFuego;
 import mundo.Boss;
@@ -22,6 +19,9 @@ import mundo.Puntaje;
 import mundo.Remington;
 import mundo.SurvivorCamp;
 import mundo.Zombie;
+import mundo.attackStrategies.AttackStrategyContext;
+import mundo.attackStrategies.BossAttackStrategy;
+import mundo.attackStrategies.CaminanteAttackStrategy;
 
 public class InterfazZombieKiller extends JFrame {
 

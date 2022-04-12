@@ -1,4 +1,4 @@
-package attackStrategies;
+package mundo.attackStrategies;
 
 import mundo.Boss;
 import mundo.Enemigo;

@@ -1,4 +1,4 @@
-package defenseStrategies;
+package mundo.defenseStrategies;
 
 import interfaz.InterfazZombieKiller;
 import mundo.ArmaDeFuego;

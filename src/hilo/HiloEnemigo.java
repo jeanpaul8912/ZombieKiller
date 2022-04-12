@@ -1,14 +1,14 @@
 package hilo;
 
-import attackStrategies.AttackStrategyContext;
-import attackStrategies.CaminanteAttackStrategy;
-import attackStrategies.RastreroAttackStrategy;
 import interfaz.InterfazZombieKiller;
 import mundo.Caminante;
 import mundo.Enemigo;
 import mundo.Rastrero;
 import mundo.SurvivorCamp;
 import mundo.Zombie;
+import mundo.attackStrategies.AttackStrategyContext;
+import mundo.attackStrategies.CaminanteAttackStrategy;
+import mundo.attackStrategies.RastreroAttackStrategy;
 
 public class HiloEnemigo extends Thread {
 
