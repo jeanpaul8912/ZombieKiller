@@ -28,7 +28,7 @@ public class PanelComoJugar extends JPanel {
 	public PanelComoJugar () {
 		setBackground(Color.BLACK);
 		setLayout(new BorderLayout());
-		this.setBorder(new EmptyBorder(50,0,50,0));
+		this.setBorder(new EmptyBorder(50,0,20,0));
 		panelDatosC = new PanelDatosCuriosos();
 		panelArmas = new PanelArmas(principal);
 		butSalir = new JButton();

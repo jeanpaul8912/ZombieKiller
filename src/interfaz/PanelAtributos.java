@@ -29,7 +29,7 @@ public class PanelAtributos extends JPanel {
 	public PanelAtributos(String[] atributos, int[] valores) {
 		setBackground(Color.BLACK);
 		setLayout(new GridLayout(valores.length, 2, 20, 20));
-		this.setBorder(new EmptyBorder(50,30,20,100));
+		this.setBorder(new EmptyBorder(50,30,20,220));
 		
 		labAtributos = new JLabel[atributos.length];
 		barValores = new JProgressBar[valores.length];

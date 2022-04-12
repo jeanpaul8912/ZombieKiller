@@ -2,6 +2,7 @@ package interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -10,6 +11,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import mundo.Cuchillo;
 import mundo.Granada;
@@ -31,7 +33,11 @@ public class PanelArmas extends JPanel{
 		setLayout(new BorderLayout());
 		labArmas = new JLabel[4];
 		panelAtributos = new PanelAtributos[4];	
-
+		JLabel infoImagen = new JLabel("Click en la imagen para conocer más armas.");
+		infoImagen.setFont(new Font("Agency FB", Font.BOLD, 20));
+		infoImagen.setForeground(Color.WHITE);
+		infoImagen.setBorder(new EmptyBorder(0,80,0,0));
+		
 		Image perfil;
 		Icon iconoEscalado;
 		perfil = new ImageIcon(getClass().getResource("/img/Fondo/perfilRemington.png")).getImage().getScaledInstance(300, 300, 300);
@@ -52,7 +58,7 @@ public class PanelArmas extends JPanel{
 	    labArmas[3].setToolTipText("Utensilio para cortar tiene una hoja de metal alargada y afilada por un solo lado.");
 	    
 		inicializarAtributos();
-		
+		add(infoImagen,BorderLayout.NORTH);
 		add(labArmas[1], BorderLayout.CENTER);
 		add(panelAtributos[1], BorderLayout.SOUTH);
 		add(labArmas[2], BorderLayout.CENTER);

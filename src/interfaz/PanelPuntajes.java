@@ -150,7 +150,7 @@ public class PanelPuntajes extends JPanel implements ActionListener {
 		auxBotones.add(butFiltroBajas);
 		auxBotones.add(butFiltroScore);
 		auxBotones.add(butBuscarNombre);
-		//auxBotones.add(butSalir);
+		auxBotones.add(butSalir);
 		setLayout(new GridLayout (5,1,20,50));
 		add(auxBotones, BorderLayout.CENTER);
 		
