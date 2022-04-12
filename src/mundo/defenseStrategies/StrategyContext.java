@@ -1,4 +1,4 @@
-package defenseStrategies;
+package mundo.defenseStrategies;
 
 public class StrategyContext {
 	

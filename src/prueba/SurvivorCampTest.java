@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import defenseStrategies.ThrowGrenadeStrategy;
-import defenseStrategies.StrategyContext;
 import interfaz.InterfazZombieKiller;
 import junit.framework.TestCase;
 import mundo.Puntaje;
 import mundo.SurvivorCamp;
 import mundo.Zombie;
+import mundo.defenseStrategies.StrategyContext;
+import mundo.defenseStrategies.ThrowGrenadeStrategy;
 
 public class SurvivorCampTest extends TestCase{
 

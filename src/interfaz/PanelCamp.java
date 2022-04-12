@@ -5,11 +5,11 @@ import java.awt.event.*;
 import java.util.Formatter;
 import javax.swing.*;
 
-import defenseStrategies.ThrowGrenadeStrategy;
-import defenseStrategies.ShootStrategy;
-import defenseStrategies.SlashStrategy;
-import defenseStrategies.StrategyContext;
 import mundo.*;
+import mundo.defenseStrategies.ShootStrategy;
+import mundo.defenseStrategies.SlashStrategy;
+import mundo.defenseStrategies.StrategyContext;
+import mundo.defenseStrategies.ThrowGrenadeStrategy;
 
 public class PanelCamp extends JPanel implements MouseListener, KeyListener {
 

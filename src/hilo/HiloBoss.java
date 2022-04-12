@@ -1,11 +1,11 @@
 package hilo;
 
-import attackStrategies.AttackStrategyContext;
-import attackStrategies.BossAttackStrategy;
 import interfaz.InterfazZombieKiller;
 import mundo.Boss;
 import mundo.Enemigo;
 import mundo.SurvivorCamp;
+import mundo.attackStrategies.AttackStrategyContext;
+import mundo.attackStrategies.BossAttackStrategy;
 
 public class HiloBoss extends Thread{
 	

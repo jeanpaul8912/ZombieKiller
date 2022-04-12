@@ -1,7 +1,7 @@
 package mundo;
 
-import attackStrategies.AttackStrategyContext;
-import attackStrategies.CaminanteAttackStrategy;
+import mundo.attackStrategies.AttackStrategyContext;
+import mundo.attackStrategies.CaminanteAttackStrategy;
 
 public class Caminante extends Zombie implements SeMueveEnZigzag {
 

@@ -1,7 +1,7 @@
 package mundo;
 
-import attackStrategies.AttackStrategyContext;
-import attackStrategies.BossAttackStrategy;
+import mundo.attackStrategies.AttackStrategyContext;
+import mundo.attackStrategies.BossAttackStrategy;
 
 public class Boss extends Enemigo implements SeMueveEnZigzag {
 
