@@ -3,7 +3,9 @@ package interfaz;
 public class ZombieKillerApplication {
 	
 	public static void main(String[] args) {
-		new InterfazZombieKiller();
+		InterfazZombieKiller inter = new InterfazZombieKiller();
+		inter.setVisible(true);
+		inter.setLocationRelativeTo(null);
 	}
 
 }

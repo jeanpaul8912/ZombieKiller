@@ -6,6 +6,9 @@ import mundo.Enemigo;
 import mundo.Rastrero;
 import mundo.SurvivorCamp;
 import mundo.Zombie;
+import mundo.attackStrategies.AttackStrategyContext;
+import mundo.attackStrategies.CaminanteAttackStrategy;
+import mundo.attackStrategies.RastreroAttackStrategy;
 
 public class HiloEnemigo extends Thread {
 
@@ -24,19 +27,32 @@ public class HiloEnemigo extends Thread {
 		try {
 			while (campo.getEstadoJuego() != SurvivorCamp.SIN_PARTIDA) {
 				Zombie enMovimiento = nodoCercano.getAtras();
-				while (!enMovimiento.getEstadoActual().equals(Zombie.NODO)) {
-					String estado = enMovimiento.ataco();
+				AttackStrategyContext attackStrategy=null;
+				
+				while (!enMovimiento.getEstadoActual().equals(Zombie.NODO)) {	
+					
+					if (enMovimiento instanceof Caminante) {
+							attackStrategy = new AttackStrategyContext(new CaminanteAttackStrategy());	
+						}else if(enMovimiento instanceof Rastrero) {
+							attackStrategy = new AttackStrategyContext(new RastreroAttackStrategy());
+						}
+					attackStrategy.executeAttack(enMovimiento);
+
+					String estado = enMovimiento.getEstadoActual();
 					if (estado.equals(Enemigo.ATACANDO)) {
 						if (enMovimiento instanceof Caminante) {
 							if (enMovimiento.getFrameActual() == 8)
 								principal.leDaAPersonaje();
 							else if (enMovimiento.getFrameActual() == 13)
-								campo.enemigoTerminaSuGolpe(enMovimiento);
+								attackStrategy.enemigoTerminaSuGolpe(campo);
+		
 						} else if (enMovimiento instanceof Rastrero) {
 							if (enMovimiento.getFrameActual() == 13)
 								principal.leDaAPersonaje();
-							else if (enMovimiento.getFrameActual() == 16)
-								campo.enemigoTerminaSuGolpe(enMovimiento);
+							else if (enMovimiento.getFrameActual() == 16) {
+	
+								attackStrategy.enemigoTerminaSuGolpe(campo);
+							}
 						}
 					} else if (estado.equals(Zombie.MURIENDO) || estado.equals(Zombie.MURIENDO_INCENDIADO)) {
 						// System.out.println(chombi.getFrameActual());

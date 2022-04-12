@@ -2,8 +2,6 @@ package interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
-import java.awt.Point;
-import java.awt.Toolkit;
 import java.io.IOException;
 import javax.swing.DebugGraphics;
 import javax.swing.ImageIcon;
@@ -13,6 +11,7 @@ import javax.swing.JOptionPane;
 import facade.ThreadsFacade;
 import mundo.ArmaDeFuego;
 import mundo.Boss;
+import mundo.Caminante;
 import mundo.Cuchillo;
 import mundo.Granada;
 import mundo.NombreInvalidoException;
@@ -20,9 +19,16 @@ import mundo.Puntaje;
 import mundo.Remington;
 import mundo.SurvivorCamp;
 import mundo.Zombie;
+import mundo.attackStrategies.AttackStrategyContext;
+import mundo.attackStrategies.BossAttackStrategy;
+import mundo.attackStrategies.CaminanteAttackStrategy;
 
 public class InterfazZombieKiller extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Campo de juego que contiene a todo el mundo
 	 */
@@ -73,6 +79,8 @@ public class InterfazZombieKiller extends JFrame {
 	private Cuchillo cuchillo;
 
 	private ThreadsFacade facade;
+	
+	private AttackStrategyContext attackStrategy;
 
 
 	/**
@@ -225,12 +233,6 @@ public class InterfazZombieKiller extends JFrame {
 		panelCampo.repaint();
 	}
 
-	public static void main(String[] args) {
-		InterfazZombieKiller inter = new InterfazZombieKiller();
-		inter.setVisible(true);
-		inter.setLocationRelativeTo(null);
-	}
-
 	/**
 	 * <pre></pre>
 	 * 
@@ -240,14 +242,16 @@ public class InterfazZombieKiller extends JFrame {
 	 * @param posX
 	 * @param posY
 	 */
-	public void disparar(int posX, int posY) {
-		if (campo.leDio(posX, posY)) {
+	/*public void disparar(int posX, int posY) {
+		StrategyContext attackStrategy = new StrategyContext(new AttackShoot(posX, posY));
+		
+		if (attackStrategy.executeAttack(campo)) {
 			reproducir("leDio" + armaActual.getClass().getSimpleName());
 		} else
 			reproducir("disparo" + armaActual.getClass().getSimpleName());
 		panelCampo.incorporarJefe(boss);
 		facade.initializeWeaponsThread("armaDeFuego");
-	}
+	}*/
 
 	/**
 	 * inicia el sonido de los zombies
@@ -270,14 +274,22 @@ public class InterfazZombieKiller extends JFrame {
 	 */
 	public void generarZombie(int nivel) {
 		Zombie chombi = campo.generarZombie(nivel);
+		if (chombi instanceof Caminante) {
+			attackStrategy = new AttackStrategyContext(new CaminanteAttackStrategy());
+			CaminanteAttackStrategy caminanteAttackStrategy = new CaminanteAttackStrategy();
+			caminanteAttackStrategy.moverEnDireccion(chombi);
+		}
 	}
 
 	/**
 	 * Ejecuta los efectos tras ser atacado por un enemigo
 	 */
 	public void leDaAPersonaje() {
+		
 		reproducir("meDio");
-		campo.enemigoAtaca();
+		//campo.enemigoAtaca();
+		attackStrategy = new AttackStrategyContext(new BossAttackStrategy());				
+		attackStrategy.enemigoAtaca(campo);
 		panelCampo.zombieAtaco();
 	}
 
@@ -299,19 +311,6 @@ public class InterfazZombieKiller extends JFrame {
 			panelCampo.updateUI();
 			panelCampo.requestFocusInWindow();
 		}
-	}
-
-	/**
-	 * <pre></pre>
-	 * 
-	 * existe por lo menos una granada en el bolsillo del personaje Ejecuta los
-	 * efectos que trae lanzar una granada
-	 */
-	public void granadaLanzada() {
-		campo.seLanzoGranada();
-		setGranada(campo.getPersonaje().getGranadas());
-		facade.initializeWeaponsThread("granada");
-		reproducir("bomba");
 	}
 
 	/**
@@ -389,7 +388,7 @@ public class InterfazZombieKiller extends JFrame {
 	 * @param x
 	 * @param y
 	 */
-	public void acuchillar(int x, int y) {
+	/*public void acuchillar(int x, int y) {
 		setCuchillo(campo.getPersonaje().getCuchillo());
 		if (campo.acuchilla(x, y)) {
 			setCursor(cursorCuchillo);
@@ -397,7 +396,7 @@ public class InterfazZombieKiller extends JFrame {
 			facade.initializeWeaponsThread("cuchillo");
 		} else if (armaActual.getMunicion() == 0)
 			reproducir("sin_balas");
-	}
+	}/*
 
 	/**
 	 * genera el jefe con su respectivo hilo
@@ -405,6 +404,9 @@ public class InterfazZombieKiller extends JFrame {
 	public void generarBoss() {
 		boss = campo.generarBoss();
 		panelCampo.incorporarJefe(boss);
+		BossAttackStrategy bossAttackStrategy = new BossAttackStrategy();
+		attackStrategy = new AttackStrategyContext(bossAttackStrategy);
+		bossAttackStrategy.moverEnDireccion(boss);
 		facade.initializeBossThread();
 	}
 
@@ -679,5 +681,11 @@ public class InterfazZombieKiller extends JFrame {
 	public void setCuchillo(Cuchillo cuchillo) {
 		this.cuchillo = cuchillo;
 	}
+	public ThreadsFacade getFacade() {
+		return facade;
+	}
 
+	public void setFacade(ThreadsFacade facade) {
+		this.facade = facade;
+	}
 }

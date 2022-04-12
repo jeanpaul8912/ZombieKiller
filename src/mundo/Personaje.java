@@ -99,14 +99,6 @@ public class Personaje implements SerViviente, Serializable {
 		return armaPrincipal;
 	}
 
-	/**
-	 * hace el efecto que causa el lanzar una granada
-	 */
-	public void lanzoGranada() {
-		granadas.setMunicion((byte) (granadas.getMunicion() - 1));
-		granadas.setEstado(Arma.CARGANDO);
-	}
-
 	@Override
 	public byte getSalud() {
 		return salud;
@@ -132,6 +124,14 @@ public class Personaje implements SerViviente, Serializable {
 		return score;
 	}
 
+	public void setMatanza(short matanza) {
+		this.matanza = matanza;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
 	/**
 	 * sube el puntaje que lleva el personaje
 	 * @param puntos
@@ -139,13 +139,6 @@ public class Personaje implements SerViviente, Serializable {
 	public void aumentarScore(int puntos) {
 		score = score + puntos;
 		matanza = (short) (matanza + 1);
-	}
-
-	@Override
-	public String ataco() {
-			armaPrincipal.setMunicion((byte)(armaPrincipal.getMunicion()-1));
-			armaPrincipal.setEstado(ArmaDeFuego.RECARGANDO);
-			return armaPrincipal.getEstado();
 	}
 
 	/**

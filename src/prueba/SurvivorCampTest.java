@@ -4,31 +4,37 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import interfaz.InterfazZombieKiller;
 import junit.framework.TestCase;
 import mundo.Puntaje;
 import mundo.SurvivorCamp;
 import mundo.Zombie;
+import mundo.defenseStrategies.StrategyContext;
+import mundo.defenseStrategies.ThrowGrenadeStrategy;
 
 public class SurvivorCampTest extends TestCase{
 
 	private SurvivorCamp sC;
-	
+	private InterfazZombieKiller interfaz = new InterfazZombieKiller() ;
+	private StrategyContext attackStrategy = new StrategyContext(new ThrowGrenadeStrategy(interfaz));
 	/**
 	 * Crea un campo con 5 zombies vivos y de la ronda 5
 	 */
 	private void setupEscenario2 () {
 		sC = new SurvivorCamp();
+		interfaz.setCampo(sC);
 		sC.generarZombie(5);
 		sC.generarZombie(5);
 		sC.generarZombie(5);
 		sC.generarZombie(5);
-		sC.generarZombie(5);
+		sC.generarZombie(5);	
 	}
 	/**
 	 * Crea un campo con 2 zombies vivos y uno muriendo
 	 */
 	private void setupEscenario3 () {
 		sC = new SurvivorCamp();
+		interfaz.setCampo(sC);
 		sC.generarZombie(4);
 		sC.generarZombie(4);
 		sC.generarZombie(4);
@@ -39,6 +45,7 @@ public class SurvivorCampTest extends TestCase{
 	 */
 	private void setupEscenario4 () {
 		sC = new SurvivorCamp();
+		interfaz.setCampo(sC);
 		// 5 bajas, de ellas 3 son de tiro a la cabeza y un total de 310 puntos
 		sC.getPersonaje().aumentarScore(70);
 		sC.getPersonaje().aumentarTirosALaCabeza();
@@ -98,7 +105,8 @@ public class SurvivorCampTest extends TestCase{
 	 */
 	public void testseLanzoGranada1() {
 		setupEscenario2();
-		sC.seLanzoGranada();
+		attackStrategy.executeAttack();
+		interfaz.setCampo(sC);
 		Zombie actual = sC.getZombNodoCercano().getAtras();
 		int cantidadDeZombies = 0;
 		while(!actual.getEstadoActual().equals(Zombie.NODO)) {
@@ -115,7 +123,8 @@ public class SurvivorCampTest extends TestCase{
 	 */
 	public void testseLanzoGranada2() {
 		setupEscenario3();
-		sC.seLanzoGranada();
+		attackStrategy.executeAttack();
+		interfaz.setCampo(sC);
 		Zombie actual = sC.getZombNodoCercano().getAtras();
 		int cantidadDeZombiesafectadosPorGranada = 0;
 		assertEquals("Se esperaba que el primer zombie no estuviera en llamas porque ya estaba muerto por balas", Zombie.MURIENDO, actual.getEstadoActual());
