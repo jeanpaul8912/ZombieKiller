@@ -5,7 +5,7 @@ import mundo.camp.Personaje;
 import mundo.camp.SurvivorCamp;
 import mundo.defenseStrategies.ShootStrategy;
 import mundo.defenseStrategies.SlashStrategy;
-import mundo.defenseStrategies.StrategyContext;
+import mundo.defenseStrategies.DefenseStrategyContext;
 import mundo.defenseStrategies.ThrowGrenadeStrategy;
 import mundo.weapons.Weapon;
 import mundo.weapons.guns.GunWeapon;
@@ -38,7 +38,7 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
     private Personaje matador;
     private GunWeapon armaEquipada;
     private Boss chief;
-    private StrategyContext attackStrategy;
+    private DefenseStrategyContext defenseStrategy;
 
     private static PanelCamp panelSingleton;
 
@@ -325,12 +325,12 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
                 int yPosition = arg0.getY();
                 if (armaEquipada.getEstado().equals(Weapon.LISTA) && armaEquipada.getAvailableBullets() > 0) {
                     ultimoDisparo = arg0.getPoint();
-                    attackStrategy = new StrategyContext(new ShootStrategy(principal, xPosition, yPosition));
-                    attackStrategy.executeAttack();
+                    defenseStrategy = new DefenseStrategyContext(new ShootStrategy(principal, xPosition, yPosition));
+                    defenseStrategy.executeDefense();
                 } else if (yPosition > Zombie.POS_ATAQUE && matador.getCuchillo().getEstado().equals(Weapon.LISTA)) {
                     ultimoDisparo = arg0.getPoint();
-                    attackStrategy = new StrategyContext(new SlashStrategy(principal, xPosition, yPosition));
-                    attackStrategy.executeAttack();
+                    defenseStrategy = new DefenseStrategyContext(new SlashStrategy(principal, xPosition, yPosition));
+                    defenseStrategy.executeDefense();
                 } else if (armaEquipada.getAvailableBullets() == 0)
                     principal.reproducir("sin_balas");
                 labPuntaje.setText("Puntaje: " + matador.getScore());
@@ -361,8 +361,8 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
                 principal.cambiarArma();
                 actualizarEquipada(matador.getPrincipal());
             } else if (e.getKeyCode() == KeyEvent.VK_SPACE && matador.getGranadas().getAvailableBullets() > 0) {
-                attackStrategy = new StrategyContext(new ThrowGrenadeStrategy(principal));
-                attackStrategy.executeAttack();
+            	defenseStrategy = new DefenseStrategyContext(new ThrowGrenadeStrategy(principal));
+            	defenseStrategy.executeDefense();
                 labGranadas.setText("" + principal.getGranada().getAvailableBullets());
             }
         }

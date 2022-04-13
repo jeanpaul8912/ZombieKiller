@@ -13,7 +13,7 @@ public class ThrowGrenadeStrategy extends DefenseStrategy {
     }
 
     @Override
-    public void executeAttack() {
+    public void executeDefense() {
 
         throwGranada();
         interfaz.setGranada(interfaz.getCampo().getPersonaje().getGranadas());
