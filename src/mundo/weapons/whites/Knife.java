@@ -17,7 +17,7 @@ public class Knife extends Weapon {
 	 */
 	public Knife() {
 		setRetroceso(200);
-		setDanio(DANIO);
+		setDamage(DANIO);
 	}
 
 	public static Knife getInstancia() {

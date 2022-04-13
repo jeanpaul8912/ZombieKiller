@@ -1,5 +1,6 @@
-package interfaz;
+package interfaz.panels;
 
+import interfaz.InterfazZombieKiller;
 import mundo.camp.Puntaje;
 
 import javax.swing.*;

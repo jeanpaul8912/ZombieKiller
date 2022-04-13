@@ -1,5 +1,6 @@
-package interfaz;
+package interfaz.panels;
 
+import interfaz.InterfazZombieKiller;
 import interfaz.commands.BestScoresCommand;
 import interfaz.commands.Command;
 import interfaz.commands.ContinueGameCommand;

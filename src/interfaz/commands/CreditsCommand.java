@@ -1,7 +1,7 @@
 package interfaz.commands;
 
 import interfaz.InterfazZombieKiller;
-import interfaz.PanelCreditos;
+import interfaz.panels.PanelCreditos;
 
 public class CreditsCommand implements Command {
 

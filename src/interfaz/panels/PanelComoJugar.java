@@ -1,4 +1,6 @@
-package interfaz;
+package interfaz.panels;
+
+import interfaz.InterfazZombieKiller;
 
 import javax.swing.*;
 import java.awt.*;

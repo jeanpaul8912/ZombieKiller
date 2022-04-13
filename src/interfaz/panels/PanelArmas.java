@@ -1,5 +1,6 @@
-package interfaz;
+package interfaz.panels;
 
+import interfaz.InterfazZombieKiller;
 import mundo.weapons.whites.Knife;
 
 import javax.swing.*;

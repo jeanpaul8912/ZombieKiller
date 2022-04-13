@@ -2,8 +2,8 @@ package threads;
 
 import interfaz.InterfazZombieKiller;
 import mundo.weapons.Weapon;
+import mundo.weapons.guns.GunWeapon;
 import mundo.weapons.guns.Remington;
-import mundo.weapons.guns.WeaponDeFuego;
 
 public class HiloArma extends Thread {
 
@@ -18,15 +18,15 @@ public class HiloArma extends Thread {
 	@Override
 	public void run() {
 		try {
-			if (weapon instanceof WeaponDeFuego) {
-				WeaponDeFuego armaDeFuego = (WeaponDeFuego) weapon;
+			if (weapon instanceof GunWeapon) {
+				GunWeapon armaDeFuego = (GunWeapon) weapon;
 
 				if (armaDeFuego.isEnsangrentada()) {
 					sleep(100);
 					principal.terminarEfectoDeSangre();
 				}
 
-				if (weapon.getEstado().equals(WeaponDeFuego.RECARGANDO)) {
+				if (weapon.getEstado().equals(GunWeapon.RECARGANDO)) {
 					// descanso mientras suena el disparo
 					sleep(200);
 					if (weapon instanceof Remington && armaDeFuego.getAvailableBullets() > 0)

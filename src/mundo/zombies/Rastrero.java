@@ -32,21 +32,26 @@ public class Rastrero extends Zombie {
     }
 
     @Override
-    public boolean comprobarDisparo(int x, int y, int danio) {
+    public boolean comprobarDisparo(int x, int y, int damage) {
         boolean leDio = false;
-        int danioResultante = danio;
+        int resultDamage = damage;
+
         if (!getEstadoActual().equals(MURIENDO)) {
             if (x > posX + 36 && x < posX + 118 && y > getPosY() + 120 && y < getPosY() + 196) {
-                // comprueba headshot
-                if (y < getPosY() + 162)
-                    danioResultante = ((byte) (danio + 2));
-                if (danio == REMINGTON_DAMAGE) {
-                    danioResultante = danioResultante - (POS_ATAQUE - getPosY()) / Remington.RANGO;
+                if (y < getPosY() + 162) {
+                    resultDamage = ((byte) (damage + 2));
                 }
-                setSalud((byte) (getSalud() - danioResultante));
+
+                if (damage == REMINGTON_DAMAGE) {
+                    resultDamage = resultDamage - (POS_ATAQUE - getPosY()) / Remington.RANGO;
+                }
+
+                setSalud((byte) (getSalud() - resultDamage));
+
                 if (getSalud() <= 0) {
                     setEstadoActual(MURIENDO);
                 }
+
                 leDio = true;
             }
         }

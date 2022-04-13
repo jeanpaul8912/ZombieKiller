@@ -62,25 +62,31 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
     }
 
     @Override
-    public boolean comprobarDisparo(int x, int y, int danio) {
+    public boolean comprobarDisparo(int x, int y, int damage) {
         boolean leDio = false;
-        int danioResultante = danio;
+        int resultDamage = damage;
+
         if (x > posX + 36 && x < posX + 118 && y > getPosY() + 5 && y < getPosY() + 188) {
             if (!getEstadoActual().equals(MURIENDO)) {
-                if (y < getPosY() + 54)
-                    danioResultante = ((byte) (danio + 2));
-                // el 320 define la distancia entre el zombie y el personaje
-                if (danio == REMINGTON_DAMAGE) {
-                    danioResultante = danioResultante - (POS_ATAQUE - getPosY()) / Remington.RANGO;
-                    // System.out.println(danioResultante);
+                if (y < getPosY() + 54) {
+                    resultDamage = ((byte) (damage + 2));
                 }
-                setSalud((byte) (getSalud() - danioResultante));
+
+                // el 320 define la distancia entre el zombie y el personaje
+                if (damage == REMINGTON_DAMAGE) {
+                    resultDamage = resultDamage - (POS_ATAQUE - getPosY()) / Remington.RANGO;
+                }
+
+                setSalud((byte) (getSalud() - resultDamage));
+
                 if (getSalud() <= 0) {
                     setEstadoActual(MURIENDO);
                 }
+
                 leDio = true;
             }
         }
+        
         return leDio;
     }
 

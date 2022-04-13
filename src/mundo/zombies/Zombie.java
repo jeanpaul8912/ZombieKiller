@@ -180,7 +180,7 @@ public abstract class Zombie extends Enemigo {
 	}
 
 	@Override
-	public abstract boolean comprobarDisparo(int x, int y, int danio);
+	public abstract boolean comprobarDisparo(int x, int y, int damage);
 
 	/**
 	 * entra en la lista enlazada relacionando los parametros zombie atras y al

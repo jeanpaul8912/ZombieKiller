@@ -7,34 +7,34 @@ import static mundo.constants.ZombieKillerConstants.GREANDE_INITIAL_RECHARGE_TIM
 import static mundo.constants.ZombieKillerConstants.GRENADE_DAMAGE;
 import static mundo.constants.ZombieKillerConstants.GRENADE_INITIAL_BULLETS;
 
-public class Grenade extends WeaponDeFuego {
+public class Grenade extends GunWeapon {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private static Grenade grenade;
+    private static Grenade grenade;
 
-	/**
-	 * Constructor de la granada con su respectiva cantidad y danio
-	 */
-	private Grenade(Ammunition ammunition) {
-		super();
-		setRetroceso(0);
-		this.ammunition = ammunition;
-	}
+    /**
+     * Constructor de la granada con su respectiva cantidad y danio
+     */
+    private Grenade() {
+        super();
+        setRetroceso(0);
+    }
 
-	public static Grenade getInstance() {
-		if (grenade == null) {
-			Ammunition ammunition = new GrenadeAmmunition(GREANDE_INITIAL_RECHARGE_TIME,
-					GRENADE_INITIAL_BULLETS, GRENADE_DAMAGE);
-			grenade = new Grenade(ammunition);
-		}
+    public static Grenade getInstance() {
+        if (grenade == null) {
+            grenade = new Grenade();
+        }
 
-		return grenade;
-	}
+        Ammunition ammunition = new GrenadeAmmunition(GREANDE_INITIAL_RECHARGE_TIME,
+                GRENADE_INITIAL_BULLETS, GRENADE_DAMAGE);
+        grenade.setAmmunition(ammunition);
+        return grenade;
+    }
 
-	@Override
-	public void improveGun() {
-		ammunition.improveAmmunition();
-	}
+    @Override
+    public void improveGun() {
+        ammunition.improveAmmunition();
+    }
 
 }

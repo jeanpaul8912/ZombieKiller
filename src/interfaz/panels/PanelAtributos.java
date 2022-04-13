@@ -1,4 +1,4 @@
-package interfaz;
+package interfaz.panels;
 
 import mundo.zombies.Boss;
 import mundo.zombies.Zombie;

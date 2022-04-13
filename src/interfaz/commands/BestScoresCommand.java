@@ -1,7 +1,7 @@
 package interfaz.commands;
 
 import interfaz.InterfazZombieKiller;
-import interfaz.PanelPuntajes;
+import interfaz.panels.PanelPuntajes;
 import mundo.camp.SurvivorCamp;
 
 import javax.swing.*;

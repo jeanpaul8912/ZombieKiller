@@ -4,7 +4,7 @@ import mundo.weapons.Weapon;
 import mundo.weapons.WeaponFactory;
 import mundo.weapons.WeaponFactoryImpl;
 import mundo.weapons.guns.Grenade;
-import mundo.weapons.guns.WeaponDeFuego;
+import mundo.weapons.guns.GunWeapon;
 import mundo.zombies.SerViviente;
 
 import java.io.Serializable;
@@ -35,15 +35,15 @@ public class Personaje implements SerViviente, Serializable {
     /**
      * Arma que el personaje usa en pantalla
      */
-    private WeaponDeFuego armaPrincipal;
+    private GunWeapon armaPrincipal;
     /**
      * Arma que esta guardada
      */
-    private WeaponDeFuego armaSecundaria;
+    private GunWeapon armaSecundaria;
     /**
      * granadas que posee el jugador
      */
-    private final WeaponDeFuego granadas;
+    private final GunWeapon granadas;
     /**
      * cuchillo del personaje, es usado cuando un zombie ataca y no tiene la
      * posibilidad de usar otra arma
@@ -62,8 +62,8 @@ public class Personaje implements SerViviente, Serializable {
         salud = SALUD;
         WeaponFactory armaFactory = new WeaponFactoryImpl();
         granadas = (Grenade) armaFactory.createWeapon("granada");
-        armaPrincipal = (WeaponDeFuego) armaFactory.createWeapon("m1911");
-        armaSecundaria = (WeaponDeFuego) armaFactory.createWeapon("remington");
+        armaPrincipal = (GunWeapon) armaFactory.createWeapon("m1911");
+        armaSecundaria = (GunWeapon) armaFactory.createWeapon("remington");
         cuchillo = armaFactory.createWeapon("cuchillo");
     }
 
@@ -81,7 +81,7 @@ public class Personaje implements SerViviente, Serializable {
      *
      * @return granadas
      */
-    public WeaponDeFuego getGranadas() {
+    public GunWeapon getGranadas() {
         return granadas;
     }
 
@@ -109,7 +109,7 @@ public class Personaje implements SerViviente, Serializable {
      *
      * @return
      */
-    public WeaponDeFuego getPrincipal() {
+    public GunWeapon getPrincipal() {
         return armaPrincipal;
     }
 
@@ -169,7 +169,7 @@ public class Personaje implements SerViviente, Serializable {
      * cambia del arma principal a la secundaria
      */
     public void cambiarArma() {
-        WeaponDeFuego temporal = armaPrincipal;
+        GunWeapon temporal = armaPrincipal;
         armaPrincipal = armaSecundaria;
         armaSecundaria = temporal;
     }

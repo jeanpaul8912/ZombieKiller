@@ -1,6 +1,11 @@
 package interfaz;
 
 import facades.ThreadsFacade;
+import interfaz.panels.PanelCamp;
+import interfaz.panels.PanelComoJugar;
+import interfaz.panels.PanelCreditos;
+import interfaz.panels.PanelMenu;
+import interfaz.panels.PanelPuntajes;
 import mundo.attackStrategies.AttackStrategyContext;
 import mundo.attackStrategies.BossAttackStrategy;
 import mundo.attackStrategies.CaminanteAttackStrategy;
@@ -8,8 +13,8 @@ import mundo.camp.Puntaje;
 import mundo.camp.SurvivorCamp;
 import mundo.exceptions.NombreInvalidoException;
 import mundo.weapons.Weapon;
+import mundo.weapons.guns.GunWeapon;
 import mundo.weapons.guns.Remington;
-import mundo.weapons.guns.WeaponDeFuego;
 import mundo.zombies.Boss;
 import mundo.zombies.Caminante;
 import mundo.zombies.Zombie;
@@ -31,7 +36,7 @@ public class InterfazZombieKiller extends JFrame {
 	/**
 	 * Arma que el jugador tiene equipada
 	 */
-	private WeaponDeFuego armaActual;
+	private GunWeapon armaActual;
 	/**
 	 * Panel del menu principal cualquier boton muestra otro panel representatitvo a
 	 * el
@@ -69,7 +74,7 @@ public class InterfazZombieKiller extends JFrame {
 
 	private Boss boss;
 
-	private WeaponDeFuego granada;
+	private GunWeapon granada;
 
 	private Weapon cuchillo;
 
@@ -567,7 +572,7 @@ public class InterfazZombieKiller extends JFrame {
 		this.cursorCuchillo = cursorCuchillo;
 	}
 
-	public WeaponDeFuego getArmaActual() {
+	public GunWeapon getArmaActual() {
 		return armaActual;
 	}
 
@@ -579,11 +584,11 @@ public class InterfazZombieKiller extends JFrame {
 		this.boss = boss;
 	}
 
-	public WeaponDeFuego getGranada() {
+	public GunWeapon getGranada() {
 		return granada;
 	}
 
-	public void setGranada(WeaponDeFuego granada) {
+	public void setGranada(GunWeapon granada) {
 		this.granada = granada;
 	}
 

@@ -124,7 +124,6 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
         zombNodoLejano.setAlFrente(zombNodoCercano);
         zombNodoCercano.setAtras(zombNodoLejano);
         mejoresPuntajes = new ArrayList<>();
-
         enemigoCaminante = new Caminante();
         enemigoRastero = new Rastrero((short) 0, zombNodoLejano);
         jefe = new Boss();
@@ -570,25 +569,30 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
         while (!aAcuchillar.getEstadoActual().equals(Zombie.NODO) && !seEncontro) {
             if (aAcuchillar.getEstadoActual().equals(Zombie.ATACANDO)
                     && aAcuchillar.comprobarDisparo(x, y, Knife.DANIO)) {
-                if (aAcuchillar.getEstadoActual().equals(Zombie.MURIENDO))
+                if (aAcuchillar.getEstadoActual().equals(Zombie.MURIENDO)) {
                     personaje.aumentarScore(40);
+                }
+
                 seEncontro = true;
                 personaje.setEnsangrentado(false);
                 personaje.getCuchillo().setEstado(Weapon.CARGANDO);
             }
             aAcuchillar = aAcuchillar.getAtras();
         }
+
         if (jefe != null) {
             if (jefe.getEstadoActual().equals(Enemigo.ATACANDO) && jefe.comprobarDisparo(x, y, Knife.DANIO)) {
                 personaje.setEnsangrentado(false);
                 personaje.getCuchillo().setEstado(Weapon.CARGANDO);
                 seEncontro = true;
+
                 if (jefe.getEstadoActual().equals(Boss.DERROTADO)) {
                     personaje.aumentarScore(100);
                     estadoJuego = SIN_PARTIDA;
                 }
             }
         }
+
         return seEncontro;
     }
 

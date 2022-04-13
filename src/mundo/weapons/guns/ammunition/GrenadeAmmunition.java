@@ -2,7 +2,7 @@ package mundo.weapons.guns.ammunition;
 
 public class GrenadeAmmunition extends Ammunition {
 
-    public GrenadeAmmunition(int rechargeTime, int maxBullets, int damage) {
+    public GrenadeAmmunition(int rechargeTime, int maxBullets, byte damage) {
         super(rechargeTime, maxBullets, damage);
     }
 

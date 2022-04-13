@@ -7,7 +7,7 @@ public final class ZombieKillerConstants {
 	}
 
 	//Levels to improve guns
-	public static final int LEVELS_TO_IMPROVE_GUNS = 2;
+	public static final int LEVELS_TO_IMPROVE_GUNS = 4;
 
 	// Meterials 
 	public static final String LEAD = "Plomo";
@@ -19,14 +19,14 @@ public final class ZombieKillerConstants {
 	public static final String PLATINUM = "Platino";
 
 	//Grenade
-	public static final int GRENADE_DAMAGE = 6;
+	public static final byte GRENADE_DAMAGE = 6;
 
 	public static final int GRENADE_INITIAL_BULLETS = 2;
 
 	public static final int GREANDE_INITIAL_RECHARGE_TIME = 200;
 
 	//M1911
-	public static final int M1911_DAMAGE = 1000;
+	public static final byte M1911_DAMAGE = 1;
 
 	public static final int M1911_INITIAL_BULLETS = 8;
 
@@ -35,7 +35,7 @@ public final class ZombieKillerConstants {
 	public static final int M1911_INITIAL_BACKWARD = 100;
 
 	//Remington
-	public static final int REMINGTON_DAMAGE = 3;
+	public static final byte REMINGTON_DAMAGE = 3;
 
 	public static final int REMINGTON_INITIAL_BULLETS = 3;
 

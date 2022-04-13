@@ -2,7 +2,7 @@ package interfaz.commands;
 
 import interfaz.CursorObjectPool;
 import interfaz.InterfazZombieKiller;
-import interfaz.PanelCamp;
+import interfaz.panels.PanelCamp;
 import mundo.camp.SurvivorCamp;
 
 import java.awt.*;

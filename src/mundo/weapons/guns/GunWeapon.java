@@ -3,7 +3,7 @@ package mundo.weapons.guns;
 import mundo.weapons.Weapon;
 import mundo.weapons.guns.ammunition.Ammunition;
 
-public abstract class WeaponDeFuego extends Weapon {
+public abstract class GunWeapon extends Weapon {
 
 	private static final long serialVersionUID = 1L;
 	/**
@@ -22,7 +22,7 @@ public abstract class WeaponDeFuego extends Weapon {
 	/**
 	 * Constructor abstracto del arma de fuego
 	 */
-	public WeaponDeFuego() {
+	public GunWeapon() {
 	}
 
 	@Override
@@ -76,4 +76,12 @@ public abstract class WeaponDeFuego extends Weapon {
 		ammunition.improveAmmunition();
 	}
 
+	@Override
+	public int getDamage() {
+		return ammunition.getDamage();
+	}
+
+	public void setAmmunition(Ammunition ammunition) {
+		this.ammunition = ammunition;
+	}
 }

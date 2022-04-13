@@ -21,7 +21,7 @@ public abstract class Weapon implements Serializable {
     /**
      * valor numerico entero que representa el danio causado por un arma
      */
-    private int danio;
+    private int damage;
     /**
      * cadena de caracteres que representa el estado del arma
      */
@@ -55,10 +55,10 @@ public abstract class Weapon implements Serializable {
     /**
      * cambia el danio que causa el arma
      *
-     * @param danio
+     * @param damage
      */
-    protected void setDanio(byte danio) {
-        this.danio = danio;
+    protected void setDamage(byte damage) {
+        this.damage = damage;
     }
 
     /**
@@ -66,8 +66,8 @@ public abstract class Weapon implements Serializable {
      *
      * @return danio
      */
-    public int getDanio() {
-        return danio;
+    public int getDamage() {
+        return damage;
     }
 
     /**

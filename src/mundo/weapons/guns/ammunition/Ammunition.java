@@ -12,9 +12,9 @@ public class Ammunition implements Serializable {
 
     protected int maxBullets;
 
-    protected int damage;
+    protected byte damage;
 
-    public Ammunition(int rechargeTime, int maxBullets, int damage) {
+    public Ammunition(int rechargeTime, int maxBullets, byte damage) {
         this.rechargeTime = rechargeTime;
         this.availableBullets = maxBullets;
         this.maxBullets = maxBullets;
@@ -49,6 +49,7 @@ public class Ammunition implements Serializable {
         maxBullets += 2;
         availableBullets = maxBullets;
         damage++;
+        rechargeTime -= 50;
     }
 
 }

@@ -1,5 +1,6 @@
-package interfaz;
+package interfaz.panels;
 
+import interfaz.InterfazZombieKiller;
 import mundo.camp.Personaje;
 import mundo.camp.SurvivorCamp;
 import mundo.defenseStrategies.ShootStrategy;
@@ -7,7 +8,7 @@ import mundo.defenseStrategies.SlashStrategy;
 import mundo.defenseStrategies.StrategyContext;
 import mundo.defenseStrategies.ThrowGrenadeStrategy;
 import mundo.weapons.Weapon;
-import mundo.weapons.guns.WeaponDeFuego;
+import mundo.weapons.guns.GunWeapon;
 import mundo.zombies.Boss;
 import mundo.zombies.Zombie;
 
@@ -35,7 +36,7 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
     private InterfazZombieKiller principal;
     private Zombie chombiMasLejano;
     private Personaje matador;
-    private WeaponDeFuego armaEquipada;
+    private GunWeapon armaEquipada;
     private Boss chief;
     private StrategyContext attackStrategy;
 
@@ -116,7 +117,7 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
         chombiMasLejano = chombi;
     }
 
-    public void actualizarEquipada(WeaponDeFuego armaEquipada) {
+    public void actualizarEquipada(GunWeapon armaEquipada) {
         this.armaEquipada = armaEquipada;
         String armaActual = armaEquipada.getClass().getSimpleName();
         labBalas.setIcon(new ImageIcon(getClass().getResource("/img/Fondo/" + armaActual + ".png")));
@@ -186,7 +187,7 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
         if (matador.getCuchillo().getEstado().equals(Weapon.CARGANDO)) {
             fondo = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/Fondo/punialada.png"));
             arg0.drawImage(fondo, ataqueX - 160, ataqueY - 30, null);
-        } else if (armaEquipada.getEstado().equals(WeaponDeFuego.RECARGANDO)) {
+        } else if (armaEquipada.getEstado().equals(GunWeapon.RECARGANDO)) {
             fondo = Toolkit.getDefaultToolkit().getImage(this.getClass()
                     .getResource("/img/Fondo/disparo" + armaEquipada.getClass().getSimpleName() + ".png"));
             arg0.drawImage(fondo, ataqueX - 33, ataqueY - 35, null);
