@@ -8,6 +8,6 @@ public class LoadGameCommand implements Command {
 	public void execute(InterfazZombieKiller interfazZombieKiller) {
 		CommandUtils.startGame(interfazZombieKiller);
 		interfazZombieKiller.cargarJuego();
-	} 
+	}
 
 }

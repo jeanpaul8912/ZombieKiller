@@ -1,18 +1,18 @@
 package interfaz.commands;
 
-import java.awt.Cursor;
-
 import interfaz.CursorObjectPool;
 import interfaz.InterfazZombieKiller;
-import interfaz.PanelCamp;
-import mundo.SurvivorCamp;
+import interfaz.panels.PanelCamp;
+import mundo.camp.SurvivorCamp;
+
+import java.awt.*;
 
 public final class CommandUtils {
 
 	private CommandUtils() {
-		
+
 	}
-	
+
 	public static void startGame(InterfazZombieKiller interfazZombieKiller) {
 		PanelCamp panelCamp = PanelCamp.getPanel();
 		panelCamp.setPrincipal(interfazZombieKiller);
@@ -28,5 +28,5 @@ public final class CommandUtils {
 		Cursor knifeCursor = CursorObjectPool.getCursor("/img/Fondo/Cuchillo.png");
 		interfazZombieKiller.setCursorCuchillo(knifeCursor);
 	}
-	
+
 }

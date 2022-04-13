@@ -1,12 +1,11 @@
 package interfaz.commands;
 
-import java.io.IOException;
-
-import javax.swing.JOptionPane;
-
 import interfaz.InterfazZombieKiller;
-import interfaz.PanelPuntajes;
-import mundo.SurvivorCamp;
+import interfaz.panels.PanelPuntajes;
+import mundo.camp.SurvivorCamp;
+
+import javax.swing.*;
+import java.io.IOException;
 
 public class BestScoresCommand implements Command {
 

@@ -2,7 +2,7 @@ package mundo.defenseStrategies;
 
 public class StrategyContext {
 	
-	private DefenseStrategy attackStrategy;
+	private final DefenseStrategy attackStrategy;
 
 	public StrategyContext(DefenseStrategy attackStrategy) {
 		this.attackStrategy = attackStrategy;
