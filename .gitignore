@@ -24,3 +24,8 @@ hs_err_pid*
 
 #bin folder
 bin/
+**/.idea
+PartidasGuardadas/
+ZombieKiller.iml
+out/
+

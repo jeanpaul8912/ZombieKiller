@@ -1,8 +1,8 @@
 package mundo.attackStrategies;
 
-import mundo.Boss;
-import mundo.Enemigo;
-import mundo.SurvivorCamp;
+import mundo.camp.SurvivorCamp;
+import mundo.zombies.Boss;
+import mundo.zombies.Enemigo;
 
 public class BossAttackStrategy extends AttackStrategy implements IAttackMovement{
 

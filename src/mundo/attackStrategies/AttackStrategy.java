@@ -1,7 +1,7 @@
 package mundo.attackStrategies;
 
-import mundo.Enemigo;
-import mundo.SurvivorCamp;
+import mundo.camp.SurvivorCamp;
+import mundo.zombies.Enemigo;
 
 public abstract class AttackStrategy {
 
@@ -18,7 +18,7 @@ public abstract class AttackStrategy {
 		campo.getPersonaje().setEnsangrentado(true);
 		campo.getPersonaje().setSalud((byte) (campo.getPersonaje().getSalud() - 1));
 		if (campo.getPersonaje().getSalud() <= 0) {
-			campo.setEstadoJuego(campo.SIN_PARTIDA);
+			campo.setEstadoJuego(SurvivorCamp.SIN_PARTIDA);
 		}
 	}
 }

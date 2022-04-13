@@ -1,7 +1,7 @@
 package interfaz.commands;
 
 import interfaz.InterfazZombieKiller;
-import interfaz.PanelComoJugar;
+import interfaz.panels.PanelComoJugar;
 
 public class HowToPlayCommand implements Command {
 

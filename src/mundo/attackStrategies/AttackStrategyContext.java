@@ -1,11 +1,11 @@
 package mundo.attackStrategies;
 
-import mundo.Enemigo;
-import mundo.SurvivorCamp;
+import mundo.camp.SurvivorCamp;
+import mundo.zombies.Enemigo;
 
 public class AttackStrategyContext {
 	
-	private AttackStrategy attackStrategy;
+	private final AttackStrategy attackStrategy;
 
 	public AttackStrategyContext(AttackStrategy attackStrategy) {
 		this.attackStrategy = attackStrategy;
