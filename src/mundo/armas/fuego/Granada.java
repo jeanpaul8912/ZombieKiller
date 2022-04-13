@@ -10,10 +10,6 @@ import static mundo.constants.ZombieKillerConstants.GRENADE_INITIAL_BULLETS;
 public class Granada extends ArmaDeFuego {
 
 	private static final long serialVersionUID = 1L;
-	/**
-	 * valor incambiable que representa el danio causado por la granada
-	 */
-	public static final byte DANIO = 6;
 
 	private static Granada granada;
 

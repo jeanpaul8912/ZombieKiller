@@ -11,4 +11,5 @@ public class GrenadeAmmunition extends Ammunition {
         availableBullets = maxBullets;
         damage++;
     }
+    
 }

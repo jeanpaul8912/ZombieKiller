@@ -1,7 +1,6 @@
 package mundo;
 
 import mundo.armas.Arma;
-import mundo.armas.blancas.Cuchillo;
 import mundo.armas.fuego.ArmaDeFuego;
 import mundo.armas.fuego.Granada;
 
@@ -62,7 +61,7 @@ public class Personaje implements SerViviente, Serializable {
         granadas = (Granada) armaFactory.createWeapon("granada");
         armaPrincipal = (ArmaDeFuego) armaFactory.createWeapon("m1911");
         armaSecundaria = (ArmaDeFuego) armaFactory.createWeapon("remington");
-        cuchillo = (Cuchillo) armaFactory.createWeapon("cuchillo");
+        cuchillo = armaFactory.createWeapon("cuchillo");
     }
 
     /**
@@ -187,4 +186,5 @@ public class Personaje implements SerViviente, Serializable {
     public int getHeadShots() {
         return headShots;
     }
+
 }

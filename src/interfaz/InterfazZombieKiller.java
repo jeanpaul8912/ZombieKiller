@@ -367,7 +367,7 @@ public class InterfazZombieKiller extends JFrame {
 	public void subirDeRonda(int nivel) {
 		terminarGemi2();
 		reproducir("sirena");
-		campo.actualizarRondaActual((byte) nivel);
+		campo.actualizarRondaActual(nivel);
 		campo.setEstadoJuego(SurvivorCamp.INICIANDO_RONDA);
 		panelCampo.actualizarRonda();
 	}
@@ -384,11 +384,12 @@ public class InterfazZombieKiller extends JFrame {
 	 */
 	/*public void acuchillar(int x, int y) {
 		setCuchillo(campo.getPersonaje().getCuchillo());
+
 		if (campo.acuchilla(x, y)) {
 			setCursor(cursorCuchillo);
 			reproducir("leDioCuchillo");
 			facade.initializeWeaponsThread("cuchillo");
-		} else if (armaActual.getMunicion() == 0)
+		} else if (armaActual.getAvailableBullets() == 0)
 			reproducir("sin_balas");
 	}/*
 
@@ -486,6 +487,7 @@ public class InterfazZombieKiller extends JFrame {
 				"Juego Terminado", JOptionPane.YES_NO_OPTION);
 		if (aceptoGuardarScore == JOptionPane.YES_OPTION) {
 			String nombrePlayer = JOptionPane.showInputDialog(this, "Escribe tu nombre");
+
 			if (nombrePlayer != null && !nombrePlayer.equals(""))
 				try {
 					campo.verificarNombre(nombrePlayer);
@@ -502,6 +504,7 @@ public class InterfazZombieKiller extends JFrame {
 				juegoTerminado();
 			}
 		}
+
 		if (!seLlamoDeNuevo) {
 			int aceptoJugar = JOptionPane.showConfirmDialog(this, "Desea volver a jugar?", "Juego Terminado",
 					JOptionPane.YES_NO_OPTION);
@@ -512,6 +515,7 @@ public class InterfazZombieKiller extends JFrame {
 				panelMenu.setVisible(true);
 			}
 		}
+
 		terminarGemi2();
 	}
 
@@ -520,8 +524,9 @@ public class InterfazZombieKiller extends JFrame {
 	 */
 	public void victoria() {
 		String nombrePlayer = JOptionPane.showInputDialog(this,
-				"Enhorabuena, has pasado todas los niveles de dificultad. su puntaje final es: "
+				"Enhorabuena, has pasado todas los niveles de dificultad. Su puntaje final es: "
 						+ campo.getPersonaje().getScore() + ". Escribe tu nombre");
+
 		if (nombrePlayer != null && !nombrePlayer.equals(""))
 			try {
 				campo.verificarNombre(nombrePlayer);
@@ -536,6 +541,7 @@ public class InterfazZombieKiller extends JFrame {
 		else {
 			victoria();
 		}
+
 		panelMenu.setVisible(true);
 		panelCampo.setVisible(false);
 		terminarGemi2();
@@ -573,40 +579,16 @@ public class InterfazZombieKiller extends JFrame {
 		panelPuntajes.actualizarPuntajes(campo.ordenarPuntajePorScore());
 	}
 
-	public PanelCamp getPanelCampo() {
-		return panelCampo;
-	}
-
 	public void setPanelCampo(PanelCamp panelCampo) {
 		this.panelCampo = panelCampo;
-	}
-
-	public PanelComoJugar getPanelComoJugar() {
-		return panelComoJugar;
 	}
 
 	public void setPanelComoJugar(PanelComoJugar panelComoJugar) {
 		this.panelComoJugar = panelComoJugar;
 	}
 
-	public PanelMenu getPanelMenu() {
-		return panelMenu;
-	}
-
-	public void setPanelMenu(PanelMenu panelMenu) {
-		this.panelMenu = panelMenu;
-	}
-
-	public PanelPuntajes getPanelPuntajes() {
-		return panelPuntajes;
-	}
-
 	public void setPanelPuntajes(PanelPuntajes panelPuntajes) {
 		this.panelPuntajes = panelPuntajes;
-	}
-
-	public PanelCreditos getPanelCreditos() {
-		return panelCreditos;
 	}
 
 	public void setPanelCreditos(PanelCreditos panelCreditos) {
@@ -621,24 +603,8 @@ public class InterfazZombieKiller extends JFrame {
 		this.campo = campo;
 	}
 
-	public Cursor getMiraM1911() {
-		return miraM1911;
-	}
-
-	public void setMiraM1911(Cursor miraM1911) {
-		this.miraM1911 = miraM1911;
-	}
-
-	public Cursor getMiraRemington() {
-		return miraRemington;
-	}
-
 	public void setMiraRemington(Cursor miraRemington) {
 		this.miraRemington = miraRemington;
-	}
-
-	public Cursor getCursorCuchillo() {
-		return cursorCuchillo;
 	}
 
 	public void setCursorCuchillo(Cursor cursorCuchillo) {
@@ -647,10 +613,6 @@ public class InterfazZombieKiller extends JFrame {
 
 	public ArmaDeFuego getArmaActual() {
 		return armaActual;
-	}
-
-	public void setArmaActual(ArmaDeFuego armaActual) {
-		this.armaActual = armaActual;
 	}
 
 	public Boss getBoss() {
@@ -683,5 +645,13 @@ public class InterfazZombieKiller extends JFrame {
 
 	public void setFacade(ThreadsFacade facade) {
 		this.facade = facade;
+	}
+
+	public PanelCamp getPanelCampo() {
+		return panelCampo;
+	}
+
+	public Cursor getCursorCuchillo() {
+		return cursorCuchillo;
 	}
 }

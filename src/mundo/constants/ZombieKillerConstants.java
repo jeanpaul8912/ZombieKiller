@@ -42,4 +42,5 @@ public final class ZombieKillerConstants {
 	public static final int REMINGTON_INITIAL_RECHARGE_TIME = 1400;
 
 	public static final int REMINGTON_INITIAL_BACKWARD = 400;
+
 }

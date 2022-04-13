@@ -2,6 +2,8 @@ package mundo;
 
 import mundo.armas.fuego.Remington;
 
+import static mundo.constants.ZombieKillerConstants.REMINGTON_DAMAGE;
+
 public class Rastrero extends Zombie {
 
     /**
@@ -38,7 +40,7 @@ public class Rastrero extends Zombie {
                 // comprueba headshot
                 if (y < getPosY() + 162)
                     danioResultante = ((byte) (danio + 2));
-                if (danio == Remington.DANIO) {
+                if (danio == REMINGTON_DAMAGE) {
                     danioResultante = danioResultante - (POS_ATAQUE - getPosY()) / Remington.RANGO;
                 }
                 setSalud((byte) (getSalud() - danioResultante));

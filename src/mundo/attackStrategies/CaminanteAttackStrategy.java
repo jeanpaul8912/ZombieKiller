@@ -1,6 +1,5 @@
 package mundo.attackStrategies;
 
-import mundo.Boss;
 import mundo.Caminante;
 import mundo.Enemigo;
 import mundo.SurvivorCamp;
@@ -21,9 +20,9 @@ public class CaminanteAttackStrategy extends AttackStrategy  implements IAttackM
 			if (caminante.getPosY() > Caminante.POS_ATAQUE) {
 				caminante.setEstadoActual(Caminante.ATACANDO);
 			} else {
-				if (caminante.posX > SurvivorCamp.ANCHO_PANTALLA - Caminante.ANCHO_IMAGEN || caminante.posX < 0)
+				if (caminante.getPosX() > SurvivorCamp.ANCHO_PANTALLA - Caminante.ANCHO_IMAGEN || caminante.getPosX() < 0)
 					moverEnDireccion(caminante);
-				caminante.posX = caminante.posX + caminante.getDireccionX();
+				caminante.posX = caminante.getPosX() + caminante.getDireccionX();
 				caminante.setPosY(caminante.getPosY() + caminante.getDireccionY());
 
 				if (caminante.getFrameActual() == 24)

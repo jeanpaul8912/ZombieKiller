@@ -1,4 +1,4 @@
-package mundo;
+package mundo.armas.fuego;
 
 public interface ArmaConMunicion {
 

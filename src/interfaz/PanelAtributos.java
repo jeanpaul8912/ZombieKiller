@@ -1,17 +1,14 @@
 package interfaz;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-
 import mundo.Boss;
 import mundo.Zombie;
-import mundo.armas.fuego.Granada;
-import mundo.armas.fuego.Remington;
+
+import javax.swing.*;
+import java.awt.*;
+
+import static mundo.constants.ZombieKillerConstants.GRENADE_DAMAGE;
+import static mundo.constants.ZombieKillerConstants.REMINGTON_INITIAL_BACKWARD;
+import static mundo.constants.ZombieKillerConstants.REMINGTON_INITIAL_RECHARGE_TIME;
 
 public class PanelAtributos extends JPanel {
 
@@ -40,15 +37,15 @@ public class PanelAtributos extends JPanel {
 			add(barValores[i]);
 
 			if (atributos[i].equals("Danio"))
-				barValores[i].setMaximum(Granada.DANIO);
+				barValores[i].setMaximum(GRENADE_DAMAGE);
 			else if (atributos[i].equals("Salud"))
 				barValores[i].setMaximum(Boss.SALUD);
 			else if (atributos[i].equals("Lentitud"))
 				barValores[i].setMaximum(Zombie.LENTITUD1);
 			else if (atributos[i].equals("Retroceso"))
-				barValores[i].setMaximum(Remington.RETROCESO + 100);
+				barValores[i].setMaximum(REMINGTON_INITIAL_BACKWARD + 100);
 			else if (atributos[i].equals("Tiempo de Carga"))
-				barValores[i].setMaximum(Remington.TIEMPO_CARGA + 200);
+				barValores[i].setMaximum(REMINGTON_INITIAL_RECHARGE_TIME + 200);
 
 			barValores[i].setValue(valores[i]);
 		}

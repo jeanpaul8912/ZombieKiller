@@ -34,10 +34,20 @@ public abstract class Arma implements Serializable {
         estado = LISTA;
     }
 
+    /**
+     * obtiene el tiempo que tarda en cargar el arma
+     *
+     * @return tiempoCarga
+     */
     public int getRetroceso() {
         return retroceso;
     }
 
+    /**
+     * cambia el tiempo que tarda en cargar el arma
+     *
+     * @param retroceso
+     */
     protected void setRetroceso(int retroceso) {
         this.retroceso = retroceso;
     }

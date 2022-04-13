@@ -135,6 +135,8 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
 
     public void actualizarRonda() {
         labRonda.setText("Ronda: " + principal.darRondaActual());
+        labBalas.setText(principal.getCampo().getPersonaje().getPrincipal().getAvailableBullets() + "");
+        labGranadas.setText(principal.getCampo().getPersonaje().getGranadas().getAvailableBullets() + "");
     }
 
     public void incorporarJefe(Boss aMatar) {
@@ -321,7 +323,6 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
 
     @Override
     public void mousePressed(MouseEvent arg0) {
-
         if (principal.getEstadoPartida() == SurvivorCamp.EN_CURSO) {
             if (arg0.getButton() == MouseEvent.BUTTON1) {
                 int xPosition = arg0.getX();
@@ -383,7 +384,6 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
         // TODO Auto-generated method stub
-
     }
 
     public void quitarSangreZombie() {

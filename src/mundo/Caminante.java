@@ -2,15 +2,14 @@ package mundo;
 
 import mundo.armas.fuego.Remington;
 
+import static mundo.constants.ZombieKillerConstants.REMINGTON_DAMAGE;
+
 public class Caminante extends Zombie implements SeMueveEnZigzag {
 
     public static final String GRUNIENDO = "gruniendo";
 
     private int direccionX;
 
-    /**
-     * posicion en el ejeX
-     */
     private int direccionY;
 
     /**
@@ -71,7 +70,7 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
                 if (y < getPosY() + 54)
                     danioResultante = ((byte) (danio + 2));
                 // el 320 define la distancia entre el zombie y el personaje
-                if (danio == Remington.DANIO) {
+                if (danio == REMINGTON_DAMAGE) {
                     danioResultante = danioResultante - (POS_ATAQUE - getPosY()) / Remington.RANGO;
                     // System.out.println(danioResultante);
                 }
@@ -92,4 +91,5 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
     public void setDireccionY(int direccionY) {
         this.direccionY = direccionY;
     }
+
 }
