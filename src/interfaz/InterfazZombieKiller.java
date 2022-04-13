@@ -564,10 +564,9 @@ public class InterfazZombieKiller extends JFrame {
 	/**
 	 * busca el mejor puntaje del nombre
 	 */
-	public void buscarPorNombre() {
-		String nombre = JOptionPane.showInputDialog("Ingrese el nombre que desea buscar");
-		if (nombre != null) {
-			Puntaje buscado = campo.buscarPuntajeDe(nombre);
+	public void buscarPorNombre(String nombreBuscado) {
+		if (nombreBuscado != null) {
+			Puntaje buscado = campo.buscarPuntajeDe(nombreBuscado);
 			panelPuntajes.mostrarPuntajeDe(buscado);
 		}
 	}
