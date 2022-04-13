@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class PanelComoJugar extends JPanel {
 
@@ -19,10 +20,10 @@ public class PanelComoJugar extends JPanel {
 	private JScrollPane scroll;
 	private JButton butSalir;
 	private InterfazZombieKiller principal;
-	
+
 	private static PanelComoJugar panelSingleton;
-	
-	public PanelComoJugar () {
+
+	public PanelComoJugar() {
 		setBackground(Color.BLACK);
 		setLayout(new BorderLayout());
 		panelDatosC = new PanelDatosCuriosos();
@@ -30,17 +31,17 @@ public class PanelComoJugar extends JPanel {
 		butSalir = new JButton();
 		configurarBoton(butSalir, getClass().getResource("/img/Palabras/volver.png"), SALIR);
 		butSalir.setActionCommand(SALIR);
-		JPanel aux = new JPanel ();
+		JPanel aux = new JPanel();
 		aux.setLayout(new BorderLayout());
 		aux.add(panelDatosC, BorderLayout.NORTH);
 		aux.add(panelArmas, BorderLayout.CENTER);
 		scroll = new JScrollPane(aux);
-		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		add(scroll, BorderLayout.CENTER);
 		add(butSalir, BorderLayout.SOUTH);
 	}
-	
+
 	public static PanelComoJugar getPanel() {
 		if (panelSingleton == null) {
 			panelSingleton = new PanelComoJugar();
@@ -48,12 +49,12 @@ public class PanelComoJugar extends JPanel {
 
 		return panelSingleton;
 	}
-	
+
 	public void setPrincipal(InterfazZombieKiller interfazZombieKiller) {
 		principal = interfazZombieKiller;
 	}
-	
-	public void configurarBoton (JButton aEditar, URL rutaImagen, String comando) {
+
+	public void configurarBoton(JButton aEditar, URL rutaImagen, String comando) {
 		aEditar.setBorder(null);
 		aEditar.setFocusable(false);
 		aEditar.setContentAreaFilled(false);
@@ -64,19 +65,23 @@ public class PanelComoJugar extends JPanel {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 			}
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				ImageIcon iI = new ImageIcon(getClass().getResource("/img/Palabras/volver.png"));
 				butSalir.setIcon(iI);
 			}
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				ImageIcon iI = new ImageIcon(getClass().getResource("/img/Palabras/volver_p.png"));
 				butSalir.setIcon(iI);
 			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				principal.mostrarComoJugar();

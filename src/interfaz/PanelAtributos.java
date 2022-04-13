@@ -7,12 +7,11 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.plaf.basic.BasicRootPaneUI;
 
 import mundo.Boss;
-import mundo.Granada;
-import mundo.Remington;
 import mundo.Zombie;
+import mundo.armas.fuego.Granada;
+import mundo.armas.fuego.Remington;
 
 public class PanelAtributos extends JPanel {
 
@@ -23,10 +22,10 @@ public class PanelAtributos extends JPanel {
 	public PanelAtributos(String[] atributos, int[] valores) {
 		setBackground(Color.BLACK);
 		setLayout(new GridLayout(valores.length, 2));
-		
+
 		labAtributos = new JLabel[atributos.length];
 		barValores = new JProgressBar[valores.length];
-		
+
 		Font letra = new Font("Chiller", Font.ITALIC, 34);
 		for (int i = 0; i < valores.length; i++) {
 
@@ -39,7 +38,7 @@ public class PanelAtributos extends JPanel {
 			barValores[i].setForeground(Color.RED);
 			barValores[i].setBackground(Color.WHITE);
 			add(barValores[i]);
-			
+
 			if (atributos[i].equals("Danio"))
 				barValores[i].setMaximum(Granada.DANIO);
 			else if (atributos[i].equals("Salud"))
@@ -50,7 +49,7 @@ public class PanelAtributos extends JPanel {
 				barValores[i].setMaximum(Remington.RETROCESO + 100);
 			else if (atributos[i].equals("Tiempo de Carga"))
 				barValores[i].setMaximum(Remington.TIEMPO_CARGA + 200);
-			
+
 			barValores[i].setValue(valores[i]);
 		}
 	}

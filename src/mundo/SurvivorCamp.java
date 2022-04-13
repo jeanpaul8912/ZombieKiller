@@ -1,5 +1,8 @@
 package mundo;
 
+import mundo.armas.Arma;
+import mundo.armas.blancas.Cuchillo;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,6 +16,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import static mundo.constants.ZombieKillerConstants.LEVELS_TO_IMPROVE_GUNS;
 
 public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 
@@ -75,7 +80,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	 * ronda en la que se encuentra la partida actual, varia desde 1 a 10, en la
 	 * 10 solo puede estar el jefe
 	 */
-	private byte rondaActual;
+	private int rondaActual;
 	/**
 	 * numero de zombies que han salido a dar la cara en todo el juego
 	 */
@@ -96,6 +101,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	private Puntaje raizPuntajes;
 	
 	private Enemigo enemigoCaminante;
+
 	private Enemigo enemigoRastero;
 
 	/**
@@ -103,11 +109,8 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	 */
 	public SurvivorCamp() {
 		personaje = new Personaje();
-		// aEliminar = new ArrayList<Zombie>();
 		estadoJuego = SIN_PARTIDA;
 		rondaActual = 0;
-		// son caminantes auxiliares, solo necesito las instancias del anterior
-		// y el de al frente
 		zombNodoLejano = new Caminante();
 		zombNodoCercano = new Caminante();
 		zombNodoLejano.setLentitud((short) 500);
@@ -141,16 +144,16 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	/**
 	 * obtiene la ronda en el instante en que se llama el metodo, 0 si el estado
 	 * es sin partida
-	 * 
+	 *
 	 * @return ronda actual
 	 */
-	public byte getRondaActual() {
+	public int getRondaActual() {
 		return rondaActual;
 	}
 
 	/**
 	 * obtiene el jefe de la partida, null si no existe
-	 * 
+	 *
 	 * @return jefe
 	 */
 	public Boss getJefe() {
@@ -161,25 +164,29 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	 * cambia la ronda en la que se encuentra, en general sube una ronda, pero
 	 * si se carga una partida puede variar
 	 */
-	public void actualizarRondaActual(byte rondaActual) {
+	public void actualizarRondaActual(int rondaActual) {
 		this.rondaActual = rondaActual;
+		improveGuns(rondaActual);
+	}
+
+	private void improveGuns(int rondaActual) {
+		if (rondaActual % LEVELS_TO_IMPROVE_GUNS == 0) {
+			personaje.getPrincipal().improveGun();
+		}
+
+		if (rondaActual % (LEVELS_TO_IMPROVE_GUNS * 2) == 0) {
+			personaje.getPrincipal().improveGun();
+			personaje.getGranadas().improveGun();
+		}
 	}
 
 	/**
 	 * obtiene el personaje que esta disparando
-	 * 
+	 *
 	 * @return personaje en juego
 	 */
 	public Personaje getPersonaje() {
 		return personaje;
-	}
-
-	/**
-	 * cambia el personaje que esta disparando, ocurre cuando se carga una
-	 * partida
-	 */
-	public void setPersonaje(Personaje personaje) {
-		this.personaje = personaje;
 	}
 
 	/**
@@ -202,9 +209,9 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	 */
 	public Zombie generarZombie(int nivel) {
 		short level = (short) nivel;
-		Zombie zombie = null;
+		Zombie zombie;
 		int tipoZombie = 0;
-		
+
 		if ((level == 3 || level == 4 || level == 8)) {
 			tipoZombie = (int) (Math.random() * 2);
 		} else if (level == 6 || level == 9) {
@@ -858,4 +865,5 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 	public char getSinPartida() {
 		return SIN_PARTIDA;
 	}
+
 }

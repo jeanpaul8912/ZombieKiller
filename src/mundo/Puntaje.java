@@ -11,11 +11,13 @@ public class Puntaje implements Serializable, Comparable<Puntaje> {
 	 */
 	private int puntaje;
 	/**
-	 * valor entero que representa la cantidad de bajas con tiro a la cabeza del personaje
+	 * valor entero que representa la cantidad de bajas con tiro a la cabeza del
+	 * personaje
 	 */
 	private int tirosALaCabeza;
 	/**
-	 * valor entero que representa la cantidad de bajas del personaje en la partida finalizada
+	 * valor entero que representa la cantidad de bajas del personaje en la partida
+	 * finalizada
 	 */
 	private int bajas;
 	/**
@@ -23,7 +25,8 @@ public class Puntaje implements Serializable, Comparable<Puntaje> {
 	 */
 	private String nombreKiller;
 	/**
-	 * Puntaje mayor que el presente, esta referencia para ordenar en forma de arbol binario
+	 * Puntaje mayor que el presente, esta referencia para ordenar en forma de arbol
+	 * binario
 	 */
 	private Puntaje mayor;
 	/**
@@ -33,6 +36,7 @@ public class Puntaje implements Serializable, Comparable<Puntaje> {
 
 	/**
 	 * Constructor del Puntaje con los datos finales de la partida
+	 * 
 	 * @param puntaje
 	 * @param tirosALaCabeza
 	 * @param bajas
@@ -47,13 +51,17 @@ public class Puntaje implements Serializable, Comparable<Puntaje> {
 
 	/**
 	 * valor entero que representa el score del puntaje guardado
+	 * 
 	 * @return puntaje
 	 */
 	public int getPuntaje() {
 		return puntaje;
 	}
+
 	/**
-	 * valor entero que representa las bajas con tiros a la cabeza del puntaje guardado
+	 * valor entero que representa las bajas con tiros a la cabeza del puntaje
+	 * guardado
+	 * 
 	 * @return tirosAlaCabeza
 	 */
 	public int getTirosALaCabeza() {
@@ -62,6 +70,7 @@ public class Puntaje implements Serializable, Comparable<Puntaje> {
 
 	/**
 	 * valor entero que representa las bajas del puntaje guardado
+	 * 
 	 * @return cantidad de bajas
 	 */
 	public int getBajas() {
@@ -70,6 +79,7 @@ public class Puntaje implements Serializable, Comparable<Puntaje> {
 
 	/**
 	 * cadena de caracteres que representa el nombre del puntaje guardado
+	 * 
 	 * @return nombre del Matador
 	 */
 	public String getNombreKiller() {
@@ -77,18 +87,20 @@ public class Puntaje implements Serializable, Comparable<Puntaje> {
 	}
 
 	/**
-	 * metodo que se encarga de agregar un puntaje en el arbol binario con el score(puntaje en numeros) como criterio de ordenamiento
+	 * metodo que se encarga de agregar un puntaje en el arbol binario con el
+	 * score(puntaje en numeros) como criterio de ordenamiento
+	 * 
 	 * @param score
 	 */
 	public void aniadirPorPuntaje(Puntaje score) {
 		if (puntaje < score.getPuntaje()) {
-			
+
 			if (mayor != null)
 				mayor.aniadirPorPuntaje(score);
 			else
 				mayor = score;
 		} else if (score.getPuntaje() == puntaje) {
-			
+
 			if (this.compareTo(score) < 0) {
 				if (mayor != null)
 					mayor.aniadirPorPuntaje(score);
@@ -101,7 +113,7 @@ public class Puntaje implements Serializable, Comparable<Puntaje> {
 					menor = score;
 			}
 		} else {
-			
+
 			if (menor != null)
 				menor.aniadirPorPuntaje(score);
 			else
@@ -111,6 +123,7 @@ public class Puntaje implements Serializable, Comparable<Puntaje> {
 
 	/**
 	 * obtiene el puntaje directamente menor al presente
+	 * 
 	 * @return menor
 	 */
 	public Puntaje getMenor() {
@@ -119,6 +132,7 @@ public class Puntaje implements Serializable, Comparable<Puntaje> {
 
 	/**
 	 * obtiene el puntaje mayor con referencia el presente
+	 * 
 	 * @return mayor
 	 */
 	public Puntaje getMayor() {
@@ -126,7 +140,9 @@ public class Puntaje implements Serializable, Comparable<Puntaje> {
 	}
 
 	/**
-	 * agrega elementos a la lista pasada por parametro de manera ordenada en forma ascendente
+	 * agrega elementos a la lista pasada por parametro de manera ordenada en forma
+	 * ascendente
+	 * 
 	 * @param lista
 	 */
 	public void generarListaInOrden(List<Puntaje> lista) {
@@ -136,7 +152,7 @@ public class Puntaje implements Serializable, Comparable<Puntaje> {
 		if (menor != null)
 			menor.generarListaInOrden(lista);
 	}
-	
+
 	@Override
 	public int compareTo(Puntaje o) {
 		int porScore = puntaje - o.puntaje;

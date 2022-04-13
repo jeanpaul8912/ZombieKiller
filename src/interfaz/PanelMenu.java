@@ -30,7 +30,7 @@ import mundo.SurvivorCamp;
 public class PanelMenu extends JPanel implements KeyListener, ActionListener, MouseListener {
 
 	private static final long serialVersionUID = 6794669918135042094L;
-	
+
 	private static final String CONTINUAR = "Continuar";
 	private static final String INICIAR = "Iniciar Nuevo Juego";
 	private static final String CARGAR = "Cargar Partida";
@@ -58,7 +58,7 @@ public class PanelMenu extends JPanel implements KeyListener, ActionListener, Mo
 		add(aux);
 		aux = new JLabel();
 		add(aux);
-		
+
 		aux = new JLabel();
 		add(aux);
 		butIniciarJuego = new JButton();
@@ -76,25 +76,25 @@ public class PanelMenu extends JPanel implements KeyListener, ActionListener, Mo
 		butCargar = new JButton();
 		configurarBoton(butCargar, getClass().getResource("/img/Palabras/cargar.png"), CARGAR);
 		add(butCargar);
-		
+
 		aux = new JLabel();
 		add(aux);
 		butGuardar = new JButton();
 		configurarBoton(butGuardar, getClass().getResource("/img/Palabras/guardar.png"), GUARDAR);
 		add(butGuardar);
-		
+
 		aux = new JLabel();
 		add(aux);
 		butComoJugar = new JButton();
 		configurarBoton(butComoJugar, getClass().getResource("/img/Palabras/como jugar.png"), COMO_JUGAR);
 		add(butComoJugar);
-		
+
 		aux = new JLabel();
 		add(aux);
 		butPuntajes = new JButton();
 		configurarBoton(butPuntajes, getClass().getResource("/img/Palabras/puntajes.png"), MEJORES_PUNTAJES);
 		add(butPuntajes);
-		
+
 		aux = new JLabel();
 		add(aux);
 		butCreditos = new JButton();
@@ -102,7 +102,7 @@ public class PanelMenu extends JPanel implements KeyListener, ActionListener, Mo
 		add(butCreditos);
 	}
 
-	public void configurarBoton (JButton aEditar, URL rutaImagen, String comando) {
+	public void configurarBoton(JButton aEditar, URL rutaImagen, String comando) {
 		aEditar.setBorder(null);
 		aEditar.setContentAreaFilled(false);
 		aEditar.setActionCommand(comando);
@@ -111,19 +111,18 @@ public class PanelMenu extends JPanel implements KeyListener, ActionListener, Mo
 		aEditar.addActionListener(this);
 		aEditar.addMouseListener(this);
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		requestFocusInWindow();
 		Image Palabras = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/Fondo/fondoMenu.png"));
 		g.drawImage(Palabras, 0, 0, null);
-		
-		if(principal.getEstadoPartida()==SurvivorCamp.PAUSADO) {
+
+		if (principal.getEstadoPartida() == SurvivorCamp.PAUSADO) {
 			butContinuar.setEnabled(true);
 			butGuardar.setEnabled(true);
-		}
-		else{
+		} else {
 			butContinuar.setEnabled(false);
 			butGuardar.setEnabled(false);
 		}
@@ -131,7 +130,7 @@ public class PanelMenu extends JPanel implements KeyListener, ActionListener, Mo
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		if (arg0.getKeyCode() == 80 && principal.getEstadoPartida()==SurvivorCamp.PAUSADO)
+		if (arg0.getKeyCode() == 80 && principal.getEstadoPartida() == SurvivorCamp.PAUSADO)
 			principal.pausarJuego();
 	}
 
@@ -165,39 +164,33 @@ public class PanelMenu extends JPanel implements KeyListener, ActionListener, Mo
 		default:
 			throw new RuntimeException("Unknown Command.");
 		}
-		
+
 		command.execute(principal);
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		JButton but = (JButton)e.getComponent();
+		JButton but = (JButton) e.getComponent();
 		ImageIcon defaultIcon;
-		if(but == butIniciarJuego) {
+		if (but == butIniciarJuego) {
 			defaultIcon = new ImageIcon(getClass().getResource("/img/Palabras/nuevo_p.png"));
 			butIniciarJuego.setIcon(defaultIcon);
-		}
-		else if(but == butCargar) {
+		} else if (but == butCargar) {
 			defaultIcon = new ImageIcon(getClass().getResource("/img/Palabras/cargar_p.png"));
 			butCargar.setIcon(defaultIcon);
-		}
-		else if(but == butContinuar && butContinuar.isEnabled()) {
+		} else if (but == butContinuar && butContinuar.isEnabled()) {
 			defaultIcon = new ImageIcon(getClass().getResource("/img/Palabras/continuar_p.png"));
 			butContinuar.setIcon(defaultIcon);
-		}
-		else if(but == butGuardar && butGuardar.isEnabled()) {
+		} else if (but == butGuardar && butGuardar.isEnabled()) {
 			defaultIcon = new ImageIcon(getClass().getResource("/img/Palabras/guardar_p.png"));
 			butGuardar.setIcon(defaultIcon);
-		}
-		else if(but == butCreditos) {
+		} else if (but == butCreditos) {
 			defaultIcon = new ImageIcon(getClass().getResource("/img/Palabras/creditos_p.png"));
 			butCreditos.setIcon(defaultIcon);
-		}
-		else if(but == butComoJugar) {
+		} else if (but == butComoJugar) {
 			defaultIcon = new ImageIcon(getClass().getResource("/img/Palabras/como jugar_p.png"));
 			butComoJugar.setIcon(defaultIcon);
-		}
-		else if(but == butPuntajes) {
+		} else if (but == butPuntajes) {
 			defaultIcon = new ImageIcon(getClass().getResource("/img/Palabras/puntajes_p.png"));
 			butPuntajes.setIcon(defaultIcon);
 		}
@@ -205,38 +198,32 @@ public class PanelMenu extends JPanel implements KeyListener, ActionListener, Mo
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		JButton but = (JButton)e.getComponent();
+		JButton but = (JButton) e.getComponent();
 		ImageIcon defaultIcon;
-		if(but == butIniciarJuego) {
+		if (but == butIniciarJuego) {
 			defaultIcon = new ImageIcon(getClass().getResource("/img/Palabras/nuevo.png"));
 			butIniciarJuego.setIcon(defaultIcon);
-		}
-		else if(but == butCargar) {
+		} else if (but == butCargar) {
 			defaultIcon = new ImageIcon(getClass().getResource("/img/Palabras/cargar.png"));
 			butCargar.setIcon(defaultIcon);
-		}
-		else if(but == butContinuar) {
+		} else if (but == butContinuar) {
 			defaultIcon = new ImageIcon(getClass().getResource("/img/Palabras/continuar.png"));
 			butContinuar.setIcon(defaultIcon);
-		}
-		else if(but == butGuardar) {
+		} else if (but == butGuardar) {
 			defaultIcon = new ImageIcon(getClass().getResource("/img/Palabras/guardar.png"));
 			butGuardar.setIcon(defaultIcon);
-		}
-		else if(but == butCreditos) {
+		} else if (but == butCreditos) {
 			defaultIcon = new ImageIcon(getClass().getResource("/img/Palabras/creditos.png"));
 			butCreditos.setIcon(defaultIcon);
-		}
-		else if(but == butComoJugar) {
+		} else if (but == butComoJugar) {
 			defaultIcon = new ImageIcon(getClass().getResource("/img/Palabras/como jugar.png"));
 			butComoJugar.setIcon(defaultIcon);
-		}
-		else if(but == butPuntajes) {
+		} else if (but == butPuntajes) {
 			defaultIcon = new ImageIcon(getClass().getResource("/img/Palabras/puntajes.png"));
 			butPuntajes.setIcon(defaultIcon);
 		}
 	}
-	
+
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
@@ -252,18 +239,18 @@ public class PanelMenu extends JPanel implements KeyListener, ActionListener, Mo
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 	}
-	
+
 }

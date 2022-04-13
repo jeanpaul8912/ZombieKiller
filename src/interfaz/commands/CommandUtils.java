@@ -10,9 +10,9 @@ import mundo.SurvivorCamp;
 public final class CommandUtils {
 
 	private CommandUtils() {
-		
+
 	}
-	
+
 	public static void startGame(InterfazZombieKiller interfazZombieKiller) {
 		PanelCamp panelCamp = PanelCamp.getPanel();
 		panelCamp.setPrincipal(interfazZombieKiller);
@@ -26,5 +26,5 @@ public final class CommandUtils {
 		Cursor knifeCursor = CursorObjectPool.getCursor("/img/Fondo/Cuchillo.png");
 		interfazZombieKiller.setCursorCuchillo(knifeCursor);
 	}
-	
+
 }

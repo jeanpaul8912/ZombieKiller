@@ -1,10 +1,9 @@
 package mundo.defenseStrategies;
 
 import interfaz.InterfazZombieKiller;
-import mundo.ArmaDeFuego;
 import mundo.Boss;
-import mundo.SurvivorCamp;
 import mundo.Zombie;
+import mundo.armas.fuego.ArmaDeFuego;
 
 public class ShootStrategy extends DefenseStrategy {
 	
@@ -32,9 +31,7 @@ public class ShootStrategy extends DefenseStrategy {
 	
 
 	public boolean shoot() {
-		
-		
-		interfaz.getCampo().getPersonaje().getPrincipal().setMunicion((byte)(interfaz.getCampo().getPersonaje().getPrincipal().getMunicion()-1));
+		interfaz.getCampo().getPersonaje().getPrincipal().shoot();
 		interfaz.getCampo().getPersonaje().getPrincipal().setEstado(ArmaDeFuego.RECARGANDO);
 		boolean leDio = false;
 		Zombie actual = interfaz.getCampo().getZombNodoCercano().getAtras();
@@ -53,6 +50,7 @@ public class ShootStrategy extends DefenseStrategy {
 			}
 			actual = actual.getAtras();
 		}
+
 		if (interfaz.getCampo().getJefe() != null)
 			if (interfaz.getCampo().getJefe().comprobarDisparo(xPosition, yPosition, interfaz.getCampo().getPersonaje().getPrincipal().getDanio())) {
 				interfaz.getCampo().getPersonaje().getPrincipal().setEnsangrentada(true);
@@ -63,6 +61,7 @@ public class ShootStrategy extends DefenseStrategy {
 					interfaz.getCampo().setEstadoJuego(interfaz.getCampo().getSinPartida());
 				}
 			}
+		
 		return leDio;
 	}
 }

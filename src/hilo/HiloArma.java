@@ -1,9 +1,9 @@
 package hilo;
 
 import interfaz.InterfazZombieKiller;
-import mundo.Arma;
-import mundo.ArmaDeFuego;
-import mundo.Remington;
+import mundo.armas.Arma;
+import mundo.armas.fuego.ArmaDeFuego;
+import mundo.armas.fuego.Remington;
 
 public class HiloArma extends Thread {
 
@@ -17,23 +17,24 @@ public class HiloArma extends Thread {
 
 	@Override
 	public void run() {
-
 		try {
 			if (weapon instanceof ArmaDeFuego) {
-				ArmaDeFuego deFuego = (ArmaDeFuego) weapon;
-				if (deFuego.isEnsangrentada()) {
+				ArmaDeFuego armaDeFuego = (ArmaDeFuego) weapon;
+
+				if (armaDeFuego.isEnsangrentada()) {
 					sleep(100);
 					principal.terminarEfectoDeSangre();
 				}
-				// System.out.println(weapon.getEstado());
+
 				if (weapon.getEstado().equals(ArmaDeFuego.RECARGANDO)) {
 					// descanso mientras suena el disparo
 					sleep(200);
-					if (weapon instanceof Remington && deFuego.getMunicion() > 0)
+					if (weapon instanceof Remington && armaDeFuego.getAvailableBullets() > 0)
 						principal.reproducir("recarga_escopeta");
 				} else
 					principal.reproducir(Arma.CARGANDO + weapon.getClass().getSimpleName());
 			}
+
 			sleep(weapon.calcularDescanso());
 			weapon.setEstado(Arma.LISTA);
 			principal.cambiarPuntero();

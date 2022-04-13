@@ -24,7 +24,8 @@ public class ThreadsFacade {
 	public void initializeEnemyThreads() {
 		zombieGeneratorThread = new HiloGeneradorDeZombies(zombieInterface, zombieInterface.getCampo());
 		zombieGeneratorThread.start();
-		EnemyThread = new HiloEnemigo(zombieInterface, zombieInterface.getCampo().getZombNodoCercano(),zombieInterface.getCampo());
+		EnemyThread = new HiloEnemigo(zombieInterface, zombieInterface.getCampo().getZombNodoCercano(),
+				zombieInterface.getCampo());
 		EnemyThread.start();
 	}
 

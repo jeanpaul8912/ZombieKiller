@@ -3,9 +3,7 @@ package interfaz;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.font.FontRenderContext;
 
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -25,7 +23,8 @@ public class PanelDatosCuriosos extends JPanel {
 		instrucciones = new JLabel[5];
 		titulos[0] = new JLabel("Datos curiosos");
 		titulos[1] = new JLabel("Controles");
-		datos[0] = new JLabel("*No siempre matar de tiro a la cabeza da mas puntos. Que el altimo tiro sea el que le vuele los sesos!");
+		datos[0] = new JLabel(
+				"*No siempre matar de tiro a la cabeza da mas puntos. Que el altimo tiro sea el que le vuele los sesos!");
 		datos[1] = new JLabel("*Puedes acuchillar a un enemigo en posicion de ataque, solo dispara...");
 		datos[2] = new JLabel("*El danio de la escopeta varia segun la distancia, usala sabiamente");
 
@@ -39,29 +38,29 @@ public class PanelDatosCuriosos extends JPanel {
 		configurarTipoDeLetra();
 
 		add(titulos[0]);
-		for (int i = 0; i < datos.length; i++) {
-			add(datos[i]);
+		for (JLabel element : datos) {
+			add(element);
 		}
 		add(titulos[1]);
-		for (int i = 0; i < instrucciones.length; i++) {
-			add(instrucciones[i]);
+		for (JLabel instruccione : instrucciones) {
+			add(instruccione);
 		}
 	}
 
 	private void configurarTipoDeLetra() {
 		Font letra = new Font("Chiller", Font.ITALIC, 30);
-		for (int i = 0; i < datos.length; i++) {
-			datos[i].setFont(letra);
-			datos[i].setForeground(Color.WHITE);
+		for (JLabel element : datos) {
+			element.setFont(letra);
+			element.setForeground(Color.WHITE);
 		}
-		for (int i = 0; i < instrucciones.length; i++) {
-			instrucciones[i].setFont(letra);
-			instrucciones[i].setForeground(Color.WHITE);
+		for (JLabel instruccione : instrucciones) {
+			instruccione.setFont(letra);
+			instruccione.setForeground(Color.WHITE);
 		}
-		for (int i = 0; i < titulos.length; i++) {
-			titulos[i].setFont(letra);
-			titulos[i].setForeground(Color.WHITE);
-			titulos[i].setHorizontalAlignment(SwingConstants.CENTER);
+		for (JLabel element : titulos) {
+			element.setFont(letra);
+			element.setForeground(Color.WHITE);
+			element.setHorizontalAlignment(SwingConstants.CENTER);
 		}
 	}
 }

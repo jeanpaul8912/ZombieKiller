@@ -19,24 +19,25 @@ public class HiloGeneradorDeZombies extends Thread {
 		try {
 			while (principal.estaCargando()) {
 				sleep(5000);
-			}				
-				
+			}
+
 			principal.cambiarPuntero();
 			int contadorZombiesPorNivel = campo.getCantidadZombiesGenerados();
 			int nivel = campo.getRondaActual();
 			while (campo.getEstadoJuego() != SurvivorCamp.SIN_PARTIDA) {
 //				 System.out.println(contadorZombiesPorNivel);
-				
-				if (contadorZombiesPorNivel % SurvivorCamp.NUMERO_ZOMBIES_RONDA == 0) {  //Si se terminan los Zombies
-					while (!campo.getZombNodoLejano().getAlFrente().getEstadoActual().equals(Zombie.NODO) && campo.getPersonaje().getSalud() > 0) {
+
+				if (contadorZombiesPorNivel % SurvivorCamp.NUMERO_ZOMBIES_RONDA == 0) { // Si se terminan los Zombies
+					while (!campo.getZombNodoLejano().getAlFrente().getEstadoActual().equals(Zombie.NODO)
+							&& campo.getPersonaje().getSalud() > 0) {
 						sleep(1000);
 					}
-					
-					//Si aun existe partida , subir nivel e iniciar
+
+					// Si aun existe partida , subir nivel e iniciar
 					if (campo.getEstadoJuego() != SurvivorCamp.SIN_PARTIDA) {
 						while (campo.getEstadoJuego() == SurvivorCamp.PAUSADO)
 							sleep(500);
-						
+
 						nivel++;
 						principal.subirDeRonda(nivel);
 						sleep(2000);
@@ -47,8 +48,8 @@ public class HiloGeneradorDeZombies extends Thread {
 
 				if (nivel < 10 && campo.getEstadoJuego() != SurvivorCamp.SIN_PARTIDA) {
 //					System.out.println("llama al metodo de generar zombie desde el hilo generador");
-					if(!campo.getZombNodoLejano().getAlFrente().getEstadoActual().equals(Zombie.MURIENDO_INCENDIADO))
-					principal.generarZombie(nivel);
+					if (!campo.getZombNodoLejano().getAlFrente().getEstadoActual().equals(Zombie.MURIENDO_INCENDIADO))
+						principal.generarZombie(nivel);
 					contadorZombiesPorNivel++;
 					sleep(1400);
 				} else if (nivel == 10) {

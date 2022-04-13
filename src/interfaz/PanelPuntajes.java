@@ -39,7 +39,7 @@ public class PanelPuntajes extends JPanel implements ActionListener {
 	private JButton butFiltroScore;
 	private JButton butSalir;
 	private InterfazZombieKiller principal;
-	
+
 	private static PanelPuntajes panelSingleton;
 
 	public PanelPuntajes() {
@@ -70,15 +70,15 @@ public class PanelPuntajes extends JPanel implements ActionListener {
 		add(texto, BorderLayout.CENTER);
 		add(butSalir, BorderLayout.SOUTH);
 	}
-	
+
 	public static PanelPuntajes getPanel() {
 		if (panelSingleton == null) {
 			panelSingleton = new PanelPuntajes();
 		}
-		
+
 		return panelSingleton;
 	}
-	
+
 	public void setPrincipal(InterfazZombieKiller interfazZombieKiller) {
 		principal = interfazZombieKiller;
 	}
@@ -133,8 +133,8 @@ public class PanelPuntajes extends JPanel implements ActionListener {
 		}
 		add(auxPuntajes, BorderLayout.CENTER);
 	}
-	
-	private void generarYAgregarBotones () {
+
+	private void generarYAgregarBotones() {
 		JPanel auxBotones = new JPanel();
 		auxBotones.setBackground(Color.black);
 		auxBotones.setLayout(new GridLayout(5, 1));

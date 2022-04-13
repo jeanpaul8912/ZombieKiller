@@ -2,62 +2,58 @@ package interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.print.attribute.standard.JobName;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
-import mundo.Cuchillo;
-import mundo.Granada;
-import mundo.M1911;
-import mundo.Remington;
+import mundo.armas.blancas.Cuchillo;
+import mundo.armas.fuego.Granada;
+import mundo.armas.fuego.M1911;
+import mundo.armas.fuego.Remington;
 
-public class PanelArmas extends JPanel implements ActionListener{
+public class PanelArmas extends JPanel implements ActionListener {
 
 	private static final String ANTERIOR = "a";
 	private static final String POSTERIOR = "p";
-	
-	private JLabel [] labArmas;
-	private PanelAtributos [] panelAtributos;
+
+	private JLabel[] labArmas;
+	private PanelAtributos[] panelAtributos;
 	private JButton butAnterior;
 	private JButton butPosterior;
 	private InterfazZombieKiller principal;
-	
-	public PanelArmas (InterfazZombieKiller inter) {
+
+	public PanelArmas(InterfazZombieKiller inter) {
 		setBackground(Color.BLACK);
 		setLayout(new BorderLayout());
 		principal = inter;
-		
+
 		labArmas = new JLabel[4];
 		panelAtributos = new PanelAtributos[4];
-		
+
 		butAnterior = new JButton("<");
 		butAnterior.setActionCommand(ANTERIOR);
 		butAnterior.addActionListener(this);
-		
+
 		butPosterior = new JButton(">");
 		butPosterior.setActionCommand(POSTERIOR);
 		butPosterior.addActionListener(this);
-		
+
 		ImageIcon perfil;
 		perfil = new ImageIcon(getClass().getResource("/img/Fondo/perfilRemington.png"));
-		labArmas[0] = new JLabel (perfil);
+		labArmas[0] = new JLabel(perfil);
 		perfil = new ImageIcon(getClass().getResource("/img/Fondo/perfilM1911.png"));
-		labArmas[1] = new JLabel (perfil);
+		labArmas[1] = new JLabel(perfil);
 		perfil = new ImageIcon(getClass().getResource("/img/Fondo/perfilGranada.png"));
-		labArmas[2] = new JLabel (perfil);
+		labArmas[2] = new JLabel(perfil);
 		perfil = new ImageIcon(getClass().getResource("/img/Fondo/perfilCuchillo.png"));
-		labArmas[3] = new JLabel (perfil);
-		
+		labArmas[3] = new JLabel(perfil);
+
 		inicializarAtributos();
-		
+
 		add(labArmas[1], BorderLayout.CENTER);
 		add(panelAtributos[1], BorderLayout.SOUTH);
 		add(labArmas[2], BorderLayout.CENTER);
@@ -69,54 +65,54 @@ public class PanelArmas extends JPanel implements ActionListener{
 		add(butAnterior, BorderLayout.WEST);
 		add(butPosterior, BorderLayout.EAST);
 	}
-	
-	public void inicializarAtributos () {
+
+	public void inicializarAtributos() {
 		String[] atributos = new String[3];
-		int[] valores = new int [3];
+		int[] valores = new int[3];
 		atributos[0] = "Danio";
 		atributos[1] = "Retroceso";
 		atributos[2] = "Tiempo de Carga";
-		
+
 		valores[0] = Remington.DANIO;
 		valores[1] = Remington.RETROCESO;
 		valores[2] = Remington.TIEMPO_CARGA;
-		
+
 		panelAtributos[0] = new PanelAtributos(atributos, valores);
-		
+
 		atributos = new String[3];
-		valores = new int [3];
+		valores = new int[3];
 		atributos[0] = "Danio";
 		atributos[1] = "Retroceso";
 		atributos[2] = "Tiempo de Carga";
-		
+
 		valores[0] = M1911.DANIO;
 		valores[1] = M1911.RETROCESO;
 		valores[2] = M1911.TIEMPO_CARGA;
-		
+
 		panelAtributos[1] = new PanelAtributos(atributos, valores);
-		
+
 		atributos = new String[1];
-		valores = new int [1];
+		valores = new int[1];
 		atributos[0] = "Danio";
-		
+
 		valores[0] = Granada.DANIO;
-		
+
 		panelAtributos[2] = new PanelAtributos(atributos, valores);
-		
+
 		atributos = new String[1];
-		valores = new int [1];
+		valores = new int[1];
 		atributos[0] = "Danio";
-		
+
 		valores[0] = Cuchillo.DANIO;
-		
+
 		panelAtributos[3] = new PanelAtributos(atributos, valores);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if(arg0.getActionCommand().equals(ANTERIOR))
+		if (arg0.getActionCommand().equals(ANTERIOR))
 			verIzquierda();
-		if(arg0.getActionCommand().equals(POSTERIOR))
+		if (arg0.getActionCommand().equals(POSTERIOR))
 			verDerecha();
 	}
 

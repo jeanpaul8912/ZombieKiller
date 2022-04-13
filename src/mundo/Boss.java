@@ -1,7 +1,6 @@
 package mundo;
 
-import mundo.attackStrategies.AttackStrategyContext;
-import mundo.attackStrategies.BossAttackStrategy;
+import mundo.armas.fuego.Remington;
 
 public class Boss extends Enemigo implements SeMueveEnZigzag {
 
@@ -25,14 +24,14 @@ public class Boss extends Enemigo implements SeMueveEnZigzag {
 	 * valor incambiable que representa el ancho de la imagen del boss
 	 */
 	public static final int ANCHO_IMAGEN = 294;
-	
+
 	/**
 	 * valor numerico entero que representa la direccion o velocidad en el eje X
 	 */
 	private int direccionX;
 	/**
 	 * valor numerico entero que representa la direccion o velocidad en el eje Y
-	 */	
+	 */
 	private int direccionY;
 	/**
 	 * valor que representa la posicion en el eje X del jefe
@@ -48,11 +47,14 @@ public class Boss extends Enemigo implements SeMueveEnZigzag {
 		setSalud(SALUD);
 		setLentitud(LENTITUD);
 	}
+
 	/**
-	 * Constructor del jefe al cargar la partida si fue guardada en la ronda del jefe
+	 * Constructor del jefe al cargar la partida si fue guardada en la ronda del
+	 * jefe
+	 *
 	 * @param salud
 	 */
-	public Boss (byte salud) {
+	public Boss(byte salud) {
 		super();
 		setEstadoActual(VOLANDO);
 		setSalud(salud);
@@ -69,23 +71,23 @@ public class Boss extends Enemigo implements SeMueveEnZigzag {
 	}*/
 
 	@Override
-	public boolean comprobarDisparo(int x, int y, byte danio) {
+	public boolean comprobarDisparo(int x, int y, int danio) {
 		boolean leDio = false;
 		int danioResultante = danio;
 		if (x > posHorizontal + 108 && x < posHorizontal + 160 && y > getPosY() + 110 && y < getPosY() + 190) {
-					if (danio == Remington.DANIO) {
-						danioResultante = danioResultante - (POS_ATAQUE - getPosY()) / Remington.RANGO;
+			if (danio == Remington.DANIO) {
+				danioResultante = danioResultante - (POS_ATAQUE - getPosY()) / Remington.RANGO;
 //						 System.out.println(danioResultante);
-					}
-					setSalud((byte) (getSalud() - danioResultante));
-					//hace lo mismo cuando termina de atacar que cuando lo atacan
-					//terminaDeAtacar();
-				if (getSalud() <= 0) {
-					setEstadoActual(DERROTADO);
-					posHorizontal = 365;
-					setPosY(POS_INICIAL);
-				}
-				leDio = true;
+			}
+			setSalud((byte) (getSalud() - danioResultante));
+			//hace lo mismo cuando termina de atacar que cuando lo atacan
+			//terminaDeAtacar();
+			if (getSalud() <= 0) {
+				setEstadoActual(DERROTADO);
+				posHorizontal = 365;
+				setPosY(POS_INICIAL);
+			}
+			leDio = true;
 		}
 		return leDio;
 	}
