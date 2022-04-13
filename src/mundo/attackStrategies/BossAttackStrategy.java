@@ -44,7 +44,7 @@ public class BossAttackStrategy extends AttackStrategy implements IAttackMovemen
 
 		Boss bossEnemy = (Boss)enemy;
 		bossEnemy.setDireccionX((int) (Math.random() * 13) - 6);
-		if(bossEnemy.getDireccionX() >0 && boss.getDireccionX()<6) {
+		if(bossEnemy.getDireccionX() >0 && bossEnemy.getDireccionX()<6) {
 			bossEnemy.setDireccionY(6 - bossEnemy.getDireccionX());
 		}
 			else if(bossEnemy.getDireccionX()<=0 && bossEnemy.getDireccionX()>-6) {
