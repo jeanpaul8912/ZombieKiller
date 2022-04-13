@@ -1,6 +1,6 @@
 package interfaz;
 
-import mundo.armas.blancas.Cuchillo;
+import mundo.weapons.blancas.Cuchillo;
 
 import javax.swing.*;
 import java.awt.*;

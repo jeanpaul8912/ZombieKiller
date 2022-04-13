@@ -1,11 +1,11 @@
 package interfaz.commands;
 
-import java.awt.Cursor;
-
 import interfaz.CursorObjectPool;
 import interfaz.InterfazZombieKiller;
 import interfaz.PanelCamp;
-import mundo.SurvivorCamp;
+import mundo.camp.SurvivorCamp;
+
+import java.awt.*;
 
 public final class CommandUtils {
 

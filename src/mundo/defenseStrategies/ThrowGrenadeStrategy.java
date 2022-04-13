@@ -1,8 +1,8 @@
 package mundo.defenseStrategies;
 
 import interfaz.InterfazZombieKiller;
-import mundo.Zombie;
-import mundo.armas.Arma;
+import mundo.weapons.Arma;
+import mundo.zombies.Zombie;
 
 public class ThrowGrenadeStrategy extends DefenseStrategy {
 

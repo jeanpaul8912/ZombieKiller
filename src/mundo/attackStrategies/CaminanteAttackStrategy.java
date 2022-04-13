@@ -1,8 +1,8 @@
 package mundo.attackStrategies;
 
-import mundo.Caminante;
-import mundo.Enemigo;
-import mundo.SurvivorCamp;
+import mundo.camp.SurvivorCamp;
+import mundo.zombies.Caminante;
+import mundo.zombies.Enemigo;
 
 public class CaminanteAttackStrategy extends AttackStrategy  implements IAttackMovement{
 

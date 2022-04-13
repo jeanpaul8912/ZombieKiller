@@ -1,7 +1,7 @@
 package mundo.attackStrategies;
 
-import mundo.Enemigo;
-import mundo.Rastrero;
+import mundo.zombies.Enemigo;
+import mundo.zombies.Rastrero;
 
 public class RastreroAttackStrategy extends AttackStrategy {
 

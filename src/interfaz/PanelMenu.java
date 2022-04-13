@@ -1,22 +1,5 @@
 package interfaz;
 
-import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.net.URL;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import interfaz.commands.BestScoresCommand;
 import interfaz.commands.Command;
 import interfaz.commands.ContinueGameCommand;
@@ -25,7 +8,17 @@ import interfaz.commands.HowToPlayCommand;
 import interfaz.commands.LoadGameCommand;
 import interfaz.commands.SaveGameCommand;
 import interfaz.commands.StartGameCommand;
-import mundo.SurvivorCamp;
+import mundo.camp.SurvivorCamp;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.net.URL;
 
 public class PanelMenu extends JPanel implements KeyListener, ActionListener, MouseListener {
 

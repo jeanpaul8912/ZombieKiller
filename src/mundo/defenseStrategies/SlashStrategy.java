@@ -1,11 +1,11 @@
 package mundo.defenseStrategies;
 
 import interfaz.InterfazZombieKiller;
-import mundo.Boss;
-import mundo.Enemigo;
-import mundo.Zombie;
-import mundo.armas.Arma;
-import mundo.armas.blancas.Cuchillo;
+import mundo.weapons.Arma;
+import mundo.weapons.blancas.Cuchillo;
+import mundo.zombies.Boss;
+import mundo.zombies.Enemigo;
+import mundo.zombies.Zombie;
 
 public class SlashStrategy extends DefenseStrategy {
 

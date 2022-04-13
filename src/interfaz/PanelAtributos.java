@@ -1,7 +1,7 @@
 package interfaz;
 
-import mundo.Boss;
-import mundo.Zombie;
+import mundo.zombies.Boss;
+import mundo.zombies.Zombie;
 
 import javax.swing.*;
 import java.awt.*;

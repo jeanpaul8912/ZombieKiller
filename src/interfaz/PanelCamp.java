@@ -1,15 +1,15 @@
 package interfaz;
 
-import mundo.Boss;
-import mundo.Personaje;
-import mundo.SurvivorCamp;
-import mundo.Zombie;
-import mundo.armas.Arma;
-import mundo.armas.fuego.ArmaDeFuego;
+import mundo.camp.Personaje;
+import mundo.camp.SurvivorCamp;
 import mundo.defenseStrategies.ShootStrategy;
 import mundo.defenseStrategies.SlashStrategy;
 import mundo.defenseStrategies.StrategyContext;
 import mundo.defenseStrategies.ThrowGrenadeStrategy;
+import mundo.weapons.Arma;
+import mundo.weapons.fuego.ArmaDeFuego;
+import mundo.zombies.Boss;
+import mundo.zombies.Zombie;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,18 +1,18 @@
 package interfaz;
 
-import facade.ThreadsFacade;
-import mundo.Boss;
-import mundo.Caminante;
-import mundo.NombreInvalidoException;
-import mundo.Puntaje;
-import mundo.SurvivorCamp;
-import mundo.Zombie;
-import mundo.armas.Arma;
-import mundo.armas.fuego.ArmaDeFuego;
-import mundo.armas.fuego.Remington;
+import facades.ThreadsFacade;
 import mundo.attackStrategies.AttackStrategyContext;
 import mundo.attackStrategies.BossAttackStrategy;
 import mundo.attackStrategies.CaminanteAttackStrategy;
+import mundo.camp.Puntaje;
+import mundo.camp.SurvivorCamp;
+import mundo.exceptions.NombreInvalidoException;
+import mundo.weapons.Arma;
+import mundo.weapons.fuego.ArmaDeFuego;
+import mundo.weapons.fuego.Remington;
+import mundo.zombies.Boss;
+import mundo.zombies.Caminante;
+import mundo.zombies.Zombie;
 
 import javax.swing.*;
 import java.awt.*;

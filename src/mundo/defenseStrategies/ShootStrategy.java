@@ -1,9 +1,9 @@
 package mundo.defenseStrategies;
 
 import interfaz.InterfazZombieKiller;
-import mundo.Boss;
-import mundo.Zombie;
-import mundo.armas.fuego.ArmaDeFuego;
+import mundo.weapons.fuego.ArmaDeFuego;
+import mundo.zombies.Boss;
+import mundo.zombies.Zombie;
 
 public class ShootStrategy extends DefenseStrategy {
 
@@ -25,7 +25,7 @@ public class ShootStrategy extends DefenseStrategy {
         } else {
             interfaz.reproducir("disparo" + interfaz.getCampo().getPersonaje().getPrincipal().getClass().getSimpleName());
         }
-        
+
         interfaz.getPanelCampo().incorporarJefe(interfaz.getBoss());
         interfaz.getFacade().initializeWeaponsThread("armaDeFuego");
     }

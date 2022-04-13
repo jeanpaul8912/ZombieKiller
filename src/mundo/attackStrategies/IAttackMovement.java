@@ -1,6 +1,6 @@
 package mundo.attackStrategies;
 
-import mundo.Enemigo;
+import mundo.zombies.Enemigo;
 
 public interface IAttackMovement {
 

@@ -2,11 +2,11 @@ package prueba;
 
 import interfaz.InterfazZombieKiller;
 import junit.framework.TestCase;
-import mundo.Puntaje;
-import mundo.SurvivorCamp;
-import mundo.Zombie;
+import mundo.camp.Puntaje;
+import mundo.camp.SurvivorCamp;
 import mundo.defenseStrategies.StrategyContext;
 import mundo.defenseStrategies.ThrowGrenadeStrategy;
+import mundo.zombies.Zombie;
 
 import java.io.IOException;
 import java.util.List;
