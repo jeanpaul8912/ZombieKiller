@@ -1,15 +1,12 @@
 package interfaz;
 
-import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 public class PanelCreditos extends JPanel implements KeyListener {
 
-	private JLabel labCreditos;
 	private InterfazZombieKiller principal;
 
 	private static PanelCreditos panelSingleton;
@@ -18,7 +15,7 @@ public class PanelCreditos extends JPanel implements KeyListener {
 		addKeyListener(this);
 		setFocusable(true);
 		setBackground(Color.black);
-		labCreditos = new JLabel("En proceso, presiona \"Esc\" para volver");
+		JLabel labCreditos = new JLabel("En proceso, presiona \"Esc\" para volver");
 		labCreditos.setForeground(Color.white);
 		add(labCreditos);
 	}

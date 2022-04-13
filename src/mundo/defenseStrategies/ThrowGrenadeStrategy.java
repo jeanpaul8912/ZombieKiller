@@ -1,12 +1,12 @@
 package mundo.defenseStrategies;
 
 import interfaz.InterfazZombieKiller;
-import mundo.weapons.Arma;
+import mundo.weapons.Weapon;
 import mundo.zombies.Zombie;
 
 public class ThrowGrenadeStrategy extends DefenseStrategy {
 
-    private InterfazZombieKiller interfaz;
+    private final InterfazZombieKiller interfaz;
 
     public ThrowGrenadeStrategy(InterfazZombieKiller interfaz) {
         this.interfaz = interfaz;
@@ -21,7 +21,6 @@ public class ThrowGrenadeStrategy extends DefenseStrategy {
         interfaz.reproducir("bomba");
     }
 
-
     public void throwGranada() {
         Zombie actual = interfaz.getCampo().getZombNodoCercano().getAtras();
         interfaz.getCampo().getPersonaje().setEnsangrentado(false);
@@ -35,6 +34,6 @@ public class ThrowGrenadeStrategy extends DefenseStrategy {
         }
 
         interfaz.getCampo().getPersonaje().getGranadas().shoot();
-        interfaz.getCampo().getPersonaje().getGranadas().setEstado(Arma.CARGANDO);
+        interfaz.getCampo().getPersonaje().getGranadas().setEstado(Weapon.CARGANDO);
     }
 }

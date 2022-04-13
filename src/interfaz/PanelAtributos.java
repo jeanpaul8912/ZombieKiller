@@ -12,16 +12,13 @@ import static mundo.constants.ZombieKillerConstants.REMINGTON_INITIAL_RECHARGE_T
 
 public class PanelAtributos extends JPanel {
 
-	private JProgressBar[] barValores;
-	private JLabel[] labAtributos;
-
 	// La cantidad de atributos y valores debe ser la misma
 	public PanelAtributos(String[] atributos, int[] valores) {
 		setBackground(Color.BLACK);
 		setLayout(new GridLayout(valores.length, 2));
 
-		labAtributos = new JLabel[atributos.length];
-		barValores = new JProgressBar[valores.length];
+		JLabel[] labAtributos = new JLabel[atributos.length];
+		JProgressBar[] barValores = new JProgressBar[valores.length];
 
 		Font letra = new Font("Chiller", Font.ITALIC, 34);
 		for (int i = 0; i < valores.length; i++) {
@@ -36,16 +33,23 @@ public class PanelAtributos extends JPanel {
 			barValores[i].setBackground(Color.WHITE);
 			add(barValores[i]);
 
-			if (atributos[i].equals("Danio"))
-				barValores[i].setMaximum(GRENADE_DAMAGE);
-			else if (atributos[i].equals("Salud"))
-				barValores[i].setMaximum(Boss.SALUD);
-			else if (atributos[i].equals("Lentitud"))
-				barValores[i].setMaximum(Zombie.LENTITUD1);
-			else if (atributos[i].equals("Retroceso"))
-				barValores[i].setMaximum(REMINGTON_INITIAL_BACKWARD + 100);
-			else if (atributos[i].equals("Tiempo de Carga"))
-				barValores[i].setMaximum(REMINGTON_INITIAL_RECHARGE_TIME + 200);
+			switch (atributos[i]) {
+				case "Danio":
+					barValores[i].setMaximum(GRENADE_DAMAGE);
+					break;
+				case "Salud":
+					barValores[i].setMaximum(Boss.SALUD);
+					break;
+				case "Lentitud":
+					barValores[i].setMaximum(Zombie.LENTITUD1);
+					break;
+				case "Retroceso":
+					barValores[i].setMaximum(REMINGTON_INITIAL_BACKWARD + 100);
+					break;
+				case "Tiempo de Carga":
+					barValores[i].setMaximum(REMINGTON_INITIAL_RECHARGE_TIME + 200);
+					break;
+			}
 
 			barValores[i].setValue(valores[i]);
 		}

@@ -9,9 +9,9 @@ import mundo.zombies.Enemigo;
 
 public class HiloBoss extends Thread {
 
-	private InterfazZombieKiller principal;
-	private Boss jefe;
-	private SurvivorCamp campo;
+	private final InterfazZombieKiller principal;
+	private final Boss jefe;
+	private final SurvivorCamp campo;
 
 	public HiloBoss(InterfazZombieKiller principal, Boss jefe, SurvivorCamp campo) {
 		this.principal = principal;
@@ -22,7 +22,6 @@ public class HiloBoss extends Thread {
 	@Override
 	public void run() {
 		try {
-			int valorJefeCambiaPosicion = 0;
 			AttackStrategyContext attackStrategy;
 			attackStrategy = new AttackStrategyContext(new BossAttackStrategy());
 			while (campo.getEstadoJuego() != SurvivorCamp.SIN_PARTIDA) {
@@ -32,14 +31,14 @@ public class HiloBoss extends Thread {
 					if (jefe.getFrameActual() == 19)
 						principal.leDaAPersonaje();
 					else if (jefe.getFrameActual() == 21) {
-								//campo.enemigoTerminaSuGolpe(jefe);
 						attackStrategy.enemigoTerminaSuGolpe(campo);
 					}
-
 				}
+
 				while (campo.getEstadoJuego() == SurvivorCamp.PAUSADO) {
 					sleep(500);
 				}
+
 				sleep(jefe.getLentitud());
 				principal.refrescar();
 			}

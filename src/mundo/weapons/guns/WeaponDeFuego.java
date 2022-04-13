@@ -1,9 +1,9 @@
-package mundo.weapons.fuego;
+package mundo.weapons.guns;
 
-import mundo.weapons.Arma;
-import mundo.weapons.fuego.ammunition.Ammunition;
+import mundo.weapons.Weapon;
+import mundo.weapons.guns.ammunition.Ammunition;
 
-public abstract class ArmaDeFuego extends Arma {
+public abstract class WeaponDeFuego extends Weapon {
 
 	private static final long serialVersionUID = 1L;
 	/**
@@ -22,7 +22,7 @@ public abstract class ArmaDeFuego extends Arma {
 	/**
 	 * Constructor abstracto del arma de fuego
 	 */
-	public ArmaDeFuego() {
+	public WeaponDeFuego() {
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package mundo.weapons;
 
 import java.io.Serializable;
 
-public abstract class Arma implements Serializable {
+public abstract class Weapon implements Serializable {
 
     private static final long serialVersionUID = 1L;
     /**
@@ -30,7 +30,7 @@ public abstract class Arma implements Serializable {
     /**
      * Constructor abstracto de un arma que pone el estado del arma Lista
      */
-    public Arma() {
+    public Weapon() {
         estado = LISTA;
     }
 

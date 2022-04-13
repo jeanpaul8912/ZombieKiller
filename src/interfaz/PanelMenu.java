@@ -32,14 +32,14 @@ public class PanelMenu extends JPanel implements KeyListener, ActionListener, Mo
 	private static final String CREDITOS = "Creditos";
 	private static final String MEJORES_PUNTAJES = "Mejores Puntajes";
 
-	private InterfazZombieKiller principal;
-	private JButton butIniciarJuego;
-	private JButton butContinuar;
-	private JButton butCargar;
-	private JButton butGuardar;
-	private JButton butComoJugar;
-	private JButton butCreditos;
-	private JButton butPuntajes;
+	private final InterfazZombieKiller principal;
+	private final JButton butIniciarJuego;
+	private final JButton butContinuar;
+	private final JButton butCargar;
+	private final JButton butGuardar;
+	private final JButton butComoJugar;
+	private final JButton butCreditos;
+	private final JButton butPuntajes;
 
 	public PanelMenu(InterfazZombieKiller interfazZombieKiller) {
 		setFocusable(true);

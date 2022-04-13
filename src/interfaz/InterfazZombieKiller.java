@@ -7,9 +7,9 @@ import mundo.attackStrategies.CaminanteAttackStrategy;
 import mundo.camp.Puntaje;
 import mundo.camp.SurvivorCamp;
 import mundo.exceptions.NombreInvalidoException;
-import mundo.weapons.Arma;
-import mundo.weapons.fuego.ArmaDeFuego;
-import mundo.weapons.fuego.Remington;
+import mundo.weapons.Weapon;
+import mundo.weapons.guns.Remington;
+import mundo.weapons.guns.WeaponDeFuego;
 import mundo.zombies.Boss;
 import mundo.zombies.Caminante;
 import mundo.zombies.Zombie;
@@ -31,12 +31,12 @@ public class InterfazZombieKiller extends JFrame {
 	/**
 	 * Arma que el jugador tiene equipada
 	 */
-	private ArmaDeFuego armaActual;
+	private WeaponDeFuego armaActual;
 	/**
 	 * Panel del menu principal cualquier boton muestra otro panel representatitvo a
 	 * el
 	 */
-	private PanelMenu panelMenu;
+	private final PanelMenu panelMenu;
 	/**
 	 * Panel del campo de juego
 	 */
@@ -57,7 +57,7 @@ public class InterfazZombieKiller extends JFrame {
 	/**
 	 * Cursor de la mira de la pistola
 	 */
-	private Cursor miraM1911;
+	private final Cursor miraM1911;
 	/**
 	 * Cursor de la mira de la escopeta
 	 */
@@ -69,9 +69,9 @@ public class InterfazZombieKiller extends JFrame {
 
 	private Boss boss;
 
-	private ArmaDeFuego granada;
+	private WeaponDeFuego granada;
 
-	private Arma cuchillo;
+	private Weapon cuchillo;
 
 	private ThreadsFacade facade;
 
@@ -86,8 +86,8 @@ public class InterfazZombieKiller extends JFrame {
 
 		BorderLayout custom = new BorderLayout();
 		setLayout(custom);
-		ImageIcon laterales = new ImageIcon(getClass().getResource("/img/Fondo/iconozombie.png"));
-		ImageIcon fondo = new ImageIcon(getClass().getResource("/img/Fondo/fondoMenu.png"));
+		new ImageIcon(getClass().getResource("/img/Fondo/iconozombie.png"));
+		new ImageIcon(getClass().getResource("/img/Fondo/fondoMenu.png"));
 
 		miraM1911 = CursorObjectPool.getCursor("/img/Fondo/mira1p.png");
 		setCursor(miraM1911);
@@ -102,7 +102,7 @@ public class InterfazZombieKiller extends JFrame {
 
 		long finish = System.currentTimeMillis();
 		double elapsed = (finish - start) / 1000.0;
-		System.out.println(String.format("Elapsed: %1$f, Start = %2$d, Finish = %3$d", elapsed, start, finish));
+		System.out.printf("Elapsed: %1$f, Start = %2$d, Finish = %3$d%n", elapsed, start, finish);
 		facade = new ThreadsFacade(this);
 	}
 
@@ -164,10 +164,7 @@ public class InterfazZombieKiller extends JFrame {
 	 * @return true si aun se estan cargando
 	 */
 	public boolean estaCargando() {
-		boolean pintando = false;
-		if (panelCampo.getDebugGraphicsOptions() == DebugGraphics.BUFFERED_OPTION)
-			pintando = true;
-		return pintando;
+		return panelCampo.getDebugGraphicsOptions() == DebugGraphics.BUFFERED_OPTION;
 	}
 
 	/**
@@ -226,26 +223,6 @@ public class InterfazZombieKiller extends JFrame {
 	public void refrescar() {
 		panelCampo.repaint();
 	}
-
-	/**
-	 * <pre></pre>
-	 *
-	 * el juego no se encuentra pausado dispara el arma principal en la posicion
-	 * pasada por parametro
-	 *
-	 * @param posX
-	 * @param posY
-	 */
-	/*public void disparar(int posX, int posY) {
-		StrategyContext attackStrategy = new StrategyContext(new AttackShoot(posX, posY));
-		
-		if (attackStrategy.executeAttack(campo)) {
-			reproducir("leDio" + armaActual.getClass().getSimpleName());
-		} else
-			reproducir("disparo" + armaActual.getClass().getSimpleName());
-		panelCampo.incorporarJefe(boss);
-		facade.initializeWeaponsThread("armaDeFuego");
-	}*/
 
 	/**
 	 * inicia el sonido de los zombies
@@ -371,27 +348,6 @@ public class InterfazZombieKiller extends JFrame {
 		campo.setEstadoJuego(SurvivorCamp.INICIANDO_RONDA);
 		panelCampo.actualizarRonda();
 	}
-
-	/**
-	 * <pre>
-	 * la posicion en el eje Y esta por debajo de la que el zombie ataca
-	 * </pre>
-	 *
-	 * intenta acuchillar
-	 *
-	 * @param x
-	 * @param y
-	 */
-	/*public void acuchillar(int x, int y) {
-		setCuchillo(campo.getPersonaje().getCuchillo());
-
-		if (campo.acuchilla(x, y)) {
-			setCursor(cursorCuchillo);
-			reproducir("leDioCuchillo");
-			facade.initializeWeaponsThread("cuchillo");
-		} else if (armaActual.getAvailableBullets() == 0)
-			reproducir("sin_balas");
-	}/*
 
 	/**
 	 * genera el jefe con su respectivo hilo
@@ -611,7 +567,7 @@ public class InterfazZombieKiller extends JFrame {
 		this.cursorCuchillo = cursorCuchillo;
 	}
 
-	public ArmaDeFuego getArmaActual() {
+	public WeaponDeFuego getArmaActual() {
 		return armaActual;
 	}
 
@@ -623,19 +579,19 @@ public class InterfazZombieKiller extends JFrame {
 		this.boss = boss;
 	}
 
-	public ArmaDeFuego getGranada() {
+	public WeaponDeFuego getGranada() {
 		return granada;
 	}
 
-	public void setGranada(ArmaDeFuego granada) {
+	public void setGranada(WeaponDeFuego granada) {
 		this.granada = granada;
 	}
 
-	public Arma getCuchillo() {
+	public Weapon getCuchillo() {
 		return cuchillo;
 	}
 
-	public void setCuchillo(Arma cuchillo) {
+	public void setCuchillo(Weapon cuchillo) {
 		this.cuchillo = cuchillo;
 	}
 

@@ -1,35 +1,35 @@
-package mundo.weapons.fuego;
+package mundo.weapons.guns;
 
-import mundo.weapons.fuego.ammunition.Ammunition;
-import mundo.weapons.fuego.ammunition.GrenadeAmmunition;
+import mundo.weapons.guns.ammunition.Ammunition;
+import mundo.weapons.guns.ammunition.GrenadeAmmunition;
 
 import static mundo.constants.ZombieKillerConstants.GREANDE_INITIAL_RECHARGE_TIME;
 import static mundo.constants.ZombieKillerConstants.GRENADE_DAMAGE;
 import static mundo.constants.ZombieKillerConstants.GRENADE_INITIAL_BULLETS;
 
-public class Granada extends ArmaDeFuego {
+public class Grenade extends WeaponDeFuego {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Granada granada;
+	private static Grenade grenade;
 
 	/**
 	 * Constructor de la granada con su respectiva cantidad y danio
 	 */
-	private Granada(Ammunition ammunition) {
+	private Grenade(Ammunition ammunition) {
 		super();
 		setRetroceso(0);
 		this.ammunition = ammunition;
 	}
 
-	public static Granada getInstance() {
-		if (granada == null) {
+	public static Grenade getInstance() {
+		if (grenade == null) {
 			Ammunition ammunition = new GrenadeAmmunition(GREANDE_INITIAL_RECHARGE_TIME,
 					GRENADE_INITIAL_BULLETS, GRENADE_DAMAGE);
-			granada = new Granada(ammunition);
+			grenade = new Grenade(ammunition);
 		}
 
-		return granada;
+		return grenade;
 	}
 
 	@Override

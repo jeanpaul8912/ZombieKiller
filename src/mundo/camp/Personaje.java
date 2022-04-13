@@ -1,10 +1,10 @@
 package mundo.camp;
 
-import mundo.weapons.Arma;
+import mundo.weapons.Weapon;
 import mundo.weapons.WeaponFactory;
 import mundo.weapons.WeaponFactoryImpl;
-import mundo.weapons.fuego.ArmaDeFuego;
-import mundo.weapons.fuego.Granada;
+import mundo.weapons.guns.Grenade;
+import mundo.weapons.guns.WeaponDeFuego;
 import mundo.zombies.SerViviente;
 
 import java.io.Serializable;
@@ -35,20 +35,20 @@ public class Personaje implements SerViviente, Serializable {
     /**
      * Arma que el personaje usa en pantalla
      */
-    private ArmaDeFuego armaPrincipal;
+    private WeaponDeFuego armaPrincipal;
     /**
      * Arma que esta guardada
      */
-    private ArmaDeFuego armaSecundaria;
+    private WeaponDeFuego armaSecundaria;
     /**
      * granadas que posee el jugador
      */
-    private ArmaDeFuego granadas;
+    private final WeaponDeFuego granadas;
     /**
      * cuchillo del personaje, es usado cuando un zombie ataca y no tiene la
      * posibilidad de usar otra arma
      */
-    private Arma cuchillo;
+    private final Weapon cuchillo;
     /**
      * estado temporal que indica que fue herido
      */
@@ -61,9 +61,9 @@ public class Personaje implements SerViviente, Serializable {
     public Personaje() {
         salud = SALUD;
         WeaponFactory armaFactory = new WeaponFactoryImpl();
-        granadas = (Granada) armaFactory.createWeapon("granada");
-        armaPrincipal = (ArmaDeFuego) armaFactory.createWeapon("m1911");
-        armaSecundaria = (ArmaDeFuego) armaFactory.createWeapon("remington");
+        granadas = (Grenade) armaFactory.createWeapon("granada");
+        armaPrincipal = (WeaponDeFuego) armaFactory.createWeapon("m1911");
+        armaSecundaria = (WeaponDeFuego) armaFactory.createWeapon("remington");
         cuchillo = armaFactory.createWeapon("cuchillo");
     }
 
@@ -72,7 +72,7 @@ public class Personaje implements SerViviente, Serializable {
      *
      * @return cuchillo
      */
-    public Arma getCuchillo() {
+    public Weapon getCuchillo() {
         return cuchillo;
     }
 
@@ -81,7 +81,7 @@ public class Personaje implements SerViviente, Serializable {
      *
      * @return granadas
      */
-    public ArmaDeFuego getGranadas() {
+    public WeaponDeFuego getGranadas() {
         return granadas;
     }
 
@@ -109,7 +109,7 @@ public class Personaje implements SerViviente, Serializable {
      *
      * @return
      */
-    public ArmaDeFuego getPrincipal() {
+    public WeaponDeFuego getPrincipal() {
         return armaPrincipal;
     }
 
@@ -162,14 +162,14 @@ public class Personaje implements SerViviente, Serializable {
      */
     public void cargo() {
         armaPrincipal.reload();
-        armaPrincipal.setEstado(Arma.CARGANDO);
+        armaPrincipal.setEstado(Weapon.CARGANDO);
     }
 
     /**
      * cambia del arma principal a la secundaria
      */
     public void cambiarArma() {
-        ArmaDeFuego temporal = armaPrincipal;
+        WeaponDeFuego temporal = armaPrincipal;
         armaPrincipal = armaSecundaria;
         armaSecundaria = temporal;
     }

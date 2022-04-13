@@ -1,6 +1,6 @@
 package mundo.zombies;
 
-import mundo.weapons.fuego.Remington;
+import mundo.weapons.guns.Remington;
 
 import static mundo.constants.ZombieKillerConstants.REMINGTON_DAMAGE;
 
@@ -64,14 +64,6 @@ public class Boss extends Enemigo implements SeMueveEnZigzag {
         //moverEnDireccion();
     }
 
-	/*@Override
-	public void terminaDeAtacar() {
-		setEstadoActual(VOLANDO);
-		setPosY(POS_INICIAL);
-		//moverEnDireccion();
-		posHorizontal = posAleatoriaX();
-	}*/
-
     @Override
     public boolean comprobarDisparo(int x, int y, int danio) {
         boolean leDio = false;
@@ -79,7 +71,6 @@ public class Boss extends Enemigo implements SeMueveEnZigzag {
         if (x > posHorizontal + 108 && x < posHorizontal + 160 && y > getPosY() + 110 && y < getPosY() + 190) {
             if (danio == REMINGTON_DAMAGE) {
                 danioResultante = danioResultante - (POS_ATAQUE - getPosY()) / Remington.RANGO;
-//						 System.out.println(danioResultante);
             }
             setSalud((byte) (getSalud() - danioResultante));
             //hace lo mismo cuando termina de atacar que cuando lo atacan

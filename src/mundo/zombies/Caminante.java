@@ -1,6 +1,6 @@
 package mundo.zombies;
 
-import mundo.weapons.fuego.Remington;
+import mundo.weapons.guns.Remington;
 
 import static mundo.constants.ZombieKillerConstants.REMINGTON_DAMAGE;
 
@@ -66,7 +66,7 @@ public class Caminante extends Zombie implements SeMueveEnZigzag {
         boolean leDio = false;
         int danioResultante = danio;
         if (x > posX + 36 && x < posX + 118 && y > getPosY() + 5 && y < getPosY() + 188) {
-            if (getEstadoActual() != MURIENDO) {
+            if (!getEstadoActual().equals(MURIENDO)) {
                 if (y < getPosY() + 54)
                     danioResultante = ((byte) (danio + 2));
                 // el 320 define la distancia entre el zombie y el personaje

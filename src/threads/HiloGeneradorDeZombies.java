@@ -6,8 +6,8 @@ import mundo.zombies.Zombie;
 
 public class HiloGeneradorDeZombies extends Thread {
 
-	private InterfazZombieKiller principal;
-	private SurvivorCamp campo;
+	private final InterfazZombieKiller principal;
+	private final SurvivorCamp campo;
 
 	public HiloGeneradorDeZombies(InterfazZombieKiller principal, SurvivorCamp campo) {
 		this.principal = principal;
@@ -25,7 +25,6 @@ public class HiloGeneradorDeZombies extends Thread {
 			int contadorZombiesPorNivel = campo.getCantidadZombiesGenerados();
 			int nivel = campo.getRondaActual();
 			while (campo.getEstadoJuego() != SurvivorCamp.SIN_PARTIDA) {
-//				 System.out.println(contadorZombiesPorNivel);
 
 				if (contadorZombiesPorNivel % SurvivorCamp.NUMERO_ZOMBIES_RONDA == 0) { // Si se terminan los Zombies
 					while (!campo.getZombNodoLejano().getAlFrente().getEstadoActual().equals(Zombie.NODO)
@@ -47,7 +46,6 @@ public class HiloGeneradorDeZombies extends Thread {
 				}
 
 				if (nivel < 10 && campo.getEstadoJuego() != SurvivorCamp.SIN_PARTIDA) {
-//					System.out.println("llama al metodo de generar zombie desde el hilo generador");
 					if (!campo.getZombNodoLejano().getAlFrente().getEstadoActual().equals(Zombie.MURIENDO_INCENDIADO))
 						principal.generarZombie(nivel);
 					contadorZombiesPorNivel++;
@@ -61,6 +59,7 @@ public class HiloGeneradorDeZombies extends Thread {
 					sleep(500);
 				}
 			}
+
 			if (campo.getPersonaje().getSalud() <= 0) {
 				principal.reproducir("meMuero");
 				principal.juegoTerminado();

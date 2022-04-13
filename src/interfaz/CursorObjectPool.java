@@ -1,16 +1,13 @@
 package interfaz;
 
-import java.awt.Cursor;
-import java.awt.Point;
-import java.awt.Toolkit;
+import javax.swing.*;
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.ImageIcon;
-
 public final class CursorObjectPool {
 
-	private static Map<String, Cursor> cursors;
+	private static final Map<String, Cursor> cursors;
 
 	static {
 		cursors = new HashMap<>();
@@ -39,8 +36,7 @@ public final class CursorObjectPool {
 	}
 
 	public static Cursor getCursor(String path) {
-		Cursor cursor = cursors.get(path);
-		return cursor;
+		return cursors.get(path);
 	}
 
 }

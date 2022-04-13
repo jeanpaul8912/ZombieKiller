@@ -1,15 +1,15 @@
 package mundo.defenseStrategies;
 
 import interfaz.InterfazZombieKiller;
-import mundo.weapons.fuego.ArmaDeFuego;
+import mundo.weapons.guns.WeaponDeFuego;
 import mundo.zombies.Boss;
 import mundo.zombies.Zombie;
 
 public class ShootStrategy extends DefenseStrategy {
 
-    private int xPosition;
-    private int yPosition;
-    private InterfazZombieKiller interfaz;
+    private final int xPosition;
+    private final int yPosition;
+    private final InterfazZombieKiller interfaz;
 
     public ShootStrategy(InterfazZombieKiller interfaz, int xPosition, int yPosition) {
         this.interfaz = interfaz;
@@ -33,7 +33,7 @@ public class ShootStrategy extends DefenseStrategy {
 
     public boolean shoot() {
         interfaz.getCampo().getPersonaje().getPrincipal().shoot();
-        interfaz.getCampo().getPersonaje().getPrincipal().setEstado(ArmaDeFuego.RECARGANDO);
+        interfaz.getCampo().getPersonaje().getPrincipal().setEstado(WeaponDeFuego.RECARGANDO);
         boolean leDio = false;
         Zombie actual = interfaz.getCampo().getZombNodoCercano().getAtras();
 

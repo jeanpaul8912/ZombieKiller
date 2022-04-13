@@ -1,13 +1,13 @@
-package mundo.weapons.fuego;
+package mundo.weapons.guns;
 
-import mundo.weapons.fuego.ammunition.Ammunition;
+import mundo.weapons.guns.ammunition.Ammunition;
 
 import static mundo.constants.ZombieKillerConstants.REMINGTON_DAMAGE;
 import static mundo.constants.ZombieKillerConstants.REMINGTON_INITIAL_BACKWARD;
 import static mundo.constants.ZombieKillerConstants.REMINGTON_INITIAL_BULLETS;
 import static mundo.constants.ZombieKillerConstants.REMINGTON_INITIAL_RECHARGE_TIME;
 
-public class Remington extends ArmaDeFuego {
+public class Remington extends WeaponDeFuego {
 
 	private static final long serialVersionUID = 1L;
 

@@ -1,18 +1,13 @@
 package interfaz;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
+import java.awt.*;
 
 public class PanelDatosCuriosos extends JPanel {
 
-	private JLabel[] titulos;
-	private JLabel[] datos;
-	private JLabel[] instrucciones;
+	private final JLabel[] titulos;
+	private final JLabel[] datos;
+	private final JLabel[] instrucciones;
 
 	public PanelDatosCuriosos() {
 		setBackground(Color.black);

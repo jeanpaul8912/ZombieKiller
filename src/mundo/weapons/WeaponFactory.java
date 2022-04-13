@@ -2,5 +2,5 @@ package mundo.weapons;
 
 public interface WeaponFactory {
 
-	Arma createWeapon(String typeWeapon);
+	Weapon createWeapon(String typeWeapon);
 }

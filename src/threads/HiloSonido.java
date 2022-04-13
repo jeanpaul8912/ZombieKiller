@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class HiloSonido extends Thread {
 
-	private String ruta;
+	private final String ruta;
 	private Clip sonido;
 
 	public HiloSonido(String ruta) {

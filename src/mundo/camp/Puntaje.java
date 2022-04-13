@@ -9,21 +9,21 @@ public class Puntaje implements Serializable, Comparable<Puntaje> {
 	/**
 	 * valor entero que representa el score del personaje en la partida finalizada
 	 */
-	private int puntaje;
+	private final int puntaje;
 	/**
 	 * valor entero que representa la cantidad de bajas con tiro a la cabeza del
 	 * personaje
 	 */
-	private int tirosALaCabeza;
+	private final int tirosALaCabeza;
 	/**
 	 * valor entero que representa la cantidad de bajas del personaje en la partida
 	 * finalizada
 	 */
-	private int bajas;
+	private final int bajas;
 	/**
 	 * valor entero que representa el nombre del personaje en la partida terminada
 	 */
-	private String nombreKiller;
+	private final String nombreKiller;
 	/**
 	 * Puntaje mayor que el presente, esta referencia para ordenar en forma de arbol
 	 * binario

@@ -20,16 +20,12 @@ public class PanelPuntajes extends JPanel implements ActionListener {
 	private static final String BUSCAR_NOMBRE = "Buscar por nombre";
 	private static final String SALIR = "salir";
 
-	private JLabel titulo;
-	private JLabel[] labScores;
-	private JLabel[] labNombres;
-	private JLabel[] labHeadShots;
-	private JLabel[] labBajas;
-	private JButton butFiltroHeadShot;
-	private JButton butBuscarNombre;
-	private JButton butFiltroBajas;
-	private JButton butFiltroScore;
-	private JButton butSalir;
+	private final JLabel titulo;
+	private final JButton butFiltroHeadShot;
+	private final JButton butBuscarNombre;
+	private final JButton butFiltroBajas;
+	private final JButton butFiltroScore;
+	private final JButton butSalir;
 	private InterfazZombieKiller principal;
 
 	private static PanelPuntajes panelSingleton;
@@ -86,10 +82,10 @@ public class PanelPuntajes extends JPanel implements ActionListener {
 	}
 
 	private void generaryAgregarLabels(List<Puntaje> scores) {
-		labScores = new JLabel[scores.size()];
-		labNombres = new JLabel[scores.size()];
-		labHeadShots = new JLabel[scores.size()];
-		labBajas = new JLabel[scores.size()];
+		JLabel[] labScores = new JLabel[scores.size()];
+		JLabel[] labNombres = new JLabel[scores.size()];
+		JLabel[] labHeadShots = new JLabel[scores.size()];
+		JLabel[] labBajas = new JLabel[scores.size()];
 		JPanel auxPuntajes = new JPanel();
 		auxPuntajes.setBackground(Color.black);
 		if (scores.size() > 10) {
@@ -158,14 +154,20 @@ public class PanelPuntajes extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		String c = arg0.getActionCommand();
-		if (c.equals(ORDEN_BAJAS))
-			principal.ordenarPorBajas();
-		else if (c.equals(ORDEN_HEADSHOT))
-			principal.ordenarPorHeadshot();
-		else if (c.equals(BUSCAR_NOMBRE))
-			principal.buscarPorNombre();
-		else if (c.equals(ORDEN_SCORE))
-			principal.ordenarPorScore();
+		switch (c) {
+			case ORDEN_BAJAS:
+				principal.ordenarPorBajas();
+				break;
+			case ORDEN_HEADSHOT:
+				principal.ordenarPorHeadshot();
+				break;
+			case BUSCAR_NOMBRE:
+				principal.buscarPorNombre();
+				break;
+			case ORDEN_SCORE:
+				principal.ordenarPorScore();
+				break;
+		}
 	}
 
 	public void configurarBoton(JButton aEditar, URL rutaImagen, String comando) {

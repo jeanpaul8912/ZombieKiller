@@ -5,7 +5,7 @@ import mundo.zombies.Enemigo;
 
 public class AttackStrategyContext {
 	
-	private AttackStrategy attackStrategy;
+	private final AttackStrategy attackStrategy;
 
 	public AttackStrategyContext(AttackStrategy attackStrategy) {
 		this.attackStrategy = attackStrategy;

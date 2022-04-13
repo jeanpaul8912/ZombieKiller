@@ -14,8 +14,10 @@ import java.util.List;
 public class SurvivorCampTest extends TestCase {
 
     private SurvivorCamp sC;
-    private InterfazZombieKiller interfaz = new InterfazZombieKiller();
-    private StrategyContext attackStrategy = new StrategyContext(new ThrowGrenadeStrategy(interfaz));
+
+    private final InterfazZombieKiller interfaz = new InterfazZombieKiller();
+
+    private final StrategyContext attackStrategy = new StrategyContext(new ThrowGrenadeStrategy(interfaz));
 
     /**
      * Crea un campo con 5 zombies vivos y de la ronda 5

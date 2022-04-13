@@ -1,4 +1,4 @@
-package mundo.weapons.fuego.ammunition;
+package mundo.weapons.guns.ammunition;
 
 import java.io.Serializable;
 
@@ -30,11 +30,7 @@ public class Ammunition implements Serializable {
     }
 
     public void setAvailableBullets(int availableBullets) {
-        this.availableBullets = availableBullets;
-
-        if (availableBullets < 0) {
-            this.availableBullets = 0;
-        }
+        this.availableBullets = Math.max(availableBullets, 0);
     }
 
     public int getMaxBullets() {

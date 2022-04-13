@@ -12,9 +12,9 @@ import mundo.zombies.Zombie;
 
 public class HiloEnemigo extends Thread {
 
-	private InterfazZombieKiller principal;
-	private Zombie nodoCercano;
-	private SurvivorCamp campo;
+	private final InterfazZombieKiller principal;
+	private final Zombie nodoCercano;
+	private final SurvivorCamp campo;
 
 	public HiloEnemigo(InterfazZombieKiller principal, Zombie nodoCercano, SurvivorCamp campo) {
 		this.principal = principal;

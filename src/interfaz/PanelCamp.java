@@ -6,8 +6,8 @@ import mundo.defenseStrategies.ShootStrategy;
 import mundo.defenseStrategies.SlashStrategy;
 import mundo.defenseStrategies.StrategyContext;
 import mundo.defenseStrategies.ThrowGrenadeStrategy;
-import mundo.weapons.Arma;
-import mundo.weapons.fuego.ArmaDeFuego;
+import mundo.weapons.Weapon;
+import mundo.weapons.guns.WeaponDeFuego;
 import mundo.zombies.Boss;
 import mundo.zombies.Zombie;
 
@@ -23,21 +23,19 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
 
     private static final long serialVersionUID = 3350712174974197350L;
 
-    private JLabel labPuntaje;
-    private JLabel labBajas;
-    private JLabel labRonda;
-    private JLabel labTirosALaCabeza;
-    private JProgressBar labVidas;
-    private JLabel labGranadas;
-    private JLabel labBalas;
-    private JPanel mostrador;
+    private final JLabel labPuntaje;
+    private final JLabel labBajas;
+    private final JLabel labRonda;
+    private final JProgressBar labVidas;
+    private final JLabel labGranadas;
+    private final JLabel labBalas;
+    private final JPanel mostrador;
     private Point ultimoDisparo;
-    private ImageIcon[] imagenesCargadas;
 
     private InterfazZombieKiller principal;
     private Zombie chombiMasLejano;
     private Personaje matador;
-    private ArmaDeFuego armaEquipada;
+    private WeaponDeFuego armaEquipada;
     private Boss chief;
     private StrategyContext attackStrategy;
 
@@ -61,7 +59,7 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
         labRonda.setFont(tipo);
         labRonda.setForeground(Color.white);
 
-        labTirosALaCabeza = new JLabel();
+        JLabel labTirosALaCabeza = new JLabel();
         labTirosALaCabeza.setFont(tipo);
         labTirosALaCabeza.setForeground(Color.white);
 
@@ -118,7 +116,7 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
         chombiMasLejano = chombi;
     }
 
-    public void actualizarEquipada(ArmaDeFuego armaEquipada) {
+    public void actualizarEquipada(WeaponDeFuego armaEquipada) {
         this.armaEquipada = armaEquipada;
         String armaActual = armaEquipada.getClass().getSimpleName();
         labBalas.setIcon(new ImageIcon(getClass().getResource("/img/Fondo/" + armaActual + ".png")));
@@ -185,14 +183,14 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
             fondo = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/img/Fondo/sangre.png"));
             arg0.drawImage(fondo, ataqueX - 33, ataqueY - 35, null);
         }
-        if (matador.getCuchillo().getEstado().equals(Arma.CARGANDO)) {
+        if (matador.getCuchillo().getEstado().equals(Weapon.CARGANDO)) {
             fondo = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/Fondo/punialada.png"));
             arg0.drawImage(fondo, ataqueX - 160, ataqueY - 30, null);
-        } else if (armaEquipada.getEstado().equals(ArmaDeFuego.RECARGANDO)) {
+        } else if (armaEquipada.getEstado().equals(WeaponDeFuego.RECARGANDO)) {
             fondo = Toolkit.getDefaultToolkit().getImage(this.getClass()
                     .getResource("/img/Fondo/disparo" + armaEquipada.getClass().getSimpleName() + ".png"));
             arg0.drawImage(fondo, ataqueX - 33, ataqueY - 35, null);
-        } else if (matador.getGranadas().getEstado().equals(Arma.CARGANDO)) {
+        } else if (matador.getGranadas().getEstado().equals(Weapon.CARGANDO)) {
             fondo = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/Fondo/explosion.png"));
             arg0.drawImage(fondo, 250, 133, null);
         }
@@ -208,14 +206,12 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
     }
 
     private void cargarImagenes() {
-        imagenesCargadas = new ImageIcon[205];
+        ImageIcon[] imagenesCargadas = new ImageIcon[205];
         ImageIcon actual;
         int contador = 0;
         // 31 es la mayor cantidad de imagenes de una animacion
         Formatter formato;
         for (int i = 0; i <= 31; i++) {
-            // System.out.println("/img/Caminante/caminando/" +
-            // formato.format("%02d", i) + ".png");
             formato = new Formatter();
             actual = new ImageIcon(
                     getClass().getResource("/img/Rastrero/caminando/" + formato.format("%02d", i) + ".png"));
@@ -301,7 +297,6 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
         actual = new ImageIcon(getClass().getResource("/img/Fondo/escenario-fondo-azul.png"));
         imagenesCargadas[contador] = actual;
         contador++;
-        // System.out.println(contador);
     }
 
     @Override
@@ -327,11 +322,11 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
             if (arg0.getButton() == MouseEvent.BUTTON1) {
                 int xPosition = arg0.getX();
                 int yPosition = arg0.getY();
-                if (armaEquipada.getEstado().equals(Arma.LISTA) && armaEquipada.getAvailableBullets() > 0) {
+                if (armaEquipada.getEstado().equals(Weapon.LISTA) && armaEquipada.getAvailableBullets() > 0) {
                     ultimoDisparo = arg0.getPoint();
                     attackStrategy = new StrategyContext(new ShootStrategy(principal, xPosition, yPosition));
                     attackStrategy.executeAttack();
-                } else if (yPosition > Zombie.POS_ATAQUE && matador.getCuchillo().getEstado().equals(Arma.LISTA)) {
+                } else if (yPosition > Zombie.POS_ATAQUE && matador.getCuchillo().getEstado().equals(Weapon.LISTA)) {
                     ultimoDisparo = arg0.getPoint();
                     attackStrategy = new StrategyContext(new SlashStrategy(principal, xPosition, yPosition));
                     attackStrategy.executeAttack();

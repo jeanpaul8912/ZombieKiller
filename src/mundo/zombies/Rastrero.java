@@ -1,6 +1,6 @@
 package mundo.zombies;
 
-import mundo.weapons.fuego.Remington;
+import mundo.weapons.guns.Remington;
 
 import static mundo.constants.ZombieKillerConstants.REMINGTON_DAMAGE;
 

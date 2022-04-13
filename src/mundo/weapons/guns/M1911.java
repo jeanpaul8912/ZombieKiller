@@ -1,13 +1,13 @@
-package mundo.weapons.fuego;
+package mundo.weapons.guns;
 
-import mundo.weapons.fuego.ammunition.Ammunition;
+import mundo.weapons.guns.ammunition.Ammunition;
 
 import static mundo.constants.ZombieKillerConstants.M1911_DAMAGE;
 import static mundo.constants.ZombieKillerConstants.M1911_INITIAL_BACKWARD;
 import static mundo.constants.ZombieKillerConstants.M1911_INITIAL_BULLETS;
 import static mundo.constants.ZombieKillerConstants.M1911_INITIAL_RECHARGE_TIME;
 
-public class M1911 extends ArmaDeFuego {
+public class M1911 extends WeaponDeFuego {
 
 	private static final long serialVersionUID = 1L;
 

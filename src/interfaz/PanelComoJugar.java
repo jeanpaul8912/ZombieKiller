@@ -1,24 +1,15 @@
 package interfaz;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.URL;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-
 public class PanelComoJugar extends JPanel {
 
 	private static final String SALIR = "Salir";
-	private PanelDatosCuriosos panelDatosC;
-	private PanelArmas panelArmas;
-	private JScrollPane scroll;
-	private JButton butSalir;
+	private final JButton butSalir;
 	private InterfazZombieKiller principal;
 
 	private static PanelComoJugar panelSingleton;
@@ -26,8 +17,8 @@ public class PanelComoJugar extends JPanel {
 	public PanelComoJugar() {
 		setBackground(Color.BLACK);
 		setLayout(new BorderLayout());
-		panelDatosC = new PanelDatosCuriosos();
-		panelArmas = new PanelArmas(principal);
+		PanelDatosCuriosos panelDatosC = new PanelDatosCuriosos();
+		PanelArmas panelArmas = new PanelArmas(principal);
 		butSalir = new JButton();
 		configurarBoton(butSalir, getClass().getResource("/img/Palabras/volver.png"), SALIR);
 		butSalir.setActionCommand(SALIR);
@@ -35,7 +26,7 @@ public class PanelComoJugar extends JPanel {
 		aux.setLayout(new BorderLayout());
 		aux.add(panelDatosC, BorderLayout.NORTH);
 		aux.add(panelArmas, BorderLayout.CENTER);
-		scroll = new JScrollPane(aux);
+		JScrollPane scroll = new JScrollPane(aux);
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		add(scroll, BorderLayout.CENTER);

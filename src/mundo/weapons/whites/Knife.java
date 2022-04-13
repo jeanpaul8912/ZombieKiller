@@ -1,12 +1,12 @@
-package mundo.weapons.blancas;
+package mundo.weapons.whites;
 
-import mundo.weapons.Arma;
+import mundo.weapons.Weapon;
 
-public class Cuchillo extends Arma {
+public class Knife extends Weapon {
 
 	private static final long serialVersionUID = 1L;
 
-	private static Cuchillo cuchillo;
+	private static Knife knife;
 	/**
 	 * valor incambiable del danio que causa el cuchillo
 	 */
@@ -15,17 +15,17 @@ public class Cuchillo extends Arma {
 	/**
 	 * Constructor del cuchillo con su respectivo danio
 	 */
-	public Cuchillo() {
+	public Knife() {
 		setRetroceso(200);
 		setDanio(DANIO);
 	}
 
-	public static Cuchillo getInstancia() {
-		if (cuchillo == null) {
-			cuchillo = new Cuchillo();
+	public static Knife getInstancia() {
+		if (knife == null) {
+			knife = new Knife();
 		}
 
-		return cuchillo;
+		return knife;
 	}
 
 }

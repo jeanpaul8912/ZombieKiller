@@ -1,6 +1,6 @@
 package interfaz;
 
-import mundo.weapons.blancas.Cuchillo;
+import mundo.weapons.whites.Knife;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,13 +17,14 @@ import static mundo.constants.ZombieKillerConstants.REMINGTON_INITIAL_RECHARGE_T
 public class PanelArmas extends JPanel implements ActionListener {
 
     private static final String ANTERIOR = "a";
+
     private static final String POSTERIOR = "p";
 
-    private JLabel[] labArmas;
-    private PanelAtributos[] panelAtributos;
-    private JButton butAnterior;
-    private JButton butPosterior;
-    private InterfazZombieKiller principal;
+    private final JLabel[] labArmas;
+
+    private final PanelAtributos[] panelAtributos;
+
+    private final InterfazZombieKiller principal;
 
     public PanelArmas(InterfazZombieKiller inter) {
         setBackground(Color.BLACK);
@@ -33,11 +34,11 @@ public class PanelArmas extends JPanel implements ActionListener {
         labArmas = new JLabel[4];
         panelAtributos = new PanelAtributos[4];
 
-        butAnterior = new JButton("<");
+        JButton butAnterior = new JButton("<");
         butAnterior.setActionCommand(ANTERIOR);
         butAnterior.addActionListener(this);
 
-        butPosterior = new JButton(">");
+        JButton butPosterior = new JButton(">");
         butPosterior.setActionCommand(POSTERIOR);
         butPosterior.addActionListener(this);
 
@@ -96,7 +97,7 @@ public class PanelArmas extends JPanel implements ActionListener {
         panelAtributos[2] = new PanelAtributos(atributosGrenade, valoresGrenade);
 
         String[] atributosCuchillo = {"Danio"};
-        int[] valoresCuchillo = {Cuchillo.DANIO};
+        int[] valoresCuchillo = {Knife.DANIO};
         panelAtributos[3] = new PanelAtributos(atributosCuchillo, valoresCuchillo);
     }
 

@@ -4,5 +4,5 @@ import mundo.zombies.Enemigo;
 
 public interface IAttackMovement {
 
-	public void moverEnDireccion(Enemigo enemy);
+	void moverEnDireccion(Enemigo enemy);
 }

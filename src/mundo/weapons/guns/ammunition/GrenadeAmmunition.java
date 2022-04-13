@@ -1,4 +1,4 @@
-package mundo.weapons.fuego.ammunition;
+package mundo.weapons.guns.ammunition;
 
 public class GrenadeAmmunition extends Ammunition {
 
