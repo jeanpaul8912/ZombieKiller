@@ -18,7 +18,7 @@ public class ShootStrategy extends DefenseStrategy {
     }
 
     @Override
-    public void executeAttack() {
+    public void executeDefense() {
 
         if (shoot()) {
             interfaz.reproducir("leDio" + interfaz.getCampo().getPersonaje().getPrincipal().getClass().getSimpleName());

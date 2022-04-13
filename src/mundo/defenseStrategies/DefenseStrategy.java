@@ -2,6 +2,6 @@ package mundo.defenseStrategies;
 
 public abstract class DefenseStrategy {
 
-	public abstract void executeAttack();
+	public abstract void executeDefense();
 
 }

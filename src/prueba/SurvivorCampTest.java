@@ -4,7 +4,7 @@ import interfaz.InterfazZombieKiller;
 import junit.framework.TestCase;
 import mundo.camp.Puntaje;
 import mundo.camp.SurvivorCamp;
-import mundo.defenseStrategies.StrategyContext;
+import mundo.defenseStrategies.DefenseStrategyContext;
 import mundo.defenseStrategies.ThrowGrenadeStrategy;
 import mundo.zombies.Zombie;
 
@@ -17,7 +17,7 @@ public class SurvivorCampTest extends TestCase {
 
     private final InterfazZombieKiller interfaz = new InterfazZombieKiller();
 
-    private final StrategyContext attackStrategy = new StrategyContext(new ThrowGrenadeStrategy(interfaz));
+    private final DefenseStrategyContext defenseStrategy = new DefenseStrategyContext(new ThrowGrenadeStrategy(interfaz));
 
     /**
      * Crea un campo con 5 zombies vivos y de la ronda 5
@@ -110,7 +110,7 @@ public class SurvivorCampTest extends TestCase {
      */
     public void testseLanzoGranada1() {
         setupEscenario2();
-        attackStrategy.executeAttack();
+        defenseStrategy.executeDefense();
         interfaz.setCampo(sC);
         Zombie actual = sC.getZombNodoCercano().getAtras();
         int cantidadDeZombies = 0;
@@ -129,7 +129,7 @@ public class SurvivorCampTest extends TestCase {
      */
     public void testseLanzoGranada2() {
         setupEscenario3();
-        attackStrategy.executeAttack();
+        defenseStrategy.executeDefense();
         interfaz.setCampo(sC);
         Zombie actual = sC.getZombNodoCercano().getAtras();
         int cantidadDeZombiesafectadosPorGranada = 0;

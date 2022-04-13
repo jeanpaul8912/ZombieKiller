@@ -22,7 +22,7 @@ public class SlashStrategy extends DefenseStrategy {
     }
 
     @Override
-    public void executeAttack() {
+    public void executeDefense() {
 
         interfaz.setCuchillo(interfaz.getCampo().getPersonaje().getCuchillo());
         if (slash()) {
