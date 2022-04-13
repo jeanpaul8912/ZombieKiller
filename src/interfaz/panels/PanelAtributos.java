@@ -4,6 +4,8 @@ import mundo.zombies.Boss;
 import mundo.zombies.Zombie;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
 
 import static mundo.constants.ZombieKillerConstants.GRENADE_DAMAGE;
@@ -12,18 +14,21 @@ import static mundo.constants.ZombieKillerConstants.REMINGTON_INITIAL_RECHARGE_T
 
 public class PanelAtributos extends JPanel {
 
+	private static final long serialVersionUID = 1L;
+
 	// La cantidad de atributos y valores debe ser la misma
 	public PanelAtributos(String[] atributos, int[] valores) {
 		setBackground(Color.BLACK);
-		setLayout(new GridLayout(valores.length, 2));
-
+		setLayout(new GridLayout(valores.length, 2, 20, 20));
+		this.setBorder(new EmptyBorder(50,30,20,220));
 		JLabel[] labAtributos = new JLabel[atributos.length];
 		JProgressBar[] barValores = new JProgressBar[valores.length];
 
-		Font letra = new Font("Chiller", Font.ITALIC, 34);
+		Font letra = new Font("Agency FB", Font.BOLD, 24);
 		for (int i = 0; i < valores.length; i++) {
 
 			labAtributos[i] = new JLabel(atributos[i]);
+			labAtributos[i].setHorizontalAlignment(SwingConstants.RIGHT);
 			labAtributos[i].setFont(letra);
 			labAtributos[i].setForeground(Color.white);
 			add(labAtributos[i]);
