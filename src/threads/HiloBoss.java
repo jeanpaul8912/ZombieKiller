@@ -5,7 +5,10 @@ import mundo.attackStrategies.AttackStrategyContext;
 import mundo.attackStrategies.BossAttackStrategy;
 import mundo.camp.SurvivorCamp;
 import mundo.zombies.Boss;
-import mundo.zombies.Enemigo;
+
+import static mundo.constants.CampConstants.PAUSADO;
+import static mundo.constants.CampConstants.SIN_PARTIDA;
+import static mundo.constants.ZombiesConstants.ATACANDO;
 
 public class HiloBoss extends Thread {
 
@@ -24,10 +27,10 @@ public class HiloBoss extends Thread {
 		try {
 			AttackStrategyContext attackStrategy;
 			attackStrategy = new AttackStrategyContext(new BossAttackStrategy());
-			while (campo.getEstadoJuego() != SurvivorCamp.SIN_PARTIDA) {
+			while (campo.getEstadoJuego() != SIN_PARTIDA) {
 				attackStrategy.executeAttack(jefe);
 				String estado = jefe.getEstadoActual();
-				if (estado.equals(Enemigo.ATACANDO)) {
+				if (estado.equals(ATACANDO)) {
 					if (jefe.getFrameActual() == 19)
 						principal.leDaAPersonaje();
 					else if (jefe.getFrameActual() == 21) {
@@ -35,7 +38,7 @@ public class HiloBoss extends Thread {
 					}
 				}
 
-				while (campo.getEstadoJuego() == SurvivorCamp.PAUSADO) {
+				while (campo.getEstadoJuego() == PAUSADO) {
 					sleep(500);
 				}
 

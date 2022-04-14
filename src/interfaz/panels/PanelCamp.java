@@ -2,15 +2,15 @@ package interfaz.panels;
 
 import interfaz.InterfazZombieKiller;
 import mundo.camp.Personaje;
-import mundo.camp.SurvivorCamp;
+import mundo.defenseStrategies.DefenseStrategyContext;
 import mundo.defenseStrategies.ShootStrategy;
 import mundo.defenseStrategies.SlashStrategy;
-import mundo.defenseStrategies.DefenseStrategyContext;
 import mundo.defenseStrategies.ThrowGrenadeStrategy;
 import mundo.weapons.Weapon;
 import mundo.weapons.guns.GunWeapon;
 import mundo.zombies.Boss;
 import mundo.zombies.Zombie;
+import mundo.zombies.ZombieZigZag;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +19,11 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Formatter;
+
+import static mundo.constants.CampConstants.EN_CURSO;
+import static mundo.constants.CampConstants.INICIANDO_RONDA;
+import static mundo.constants.ZombiesConstants.NODO;
+import static mundo.constants.ZombiesConstants.POS_ATAQUE;
 
 public class PanelCamp extends JPanel implements MouseListener, KeyListener {
 
@@ -34,7 +39,7 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
     private Point ultimoDisparo;
 
     private InterfazZombieKiller principal;
-    private Zombie chombiMasLejano;
+    private ZombieZigZag chombiMasLejano;
     private Personaje matador;
     private GunWeapon armaEquipada;
     private Boss chief;
@@ -113,7 +118,7 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
         principal = interfazZombieKiller;
     }
 
-    public void actualizarChombis(Zombie chombi) {
+    public void actualizarChombis(ZombieZigZag chombi) {
         chombiMasLejano = chombi;
     }
 
@@ -158,13 +163,13 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
         }
         Zombie aPintar = chombiMasLejano.getAlFrente();
         if (aPintar != null)
-            while (!aPintar.getEstadoActual().equals(Zombie.NODO)) {
+            while (!aPintar.getEstadoActual().equals(NODO)) {
                 try {
                     int posX = aPintar.getPosX();
                     int posY = aPintar.getPosY();
 
                     Image imgZombie = Toolkit.getDefaultToolkit()
-                            .getImage(this.getClass().getResource(aPintar.getURL()));
+                            .getImage(this.getClass().getResource(aPintar.getURL(principal.getCampo().getRondaActual())));
                     arg0.drawImage(imgZombie, posX, posY, null);
                     aPintar = aPintar.getAlFrente();
                 } catch (Exception e) {
@@ -174,7 +179,8 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
                 // System.out.println(chombis.size());
             }
         if (chief != null) {
-            Image chiefAPintar = Toolkit.getDefaultToolkit().getImage(getClass().getResource(chief.getURL()));
+            Image chiefAPintar = Toolkit.getDefaultToolkit().getImage(getClass().getResource(
+                    chief.getURL(principal.getCampo().getRondaActual())));
             arg0.drawImage(chiefAPintar, chief.getPosX(), chief.getPosY(), null);
         }
 
@@ -199,7 +205,7 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
             fondo = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/Fondo/boss_ataca.png"));
             arg0.drawImage(fondo, 0, 0, null);
         }
-        if (principal.getEstadoPartida() == SurvivorCamp.INICIANDO_RONDA) {
+        if (principal.getEstadoPartida() == INICIANDO_RONDA) {
             fondo = Toolkit.getDefaultToolkit()
                     .getImage(getClass().getResource("/img/Palabras/ronda" + principal.darRondaActual() + ".png"));
             arg0.drawImage(fondo, 100, 300, null);
@@ -313,13 +319,13 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
 
     @Override
     public void mouseExited(MouseEvent arg0) {
-        if (principal.getEstadoPartida() == SurvivorCamp.EN_CURSO)
+        if (principal.getEstadoPartida() == EN_CURSO)
             principal.pausarJuego();
     }
 
     @Override
     public void mousePressed(MouseEvent arg0) {
-        if (principal.getEstadoPartida() == SurvivorCamp.EN_CURSO) {
+        if (principal.getEstadoPartida() == EN_CURSO) {
             if (arg0.getButton() == MouseEvent.BUTTON1) {
                 int xPosition = arg0.getX();
                 int yPosition = arg0.getY();
@@ -327,7 +333,7 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
                     ultimoDisparo = arg0.getPoint();
                     defenseStrategy = new DefenseStrategyContext(new ShootStrategy(principal, xPosition, yPosition));
                     defenseStrategy.executeDefense();
-                } else if (yPosition > Zombie.POS_ATAQUE && matador.getCuchillo().getEstado().equals(Weapon.LISTA)) {
+                } else if (yPosition > POS_ATAQUE && matador.getCuchillo().getEstado().equals(Weapon.LISTA)) {
                     ultimoDisparo = arg0.getPoint();
                     defenseStrategy = new DefenseStrategyContext(new SlashStrategy(principal, xPosition, yPosition));
                     defenseStrategy.executeDefense();
@@ -353,7 +359,7 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (principal.getEstadoPartida() == SurvivorCamp.EN_CURSO) {
+        if (principal.getEstadoPartida() == EN_CURSO) {
             if (e.getKeyCode() == KeyEvent.VK_ESCAPE || e.getKeyCode() == KeyEvent.VK_ALT
                     || e.getKeyCode() == KeyEvent.VK_P)
                 principal.pausarJuego();
@@ -361,8 +367,8 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
                 principal.cambiarArma();
                 actualizarEquipada(matador.getPrincipal());
             } else if (e.getKeyCode() == KeyEvent.VK_SPACE && matador.getGranadas().getAvailableBullets() > 0) {
-            	defenseStrategy = new DefenseStrategyContext(new ThrowGrenadeStrategy(principal));
-            	defenseStrategy.executeDefense();
+                defenseStrategy = new DefenseStrategyContext(new ThrowGrenadeStrategy(principal));
+                defenseStrategy.executeDefense();
                 labGranadas.setText("" + principal.getGranada().getAvailableBullets());
             }
         }

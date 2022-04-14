@@ -3,9 +3,9 @@ package mundo.weapons.guns;
 import mundo.weapons.guns.ammunition.Ammunition;
 import mundo.weapons.guns.ammunition.GrenadeAmmunition;
 
-import static mundo.constants.ZombieKillerConstants.GREANDE_INITIAL_RECHARGE_TIME;
-import static mundo.constants.ZombieKillerConstants.GRENADE_DAMAGE;
-import static mundo.constants.ZombieKillerConstants.GRENADE_INITIAL_BULLETS;
+import static mundo.constants.WeaponsConstants.GREANDE_INITIAL_RECHARGE_TIME;
+import static mundo.constants.WeaponsConstants.GRENADE_DAMAGE;
+import static mundo.constants.WeaponsConstants.GRENADE_INITIAL_BULLETS;
 
 public class Grenade extends GunWeapon {
 

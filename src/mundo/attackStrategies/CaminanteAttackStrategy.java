@@ -1,8 +1,16 @@
 package mundo.attackStrategies;
 
-import mundo.camp.SurvivorCamp;
 import mundo.zombies.Caminante;
 import mundo.zombies.Enemigo;
+
+import static mundo.constants.CampConstants.ANCHO_PANTALLA;
+import static mundo.constants.ZombiesConstants.ANCHO_IMAGEN;
+import static mundo.constants.ZombiesConstants.ATACANDO;
+import static mundo.constants.ZombiesConstants.CAMINANDO;
+import static mundo.constants.ZombiesConstants.GRUNIENDO;
+import static mundo.constants.ZombiesConstants.MURIENDO;
+import static mundo.constants.ZombiesConstants.MURIENDO_INCENDIADO;
+import static mundo.constants.ZombiesConstants.POS_ATAQUE;
 
 public class CaminanteAttackStrategy extends AttackStrategy implements IAttackMovement {
 
@@ -16,11 +24,11 @@ public class CaminanteAttackStrategy extends AttackStrategy implements IAttackMo
 
     public void attack(Caminante caminante) {
         switch (caminante.getEstadoActual()) {
-            case Caminante.CAMINANDO:
-                if (caminante.getPosY() > Caminante.POS_ATAQUE) {
-                    caminante.setEstadoActual(Caminante.ATACANDO);
+            case CAMINANDO:
+                if (caminante.getPosY() > POS_ATAQUE) {
+                    caminante.setEstadoActual(ATACANDO);
                 } else {
-                    if (caminante.getPosX() > SurvivorCamp.ANCHO_PANTALLA - Caminante.ANCHO_IMAGEN || caminante.getPosX() < 0) {
+                    if (caminante.getPosX() > ANCHO_PANTALLA - ANCHO_IMAGEN || caminante.getPosX() < 0) {
                         moverEnDireccion(caminante);
                     }
 
@@ -34,22 +42,22 @@ public class CaminanteAttackStrategy extends AttackStrategy implements IAttackMo
                     }
                 }
                 break;
-            case Caminante.ATACANDO:
+            case ATACANDO:
                 if (caminante.getFrameActual() < 16) {
                     caminante.setFrameActual((byte) (caminante.getFrameActual() + 1));
                 }
                 break;
-            case Caminante.MURIENDO:
-            case Caminante.MURIENDO_INCENDIADO:
+            case MURIENDO:
+            case MURIENDO_INCENDIADO:
                 if (caminante.getFrameActual() < 17) {
                     caminante.setFrameActual((byte) (caminante.getFrameActual() + 1));
                 }
                 break;
-            case Caminante.GRUNIENDO:
+            case GRUNIENDO:
                 if (caminante.getFrameActual() < 17) {
                     caminante.setFrameActual((byte) (caminante.getFrameActual() + 1));
                 } else {
-                    caminante.setEstadoActual(Caminante.ATACANDO);
+                    caminante.setEstadoActual(ATACANDO);
                 }
                 break;
         }
@@ -68,6 +76,6 @@ public class CaminanteAttackStrategy extends AttackStrategy implements IAttackMo
     }
 
     public void terminaDeAtacar() {
-        caminante.setEstadoActual(Caminante.GRUNIENDO);
+        caminante.setEstadoActual(GRUNIENDO);
     }
 }

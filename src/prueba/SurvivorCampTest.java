@@ -11,6 +11,10 @@ import mundo.zombies.Zombie;
 import java.io.IOException;
 import java.util.List;
 
+import static mundo.constants.ZombiesConstants.MURIENDO;
+import static mundo.constants.ZombiesConstants.MURIENDO_INCENDIADO;
+import static mundo.constants.ZombiesConstants.NODO;
+
 public class SurvivorCampTest extends TestCase {
 
     private SurvivorCamp sC;
@@ -41,7 +45,7 @@ public class SurvivorCampTest extends TestCase {
         sC.generarZombie(4);
         sC.generarZombie(4);
         sC.generarZombie(4);
-        sC.getZombNodoCercano().getAtras().setEstadoActual(Zombie.MURIENDO);
+        sC.getZombNodoCercano().getAtras().setEstadoActual(MURIENDO);
     }
 
     /**
@@ -114,8 +118,9 @@ public class SurvivorCampTest extends TestCase {
         interfaz.setCampo(sC);
         Zombie actual = sC.getZombNodoCercano().getAtras();
         int cantidadDeZombies = 0;
-        while (!actual.getEstadoActual().equals(Zombie.NODO)) {
-            assertEquals("Se esperaba que todos los zombies estuvieran en llamas", Zombie.MURIENDO_INCENDIADO,
+
+        while (!actual.getEstadoActual().equals(NODO)) {
+            assertEquals("Se esperaba que todos los zombies estuvieran en llamas", MURIENDO_INCENDIADO,
                     actual.getEstadoActual());
             cantidadDeZombies++;
             actual = actual.getAtras();
@@ -134,10 +139,10 @@ public class SurvivorCampTest extends TestCase {
         Zombie actual = sC.getZombNodoCercano().getAtras();
         int cantidadDeZombiesafectadosPorGranada = 0;
         assertEquals("Se esperaba que el primer zombie no estuviera en llamas porque ya estaba muerto por balas",
-                Zombie.MURIENDO, actual.getEstadoActual());
+                MURIENDO, actual.getEstadoActual());
         actual = actual.getAtras();
-        while (!actual.getEstadoActual().equals(Zombie.NODO)) {
-            assertEquals("Se esperaba que todos los zombies estuvieran en llamas", Zombie.MURIENDO_INCENDIADO,
+        while (!actual.getEstadoActual().equals(NODO)) {
+            assertEquals("Se esperaba que todos los zombies estuvieran en llamas", MURIENDO_INCENDIADO,
                     actual.getEstadoActual());
             cantidadDeZombiesafectadosPorGranada++;
             actual = actual.getAtras();

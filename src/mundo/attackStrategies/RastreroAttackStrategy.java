@@ -3,6 +3,12 @@ package mundo.attackStrategies;
 import mundo.zombies.Enemigo;
 import mundo.zombies.Rastrero;
 
+import static mundo.constants.ZombiesConstants.ATACANDO;
+import static mundo.constants.ZombiesConstants.CAMINANDO;
+import static mundo.constants.ZombiesConstants.MURIENDO;
+import static mundo.constants.ZombiesConstants.MURIENDO_INCENDIADO;
+import static mundo.constants.ZombiesConstants.POS_ATAQUE;
+
 public class RastreroAttackStrategy extends AttackStrategy {
 
     private Rastrero rastrero;
@@ -15,9 +21,9 @@ public class RastreroAttackStrategy extends AttackStrategy {
 
     public void attack(Rastrero rastrero) {
         switch (rastrero.getEstadoActual()) {
-            case Rastrero.CAMINANDO:
-                if (rastrero.getPosY() > Rastrero.POS_ATAQUE) {
-                    rastrero.setEstadoActual(Rastrero.ATACANDO);
+            case CAMINANDO:
+                if (rastrero.getPosY() > POS_ATAQUE) {
+                    rastrero.setEstadoActual(ATACANDO);
                 } else {
                     rastrero.setPosY(rastrero.getPosY() + 3);
                     if (rastrero.getFrameActual() == 31) {
@@ -27,13 +33,13 @@ public class RastreroAttackStrategy extends AttackStrategy {
                     }
                 }
                 break;
-            case Rastrero.ATACANDO:
+            case ATACANDO:
                 if (rastrero.getFrameActual() < 16) {
                     rastrero.setFrameActual((byte) (rastrero.getFrameActual() + 1));
                 }
                 break;
-            case Rastrero.MURIENDO:
-            case Rastrero.MURIENDO_INCENDIADO:
+            case MURIENDO:
+            case MURIENDO_INCENDIADO:
                 if (rastrero.getFrameActual() < 11) {
                     rastrero.setFrameActual((byte) (rastrero.getFrameActual() + 1));
                 }
@@ -42,6 +48,6 @@ public class RastreroAttackStrategy extends AttackStrategy {
     }
 
     public void terminaDeAtacar() {
-        rastrero.setEstadoActual(Rastrero.MURIENDO);
+        rastrero.setEstadoActual(MURIENDO);
     }
 }

@@ -10,12 +10,12 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static mundo.constants.ZombieKillerConstants.M1911_DAMAGE;
-import static mundo.constants.ZombieKillerConstants.M1911_INITIAL_BACKWARD;
-import static mundo.constants.ZombieKillerConstants.M1911_INITIAL_RECHARGE_TIME;
-import static mundo.constants.ZombieKillerConstants.REMINGTON_DAMAGE;
-import static mundo.constants.ZombieKillerConstants.REMINGTON_INITIAL_BACKWARD;
-import static mundo.constants.ZombieKillerConstants.REMINGTON_INITIAL_RECHARGE_TIME;
+import static mundo.constants.WeaponsConstants.M1911_DAMAGE;
+import static mundo.constants.WeaponsConstants.M1911_INITIAL_BACKWARD;
+import static mundo.constants.WeaponsConstants.M1911_INITIAL_RECHARGE_TIME;
+import static mundo.constants.WeaponsConstants.REMINGTON_DAMAGE;
+import static mundo.constants.WeaponsConstants.REMINGTON_INITIAL_BACKWARD;
+import static mundo.constants.WeaponsConstants.REMINGTON_INITIAL_RECHARGE_TIME;
 
 public class PanelArmas extends JPanel{
 
@@ -32,7 +32,7 @@ public class PanelArmas extends JPanel{
 		setLayout(new BorderLayout());
 		labArmas = new JLabel[4];
 		panelAtributos = new PanelAtributos[4];	
-		JLabel infoImagen = new JLabel("Click en la imagen para conocer más armas.");
+		JLabel infoImagen = new JLabel("Click en la imagen para conocer mï¿½s armas.");
 		infoImagen.setFont(new Font("Agency FB", Font.BOLD, 20));
 		infoImagen.setForeground(Color.WHITE);
 		infoImagen.setBorder(new EmptyBorder(0,80,0,0));
@@ -42,15 +42,15 @@ public class PanelArmas extends JPanel{
 		perfil = new ImageIcon(getClass().getResource("/img/Fondo/perfilRemington.png")).getImage().getScaledInstance(300, 300, 300);
 	    iconoEscalado = new ImageIcon(perfil);
 		labArmas[0] = new JLabel (iconoEscalado);
-		labArmas[0].setToolTipText("Fusiles de cerrojo fabricados para emplear munición de diversos calibres.");
+		labArmas[0].setToolTipText("Fusiles de cerrojo fabricados para emplear municiï¿½n de diversos calibres.");
 		perfil = new ImageIcon(getClass().getResource("/img/Fondo/perfilM1911.png")).getImage().getScaledInstance(300, 200, 300);
 	    iconoEscalado = new ImageIcon(perfil);
 	    labArmas[1] = new JLabel (iconoEscalado);
-	    labArmas[1].setToolTipText("Arma de fuego de repetición que se caracteriza por llevar la munición en un tambor.");
+	    labArmas[1].setToolTipText("Arma de fuego de repeticiï¿½n que se caracteriza por llevar la municiï¿½n en un tambor.");
 	    perfil = new ImageIcon(getClass().getResource("/img/Fondo/perfilGranada.png")).getImage().getScaledInstance(300, 200, 300);
 	    iconoEscalado = new ImageIcon(perfil);
 	    labArmas[2] = new JLabel (iconoEscalado);
-	    labArmas[2].setToolTipText("Proyectil pequeño que contiene explosivos o gas en su interior y que se lanza a mano.");
+	    labArmas[2].setToolTipText("Proyectil pequeï¿½o que contiene explosivos o gas en su interior y que se lanza a mano.");
 	    perfil = new ImageIcon(getClass().getResource("/img/Fondo/perfilCuchillo.png")).getImage().getScaledInstance(300, 200, 300);
 	    iconoEscalado = new ImageIcon(perfil);
 	    labArmas[3] = new JLabel (iconoEscalado);

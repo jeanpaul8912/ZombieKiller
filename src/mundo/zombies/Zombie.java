@@ -1,67 +1,17 @@
 package mundo.zombies;
 
+import static mundo.constants.ZombiesConstants.CAMINANDO;
+import static mundo.constants.ZombiesConstants.LENTITUD1;
+import static mundo.constants.ZombiesConstants.LENTITUD2;
+import static mundo.constants.ZombiesConstants.LENTITUD3;
+import static mundo.constants.ZombiesConstants.LENTITUD4;
+import static mundo.constants.ZombiesConstants.NODO;
+import static mundo.constants.ZombiesConstants.SALUD1;
+import static mundo.constants.ZombiesConstants.SALUD2;
+import static mundo.constants.ZombiesConstants.SALUD3;
+import static mundo.constants.ZombiesConstants.SALUD4;
+
 public abstract class Zombie extends Enemigo {
-
-	/**
-	 * valor incambiable de la lentitud rango 1
-	 */
-	public static final short LENTITUD1 = 50;
-	/**
-	 * valor incambiable de la lentitud rango 2
-	 */
-	public static final short LENTITUD2 = 45;
-	/**
-	 * valor incambiable de la lentitud rango 3
-	 */
-	public static final short LENTITUD3 = 40;
-	/**
-	 * valor incambiable de la lentitud rango 4
-	 */
-	public static final short LENTITUD4 = 30;
-
-	/**
-	 * valor incambiable de la salud rango 1
-	 */
-	public static final byte SALUD1 = 3;
-	/**
-	 * valor incambiable de la salud rango 2
-	 */
-	public static final byte SALUD2 = 5;
-	/**
-	 * valor incambiable de la salud rango 3
-	 */
-	public static final byte SALUD3 = 6;
-	/**
-	 * valor incambiable de la salud rango 4
-	 */
-	public static final byte SALUD4 = 8;
-
-	/**
-	 * caracteres que representan el estado Caminando del zombie
-	 */
-	public static final String CAMINANDO = "caminando";
-	/**
-	 * caracteres que representan el estado Muriendo del zombie
-	 */
-	public static final String MURIENDO = "muriendo";
-	/**
-	 * caracteres que representan el estado Muriendo de tiro a la cabeza del zombie
-	 */
-	public static final String MURIENDO_HEADSHOT = "muriendo";
-	/**
-	 * caracteres que representan el estado Muriendo incendiado o por granada del
-	 * zombie
-	 */
-	public static final String MURIENDO_INCENDIADO = "muriendoIncendiado";
-	/**
-	 * caracteres que representan el estado Nodo del zombie, este no se cambia nunca
-	 */
-	public static final String NODO = "nodo";
-
-	/**
-	 * valor incambiable que representa el ancho de toda imagen zombie
-	 */
-	public static final int ANCHO_IMAGEN = 150;
 
 	/**
 	 * zombie que se encuentra al frente o fue generado antes que este
@@ -73,6 +23,10 @@ public abstract class Zombie extends Enemigo {
 	private Zombie atras;
 
 	public int posX;
+
+	protected int direccionX;
+
+	protected int direccionY;
 
 	/**
 	 * Constructor de un zombie nodo
@@ -207,8 +161,20 @@ public abstract class Zombie extends Enemigo {
 		this.posX = posAleatoriaX();
 	}
 
+	public void setPosXForClone(int posX) {
+		this.posX = posX;
+	}
+
 	public int getPosX() {
 		return this.posX;
+	}
+
+	public void setDireccionX(int direccionX) {
+		this.direccionX = direccionX;
+	}
+
+	public void setDireccionY(int direccionY) {
+		this.direccionY = direccionY;
 	}
 
 }
