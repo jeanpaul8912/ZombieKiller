@@ -18,10 +18,12 @@ public final class CommandUtils {
 		panelCamp.setPrincipal(interfazZombieKiller);
 		interfazZombieKiller.setPanelCampo(panelCamp);
 		SurvivorCamp campo = interfazZombieKiller.getCampo();
+
 		if(campo == null) {
 			SurvivorCamp survivorCamp = new SurvivorCamp();
 			interfazZombieKiller.setCampo(survivorCamp);
 		}
+
 		Cursor remingtonCursor = CursorObjectPool.getCursor("/img/Fondo/mira1.png");
 		interfazZombieKiller.setMiraRemington(remingtonCursor);
 

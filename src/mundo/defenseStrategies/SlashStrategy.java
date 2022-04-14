@@ -3,9 +3,12 @@ package mundo.defenseStrategies;
 import interfaz.InterfazZombieKiller;
 import mundo.weapons.Weapon;
 import mundo.weapons.whites.Knife;
-import mundo.zombies.Boss;
-import mundo.zombies.Enemigo;
 import mundo.zombies.Zombie;
+
+import static mundo.constants.ZombiesConstants.ATACANDO;
+import static mundo.constants.ZombiesConstants.DERROTADO;
+import static mundo.constants.ZombiesConstants.MURIENDO;
+import static mundo.constants.ZombiesConstants.NODO;
 
 public class SlashStrategy extends DefenseStrategy {
 
@@ -38,10 +41,10 @@ public class SlashStrategy extends DefenseStrategy {
         Zombie aAcuchillar = interfaz.getCampo().getZombNodoCercano().getAtras();
         boolean seEncontro = false;
 
-        while (!aAcuchillar.getEstadoActual().equals(Zombie.NODO) && !seEncontro) {
-            if (aAcuchillar.getEstadoActual().equals(Zombie.ATACANDO)
+        while (!aAcuchillar.getEstadoActual().equals(NODO) && !seEncontro) {
+            if (aAcuchillar.getEstadoActual().equals(ATACANDO)
                     && aAcuchillar.comprobarDisparo(xPosition, yPosition, Knife.DANIO)) {
-                if (aAcuchillar.getEstadoActual().equals(Zombie.MURIENDO))
+                if (aAcuchillar.getEstadoActual().equals(MURIENDO))
                     interfaz.getCampo().getPersonaje().aumentarScore(40);
                 seEncontro = true;
                 interfaz.getCampo().getPersonaje().setEnsangrentado(false);
@@ -51,12 +54,12 @@ public class SlashStrategy extends DefenseStrategy {
         }
 
         if (interfaz.getCampo().getJefe() != null) {
-            if (interfaz.getCampo().getJefe().getEstadoActual().equals(Enemigo.ATACANDO) &&
+            if (interfaz.getCampo().getJefe().getEstadoActual().equals(ATACANDO) &&
                     interfaz.getCampo().getJefe().comprobarDisparo(xPosition, yPosition, Knife.DANIO)) {
                 interfaz.getCampo().getPersonaje().setEnsangrentado(false);
                 interfaz.getCampo().getPersonaje().getCuchillo().setEstado(Weapon.CARGANDO);
                 seEncontro = true;
-                if (interfaz.getCampo().getJefe().getEstadoActual().equals(Boss.DERROTADO)) {
+                if (interfaz.getCampo().getJefe().getEstadoActual().equals(DERROTADO)) {
                     interfaz.getCampo().getPersonaje().aumentarScore(100);
                     interfaz.getCampo().setEstadoJuego(interfaz.getCampo().getSinPartida());
                 }

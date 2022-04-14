@@ -2,7 +2,11 @@ package mundo.zombies;
 
 import mundo.weapons.guns.Remington;
 
-import static mundo.constants.ZombieKillerConstants.REMINGTON_DAMAGE;
+import java.util.Formatter;
+
+import static mundo.constants.WeaponsConstants.REMINGTON_DAMAGE;
+import static mundo.constants.ZombiesConstants.MURIENDO;
+import static mundo.constants.ZombiesConstants.POS_ATAQUE;
 
 public class Rastrero extends Zombie {
 
@@ -57,6 +61,14 @@ public class Rastrero extends Zombie {
         }
 
         return leDio;
+    }
+
+    @Override
+    public String getURL(int level) {
+        try (Formatter formatter = new Formatter()) {
+            return "/img/" + getClass().getSimpleName() + "/" + getEstadoActual() + "/"
+                    + formatter.format("%02d", getFrameActual()) + ".png";
+        }
     }
 
 }

@@ -2,10 +2,10 @@ package mundo.weapons.guns;
 
 import mundo.weapons.guns.ammunition.Ammunition;
 
-import static mundo.constants.ZombieKillerConstants.REMINGTON_DAMAGE;
-import static mundo.constants.ZombieKillerConstants.REMINGTON_INITIAL_BACKWARD;
-import static mundo.constants.ZombieKillerConstants.REMINGTON_INITIAL_BULLETS;
-import static mundo.constants.ZombieKillerConstants.REMINGTON_INITIAL_RECHARGE_TIME;
+import static mundo.constants.WeaponsConstants.REMINGTON_DAMAGE;
+import static mundo.constants.WeaponsConstants.REMINGTON_INITIAL_BACKWARD;
+import static mundo.constants.WeaponsConstants.REMINGTON_INITIAL_BULLETS;
+import static mundo.constants.WeaponsConstants.REMINGTON_INITIAL_RECHARGE_TIME;
 
 public class Remington extends GunWeapon {
 

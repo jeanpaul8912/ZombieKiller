@@ -2,30 +2,18 @@ package mundo.zombies;
 
 import mundo.weapons.guns.Remington;
 
-import static mundo.constants.ZombieKillerConstants.REMINGTON_DAMAGE;
+import java.util.Formatter;
+
+import static mundo.constants.WeaponsConstants.REMINGTON_DAMAGE;
+import static mundo.constants.ZombiesConstants.DERROTADO;
+import static mundo.constants.ZombiesConstants.LENTITUD_BOSS;
+import static mundo.constants.ZombiesConstants.POS_ATAQUE;
+import static mundo.constants.ZombiesConstants.POS_INICIAL;
+import static mundo.constants.ZombiesConstants.SALUD_BOSS;
+import static mundo.constants.ZombiesConstants.VOLANDO;
 
 public class Boss extends Enemigo implements SeMueveEnZigzag {
 
-    /**
-     * cadena de caracteres incambiable que representa el estado del jefe volando
-     */
-    public static final String VOLANDO = "volando";
-    /**
-     * cadena de caracteres incambiable que representa el estado del jefe derrotado
-     */
-    public static final String DERROTADO = "derrotado";
-    /**
-     * valor incambiable que representa la salud del jefe
-     */
-    public static final byte SALUD = 16;
-    /**
-     * valor incambiable que representa la lentitud del jefe
-     */
-    public static final short LENTITUD = 14;
-    /**
-     * valor incambiable que representa el ancho de la imagen del boss
-     */
-    public static final int ANCHO_IMAGEN = 294;
 
     /**
      * valor numerico entero que representa la direccion o velocidad en el eje X
@@ -46,8 +34,8 @@ public class Boss extends Enemigo implements SeMueveEnZigzag {
     public Boss() {
         super();
         setEstadoActual(VOLANDO);
-        setSalud(SALUD);
-        setLentitud(LENTITUD);
+        setSalud(SALUD_BOSS);
+        setLentitud(LENTITUD_BOSS);
     }
 
     /**
@@ -60,29 +48,58 @@ public class Boss extends Enemigo implements SeMueveEnZigzag {
         super();
         setEstadoActual(VOLANDO);
         setSalud(salud);
-        setLentitud(LENTITUD);
-        //moverEnDireccion();
+        setLentitud(LENTITUD_BOSS);
+        moverEnDireccion();
+    }
+
+    public void terminaDeAtacar() {
+        setEstadoActual(VOLANDO);
+        setPosY(POS_INICIAL);
+        moverEnDireccion();
+        posHorizontal = posAleatoriaX();
+    }
+
+    public void moverEnDireccion() {
+        direccionX = (int) (Math.random() * 13) - 6;
+        if (direccionX > 0 && direccionX < 6)
+            direccionY = 6 - direccionX;
+        else if (direccionX <= 0 && direccionX > -6)
+            direccionY = 6 + direccionX;
+        else
+            direccionY = 2;
     }
 
     @Override
     public boolean comprobarDisparo(int x, int y, int danio) {
         boolean leDio = false;
         int danioResultante = danio;
+
         if (x > posHorizontal + 108 && x < posHorizontal + 160 && y > getPosY() + 110 && y < getPosY() + 190) {
             if (danio == REMINGTON_DAMAGE) {
                 danioResultante = danioResultante - (POS_ATAQUE - getPosY()) / Remington.RANGO;
             }
+
             setSalud((byte) (getSalud() - danioResultante));
-            //hace lo mismo cuando termina de atacar que cuando lo atacan
-            //terminaDeAtacar();
+            terminaDeAtacar();
+
             if (getSalud() <= 0) {
                 setEstadoActual(DERROTADO);
                 posHorizontal = 365;
                 setPosY(POS_INICIAL);
             }
+
             leDio = true;
         }
+
         return leDio;
+    }
+
+    @Override
+    public String getURL(int level) {
+        try (Formatter formatter = new Formatter()) {
+            return "/img/" + getClass().getSimpleName() + "/" + getEstadoActual() + "/"
+                    + formatter.format("%02d", getFrameActual()) + ".png";
+        }
     }
 
     @Override

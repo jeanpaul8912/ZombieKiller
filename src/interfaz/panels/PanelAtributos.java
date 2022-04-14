@@ -1,16 +1,14 @@
 package interfaz.panels;
 
-import mundo.zombies.Boss;
-import mundo.zombies.Zombie;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 import java.awt.*;
 
-import static mundo.constants.ZombieKillerConstants.GRENADE_DAMAGE;
-import static mundo.constants.ZombieKillerConstants.REMINGTON_INITIAL_BACKWARD;
-import static mundo.constants.ZombieKillerConstants.REMINGTON_INITIAL_RECHARGE_TIME;
+import static mundo.constants.WeaponsConstants.GRENADE_DAMAGE;
+import static mundo.constants.WeaponsConstants.REMINGTON_INITIAL_BACKWARD;
+import static mundo.constants.WeaponsConstants.REMINGTON_INITIAL_RECHARGE_TIME;
+import static mundo.constants.ZombiesConstants.LENTITUD1;
+import static mundo.constants.ZombiesConstants.SALUD_BOSS;
 
 public class PanelAtributos extends JPanel {
 
@@ -43,10 +41,10 @@ public class PanelAtributos extends JPanel {
 					barValores[i].setMaximum(GRENADE_DAMAGE);
 					break;
 				case "Salud":
-					barValores[i].setMaximum(Boss.SALUD);
+					barValores[i].setMaximum(SALUD_BOSS);
 					break;
 				case "Lentitud":
-					barValores[i].setMaximum(Zombie.LENTITUD1);
+					barValores[i].setMaximum(LENTITUD1);
 					break;
 				case "Retroceso":
 					barValores[i].setMaximum(REMINGTON_INITIAL_BACKWARD + 100);

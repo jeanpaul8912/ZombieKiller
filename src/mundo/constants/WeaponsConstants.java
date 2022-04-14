@@ -1,8 +1,8 @@
 package mundo.constants;
 
-public final class ZombieKillerConstants {
+public final class WeaponsConstants {
 
-	private ZombieKillerConstants() {
+	private WeaponsConstants() {
 
 	}
 
@@ -26,7 +26,7 @@ public final class ZombieKillerConstants {
 	public static final int GREANDE_INITIAL_RECHARGE_TIME = 200;
 
 	//M1911
-	public static final byte M1911_DAMAGE = 1;
+	public static final byte M1911_DAMAGE = 10;
 
 	public static final int M1911_INITIAL_BULLETS = 8;
 
@@ -42,5 +42,10 @@ public final class ZombieKillerConstants {
 	public static final int REMINGTON_INITIAL_RECHARGE_TIME = 1400;
 
 	public static final int REMINGTON_INITIAL_BACKWARD = 400;
+
+	//Improves
+	public static final int IMPROVE_RECHARGE_TIME = 10;
+
+	public static final int MINIMUM_RECHARGE_TIME = 150;
 
 }

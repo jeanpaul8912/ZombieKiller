@@ -9,6 +9,7 @@ import mundo.zombies.Caminante;
 import mundo.zombies.Enemigo;
 import mundo.zombies.Rastrero;
 import mundo.zombies.Zombie;
+import mundo.zombies.ZombieZigZag;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -24,52 +25,37 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import static mundo.constants.ZombieKillerConstants.LEVELS_TO_IMPROVE_GUNS;
+import static mundo.constants.CampConstants.ANCHO_PANTALLA;
+import static mundo.constants.CampConstants.EN_CURSO;
+import static mundo.constants.CampConstants.PAUSADO;
+import static mundo.constants.CampConstants.SIN_PARTIDA;
+import static mundo.constants.WeaponsConstants.LEVELS_TO_IMPROVE_GUNS;
+import static mundo.constants.ZombiesConstants.ANCHO_IMAGEN;
+import static mundo.constants.ZombiesConstants.ATACANDO;
+import static mundo.constants.ZombiesConstants.CAMINANDO;
+import static mundo.constants.ZombiesConstants.DERROTADO;
+import static mundo.constants.ZombiesConstants.MURIENDO;
+import static mundo.constants.ZombiesConstants.MURIENDO_INCENDIADO;
+import static mundo.constants.ZombiesConstants.NODO;
+import static mundo.constants.ZombiesConstants.NUMERO_ZOMBIES_RONDA;
+import static mundo.constants.ZombiesConstants.POS_ATAQUE;
+import static mundo.constants.ZombiesConstants.POS_INICIAL;
 
 public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 
-    /**
-     * entero incambiable que representa los pixeles del ancho del juego
-     */
-    public static final int ANCHO_PANTALLA = 1000;
-    /**
-     * entero incambiable que representa los pixeles del alto del juego
-     */
-    public static final int ALTO_PANTALLA = 720;
-    /**
-     * entero incambiable que representa el numero de zombies que aparecen en
-     * una ronda
-     */
-    public static final int NUMERO_ZOMBIES_RONDA = 16;
-    /**
-     * char incambiable que representa el estado del juego pausado
-     */
-    public static final char PAUSADO = 'P';
-    /**
-     * char incambiable que representa el estado del juego en curso
-     */
-    public static final char EN_CURSO = 'J';
-    /**
-     * char incambiable que representa el estado del juego sin una partida
-     * iniciada
-     */
-    public static final char SIN_PARTIDA = 'N';
 
-    /**
-     * char incambiable que representa el estado del juego iniciando la ronda
-     */
-    public static final char INICIANDO_RONDA = 'I';
+    public static final int CREEPING_ZOMBIE = 1;
 
     /**
      * Zombie que no aparece en el juego pero sirve como nodo para modificar la
      * lista facilmente nodo mas cercano al personaje (abajo)
      */
-    private final Zombie zombNodoLejano;
+    private ZombieZigZag zombNodoLejano;
     /**
      * Zombie que no aparece en el juego pero sirve como nodo para modificar la
      * lista facilmente nodo mas lejano al personaje (arriba)
      */
-    private final Zombie zombNodoCercano;
+    private ZombieZigZag zombNodoCercano;
     /**
      * Personaje en el campo de batalla que esta disparando
      */
@@ -109,12 +95,13 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 
     private final Enemigo enemigoCaminante;
 
-    private final Enemigo enemigoRastero;
+    private Enemigo enemigoRastero;
 
     /**
      * Constructor de la clase principal del mundo
      */
     public SurvivorCamp() {
+        enemigoCaminante = new Caminante();
         personaje = new Personaje();
         estadoJuego = SIN_PARTIDA;
         rondaActual = 0;
@@ -124,7 +111,6 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
         zombNodoLejano.setAlFrente(zombNodoCercano);
         zombNodoCercano.setAtras(zombNodoLejano);
         mejoresPuntajes = new ArrayList<>();
-        enemigoCaminante = new Caminante();
         enemigoRastero = new Rastrero((short) 0, zombNodoLejano);
         jefe = new Boss();
     }
@@ -220,10 +206,10 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
         if ((level == 3 || level == 4 || level == 8)) {
             tipoZombie = (int) (Math.random() * 2);
         } else if (level == 6 || level == 9) {
-            tipoZombie = 1;
+            tipoZombie = CREEPING_ZOMBIE;
         }
 
-        if (tipoZombie == 1) {
+        if (tipoZombie == CREEPING_ZOMBIE) {
             zombie = (Rastrero) enemigoRastero.clonar();
         } else {
             zombie = (Caminante) enemigoCaminante.clonar();
@@ -244,7 +230,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
         Zombie actual = zombNodoCercano.getAtras();
         int contador = 0;
 
-        while (!actual.getEstadoActual().equals(Zombie.NODO)) {
+        while (!actual.getEstadoActual().equals(NODO)) {
             contador++;
             actual = actual.getAtras();
         }
@@ -257,10 +243,12 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
      * @return estado final
      */
     public char pausarJuego() {
-        if (estadoJuego == PAUSADO)
+        if (estadoJuego == PAUSADO) {
             estadoJuego = EN_CURSO;
-        else
+        } else {
             estadoJuego = PAUSADO;
+        }
+
         return estadoJuego;
     }
 
@@ -269,7 +257,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
      *
      * @return zombie nodo de arriba
      */
-    public Zombie getZombNodoLejano() {
+    public ZombieZigZag getZombNodoLejano() {
         return zombNodoLejano;
     }
 
@@ -352,7 +340,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
             if (personaje.getMatanza() % NUMERO_ZOMBIES_RONDA == 0) {
                 ronda = personaje.getMatanza() / NUMERO_ZOMBIES_RONDA;
             } else {
-                ronda = personaje.getMatanza() / NUMERO_ZOMBIES_RONDA + 1;
+                ronda = personaje.getMatanza() / NUMERO_ZOMBIES_RONDA + CREEPING_ZOMBIE;
             }
 
             String lineaActual = bR.readLine();
@@ -366,8 +354,8 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
                     Zombie aAgregar = null;
                     byte salud = Byte.parseByte(datos[0]);
 
-                    if (datos.length > 1) {
-                        int posX = Integer.parseInt(datos[1]);
+                    if (datos.length > CREEPING_ZOMBIE) {
+                        int posX = Integer.parseInt(datos[CREEPING_ZOMBIE]);
                         int posY = Integer.parseInt(datos[2]);
                         String estadoActual = datos[3];
                         byte frameActual = Byte.parseByte(datos[4]);
@@ -391,8 +379,8 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
                         } else
                             masCercano = aAgregar;
                         ultimoAgregado = aAgregar;
-                        if (!aAgregar.getEstadoActual().equals(Zombie.MURIENDO)
-                                && !aAgregar.getEstadoActual().equals(Zombie.MURIENDO_INCENDIADO))
+                        if (!aAgregar.getEstadoActual().equals(MURIENDO)
+                                && !aAgregar.getEstadoActual().equals(MURIENDO_INCENDIADO))
                             contadorZombiesEnPantalla++;
                     } else
                         cargaBossSiExiste(ronda, salud);
@@ -470,10 +458,10 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
      */
     private void verificarDatosZombie(int posX, int posY, String estadoActual, byte frameActual)
             throws DatosErroneosException {
-        if (posX > ANCHO_PANTALLA - Zombie.ANCHO_IMAGEN || posX < 0 || posY > Zombie.POS_ATAQUE
-                || posY < Zombie.POS_INICIAL || frameActual > 31
-                || (!estadoActual.equals(Zombie.CAMINANDO) && !estadoActual.equals(Zombie.MURIENDO_INCENDIADO)
-                && !estadoActual.equals(Zombie.MURIENDO) && !estadoActual.equals(Zombie.ATACANDO)))
+        if (posX > ANCHO_PANTALLA - ANCHO_IMAGEN || posX < 0 || posY > POS_ATAQUE
+                || posY < POS_INICIAL || frameActual > 31
+                || (!estadoActual.equals(CAMINANDO) && !estadoActual.equals(MURIENDO_INCENDIADO)
+                && !estadoActual.equals(MURIENDO) && !estadoActual.equals(ATACANDO)))
             throw new DatosErroneosException();
     }
 
@@ -526,7 +514,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
      * @return el texto con la informacion de los zombies
      */
     private String escribirDatosZombie(String datos, Zombie actual) {
-        if (actual.getEstadoActual().equals(Zombie.NODO))
+        if (actual.getEstadoActual().equals(NODO))
             return datos;
         datos += "\n" + actual.getSalud() + "_" + actual.getPosX() + "_" + actual.getPosY() + "_"
                 + actual.getEstadoActual() + "_" + actual.getFrameActual();
@@ -566,10 +554,10 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
         Zombie aAcuchillar = zombNodoCercano.getAtras();
         boolean seEncontro = false;
 
-        while (!aAcuchillar.getEstadoActual().equals(Zombie.NODO) && !seEncontro) {
-            if (aAcuchillar.getEstadoActual().equals(Zombie.ATACANDO)
+        while (!aAcuchillar.getEstadoActual().equals(NODO) && !seEncontro) {
+            if (aAcuchillar.getEstadoActual().equals(ATACANDO)
                     && aAcuchillar.comprobarDisparo(x, y, Knife.DANIO)) {
-                if (aAcuchillar.getEstadoActual().equals(Zombie.MURIENDO)) {
+                if (aAcuchillar.getEstadoActual().equals(MURIENDO)) {
                     personaje.aumentarScore(40);
                 }
 
@@ -581,12 +569,12 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
         }
 
         if (jefe != null) {
-            if (jefe.getEstadoActual().equals(Enemigo.ATACANDO) && jefe.comprobarDisparo(x, y, Knife.DANIO)) {
+            if (jefe.getEstadoActual().equals(ATACANDO) && jefe.comprobarDisparo(x, y, Knife.DANIO)) {
                 personaje.setEnsangrentado(false);
                 personaje.getCuchillo().setEstado(Weapon.CARGANDO);
                 seEncontro = true;
 
-                if (jefe.getEstadoActual().equals(Boss.DERROTADO)) {
+                if (jefe.getEstadoActual().equals(DERROTADO)) {
                     personaje.aumentarScore(100);
                     estadoJuego = SIN_PARTIDA;
                 }
@@ -615,7 +603,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
         if (armaMostrada == 3)
             armaMostrada = 0;
         else
-            armaMostrada = armaMostrada + 1;
+            armaMostrada = armaMostrada + CREEPING_ZOMBIE;
         return armaMostrada;
     }
 
@@ -629,7 +617,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
         if (armaMostrada == 0)
             armaMostrada = 3;
         else
-            armaMostrada = armaMostrada - 1;
+            armaMostrada = armaMostrada - CREEPING_ZOMBIE;
         return armaMostrada;
     }
 
@@ -685,14 +673,14 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
         for (int i = 0; i < mejoresPuntajes.size(); i++) {
             Puntaje masHeadShot = mejoresPuntajes.get(i);
             int posACambiar = i;
-            for (int j = i; j < mejoresPuntajes.size() - 1; j++) {
-                if (masHeadShot.getTirosALaCabeza() - mejoresPuntajes.get(j + 1).getTirosALaCabeza() < 0) {
-                    masHeadShot = mejoresPuntajes.get(j + 1);
-                    posACambiar = j + 1;
-                } else if (masHeadShot.getTirosALaCabeza() - mejoresPuntajes.get(j + 1).getTirosALaCabeza() == 0) {
-                    if (masHeadShot.compareTo(mejoresPuntajes.get(j + 1)) < 0) {
-                        masHeadShot = mejoresPuntajes.get(j + 1);
-                        posACambiar = j + 1;
+            for (int j = i; j < mejoresPuntajes.size() - CREEPING_ZOMBIE; j++) {
+                if (masHeadShot.getTirosALaCabeza() - mejoresPuntajes.get(j + CREEPING_ZOMBIE).getTirosALaCabeza() < 0) {
+                    masHeadShot = mejoresPuntajes.get(j + CREEPING_ZOMBIE);
+                    posACambiar = j + CREEPING_ZOMBIE;
+                } else if (masHeadShot.getTirosALaCabeza() - mejoresPuntajes.get(j + CREEPING_ZOMBIE).getTirosALaCabeza() == 0) {
+                    if (masHeadShot.compareTo(mejoresPuntajes.get(j + CREEPING_ZOMBIE)) < 0) {
+                        masHeadShot = mejoresPuntajes.get(j + CREEPING_ZOMBIE);
+                        posACambiar = j + CREEPING_ZOMBIE;
                     }
                 }
             }
@@ -714,10 +702,10 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
             Puntaje masKill = mejoresPuntajes.get(i);
             int posACambiar = i;
 
-            for (int j = i; j < mejoresPuntajes.size() - 1; j++) {
-                if (compare(masKill, mejoresPuntajes.get(j + 1)) < 0) {
-                    masKill = mejoresPuntajes.get(j + 1);
-                    posACambiar = j + 1;
+            for (int j = i; j < mejoresPuntajes.size() - CREEPING_ZOMBIE; j++) {
+                if (compare(masKill, mejoresPuntajes.get(j + CREEPING_ZOMBIE)) < 0) {
+                    masKill = mejoresPuntajes.get(j + CREEPING_ZOMBIE);
+                    posACambiar = j + CREEPING_ZOMBIE;
                 }
             }
 
@@ -766,25 +754,25 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
     public Puntaje buscarPuntajeDe(String nombre) {
         mejoresPuntajes.sort(new ComparadorPuntajePorNombre());
         int inicio = 0;
-        int fin = mejoresPuntajes.size() - 1;
+        int fin = mejoresPuntajes.size() - CREEPING_ZOMBIE;
         Puntaje puntajeBuscado = null;
         int medio = (inicio + fin) / 2;
         while (inicio <= fin && puntajeBuscado == null) {
             if (mejoresPuntajes.get(medio).getNombreKiller().compareToIgnoreCase(nombre) == 0) {
                 puntajeBuscado = mejoresPuntajes.get(medio);
                 boolean hayMas = true;
-                medio = medio + 1;
+                medio = medio + CREEPING_ZOMBIE;
                 while (medio <= fin && hayMas) {
                     if (mejoresPuntajes.get(medio).getNombreKiller().compareToIgnoreCase(nombre) == 0)
                         puntajeBuscado = mejoresPuntajes.get(medio);
                     else
                         hayMas = false;
-                    medio = medio + 1;
+                    medio = medio + CREEPING_ZOMBIE;
                 }
             } else if (mejoresPuntajes.get(medio).getNombreKiller().compareToIgnoreCase(nombre) > 0)
-                fin = medio - 1;
+                fin = medio - CREEPING_ZOMBIE;
             else
-                inicio = medio + 1;
+                inicio = medio + CREEPING_ZOMBIE;
             medio = (inicio + fin) / 2;
         }
         return puntajeBuscado;

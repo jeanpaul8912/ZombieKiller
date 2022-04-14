@@ -2,10 +2,10 @@ package mundo.weapons.guns;
 
 import mundo.weapons.guns.ammunition.Ammunition;
 
-import static mundo.constants.ZombieKillerConstants.M1911_DAMAGE;
-import static mundo.constants.ZombieKillerConstants.M1911_INITIAL_BACKWARD;
-import static mundo.constants.ZombieKillerConstants.M1911_INITIAL_BULLETS;
-import static mundo.constants.ZombieKillerConstants.M1911_INITIAL_RECHARGE_TIME;
+import static mundo.constants.WeaponsConstants.M1911_DAMAGE;
+import static mundo.constants.WeaponsConstants.M1911_INITIAL_BACKWARD;
+import static mundo.constants.WeaponsConstants.M1911_INITIAL_BULLETS;
+import static mundo.constants.WeaponsConstants.M1911_INITIAL_RECHARGE_TIME;
 
 public class M1911 extends GunWeapon {
 

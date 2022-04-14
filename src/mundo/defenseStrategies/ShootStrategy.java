@@ -2,8 +2,11 @@ package mundo.defenseStrategies;
 
 import interfaz.InterfazZombieKiller;
 import mundo.weapons.guns.GunWeapon;
-import mundo.zombies.Boss;
 import mundo.zombies.Zombie;
+
+import static mundo.constants.ZombiesConstants.DERROTADO;
+import static mundo.constants.ZombiesConstants.MURIENDO_HEADSHOT;
+import static mundo.constants.ZombiesConstants.NODO;
 
 public class ShootStrategy extends DefenseStrategy {
 
@@ -37,7 +40,7 @@ public class ShootStrategy extends DefenseStrategy {
         boolean leDio = false;
         Zombie actual = interfaz.getCampo().getZombNodoCercano().getAtras();
 
-        while (!actual.getEstadoActual().equals(Zombie.NODO) && !leDio) {
+        while (!actual.getEstadoActual().equals(NODO) && !leDio) {
             if (actual.comprobarDisparo(xPosition, yPosition, interfaz.getCampo().getPersonaje().getPrincipal().getDamage())) {
                 leDio = true;
                 interfaz.getCampo().getPersonaje().getPrincipal().setEnsangrentada(true);
@@ -45,7 +48,7 @@ public class ShootStrategy extends DefenseStrategy {
                 if (actual.getSalud() <= 0) {
                     interfaz.getCampo().getPersonaje().aumentarScore(10 + actual.getSalud() * (-10));
 
-                    if (actual.getEstadoActual().equals(Zombie.MURIENDO_HEADSHOT)) {
+                    if (actual.getEstadoActual().equals(MURIENDO_HEADSHOT)) {
                         interfaz.getCampo().getPersonaje().aumentarTirosALaCabeza();
                     }
                 }
@@ -61,8 +64,8 @@ public class ShootStrategy extends DefenseStrategy {
                 interfaz.getCampo().getPersonaje().getPrincipal().setEnsangrentada(true);
                 interfaz.getCampo().getPersonaje().setEnsangrentado(false);
                 leDio = true;
-                
-                if (interfaz.getCampo().getJefe().getEstadoActual().equals(Boss.DERROTADO)) {
+
+                if (interfaz.getCampo().getJefe().getEstadoActual().equals(DERROTADO)) {
                     interfaz.getCampo().getPersonaje().aumentarScore(20 + interfaz.getCampo().getJefe().getSalud() * (-20));
                     interfaz.getCampo().setEstadoJuego(interfaz.getCampo().getSinPartida());
                 }

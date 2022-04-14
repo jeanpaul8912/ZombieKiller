@@ -4,6 +4,10 @@ import interfaz.InterfazZombieKiller;
 import mundo.weapons.Weapon;
 import mundo.zombies.Zombie;
 
+import static mundo.constants.ZombiesConstants.MURIENDO;
+import static mundo.constants.ZombiesConstants.MURIENDO_INCENDIADO;
+import static mundo.constants.ZombiesConstants.NODO;
+
 public class ThrowGrenadeStrategy extends DefenseStrategy {
 
     private final InterfazZombieKiller interfaz;
@@ -24,10 +28,10 @@ public class ThrowGrenadeStrategy extends DefenseStrategy {
     public void throwGranada() {
         Zombie actual = interfaz.getCampo().getZombNodoCercano().getAtras();
         interfaz.getCampo().getPersonaje().setEnsangrentado(false);
-        while (!actual.getEstadoActual().equals(Zombie.NODO)) {
+        while (!actual.getEstadoActual().equals(NODO)) {
 
-            if (!actual.getEstadoActual().equals(Zombie.MURIENDO) && !actual.getEstadoActual().equals(Zombie.MURIENDO_INCENDIADO)) {
-                actual.setEstadoActual(Zombie.MURIENDO_INCENDIADO);
+            if (!actual.getEstadoActual().equals(MURIENDO) && !actual.getEstadoActual().equals(MURIENDO_INCENDIADO)) {
+                actual.setEstadoActual(MURIENDO_INCENDIADO);
                 interfaz.getCampo().getPersonaje().aumentarScore(50);
                 actual = actual.getAtras();
             }

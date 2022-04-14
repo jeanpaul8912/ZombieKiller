@@ -15,7 +15,7 @@ public class Personaje implements SerViviente, Serializable {
     /**
      * valor incambiable de la salud total del personaje
      */
-    public static final byte SALUD = 4;
+    public static final byte SALUD = 100;
     /**
      * valor de la salud del personaje
      */
