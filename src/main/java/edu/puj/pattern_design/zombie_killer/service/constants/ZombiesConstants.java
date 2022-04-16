@@ -51,6 +51,8 @@ public final class ZombiesConstants {
 
     public static final short POS_ATAQUE = 460;
 
+    //Types
+    public static final int CREEPING_ZOMBIE = 1;
 
     private ZombiesConstants() {
 

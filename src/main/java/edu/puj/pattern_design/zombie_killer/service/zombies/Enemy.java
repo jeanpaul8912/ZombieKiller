@@ -1,10 +1,14 @@
 package edu.puj.pattern_design.zombie_killer.service.zombies;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.ANCHO_PANTALLA;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.POS_INICIAL;
 
-public abstract class Enemy implements SerViviente, Cloneable {
-
+@Getter
+@Setter
+public abstract class Enemy implements LivingBeing, Cloneable {
 
     /**
      * todo enemigo tiene una posicion en el eje Y
@@ -48,15 +52,6 @@ public abstract class Enemy implements SerViviente, Cloneable {
     }
 
     /**
-     * cadena de caracteres que representa el estado actual del zombie
-     *
-     * @return estadoActual
-     */
-    public String getEstadoActual() {
-        return estadoActual;
-    }
-
-    /**
      * cambia el estado actual del enemigo
      *
      * @param estadoActual
@@ -67,29 +62,53 @@ public abstract class Enemy implements SerViviente, Cloneable {
     }
 
     /**
-     * obtiene el valor numerico de la imagen actual con corde al estado
-     *
-     * @return frameActual
-     */
-    public byte getFrameActual() {
-        return frameActual;
-    }
-
-    /**
-     * cambia el frame o numero de la imagen con respecto al estado actual
-     *
-     * @param frameActual
-     */
-    public void setFrameActual(byte frameActual) {
-        this.frameActual = frameActual;
-    }
-
-    /**
      * obtiene la posicion X del enemigo
      *
      * @return posicionX
      */
     public abstract int getPosX();
+
+    /**
+     * crea una posicion aleatoria en el eje X para la aparicion del enemigo
+     *
+     * @return posAleatoria
+     */
+    public short posAleatoriaX() {
+        int posAleatoria = (int) (Math.random() * ANCHO_PANTALLA / 3) + ANCHO_PANTALLA / 3 - 75;
+        return (short) posAleatoria;
+    }
+
+    /**
+     * ejecuta cierta accion al terminar de atacar al personaje
+     */
+    //public abstract void terminaDeAtacar();
+
+    /**
+     * comprueba que las posiciones de la bala coincidan con la posicion del enemigo
+     * y reduzca su salud en caso de ser afectado
+     *
+     * @param x
+     * @param y
+     * @param danio
+     * @return true si fue afectado por el disparo
+     */
+    public abstract boolean checkShoot(int x, int y, int danio);
+
+    /**
+     * obtiene la ruta de la imagen desde la carpeta img
+     *
+     * @return
+     */
+    public abstract String getURL(int level);
+
+    public Enemy cloneEnemy() {
+        try {
+            return (Enemy) super.clone();
+        } catch (CloneNotSupportedException cloneNotSupportedException) {
+            throw new RuntimeException(cloneNotSupportedException.getMessage());
+        }
+    }
+
 
     /**
      * obtiene la posicion Y del enemigo
@@ -134,48 +153,8 @@ public abstract class Enemy implements SerViviente, Cloneable {
     }
 
     @Override
-    public void setHealth(byte health) {
-        this.salud = health;
+    public void setHealth(byte newHealth) {
+        this.salud = newHealth;
     }
 
-    /**
-     * crea una posicion aleatoria en el eje X para la aparicion del enemigo
-     *
-     * @return posAleatoria
-     */
-    public short posAleatoriaX() {
-        int posAleatoria = (int) (Math.random() * ANCHO_PANTALLA / 3) + ANCHO_PANTALLA / 3 - 75;
-        return (short) posAleatoria;
-    }
-
-    /**
-     * ejecuta cierta accion al terminar de atacar al personaje
-     */
-    //public abstract void terminaDeAtacar();
-
-    /**
-     * comprueba que las posiciones de la bala coincidan con la posicion del enemigo
-     * y reduzca su salud en caso de ser afectado
-     *
-     * @param x
-     * @param y
-     * @param danio
-     * @return true si fue afectado por el disparo
-     */
-    public abstract boolean comprobarDisparo(int x, int y, int danio);
-
-    /**
-     * obtiene la ruta de la imagen desde la carpeta img
-     *
-     * @return
-     */
-    public abstract String getURL(int level);
-
-    public Enemy clonar() {
-        try {
-            return (Enemy) super.clone();
-        } catch (CloneNotSupportedException cloneNotSupportedException) {
-            throw new RuntimeException(cloneNotSupportedException.getMessage());
-        }
-    }
 }

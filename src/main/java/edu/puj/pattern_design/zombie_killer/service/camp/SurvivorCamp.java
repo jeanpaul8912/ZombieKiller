@@ -3,9 +3,9 @@ package edu.puj.pattern_design.zombie_killer.service.camp;
 import edu.puj.pattern_design.zombie_killer.service.exceptions.DatosErroneosException;
 import edu.puj.pattern_design.zombie_killer.service.exceptions.NombreInvalidoException;
 import edu.puj.pattern_design.zombie_killer.service.zombies.Boss;
-import edu.puj.pattern_design.zombie_killer.service.zombies.Caminante;
+import edu.puj.pattern_design.zombie_killer.service.zombies.WalkerZombie;
 import edu.puj.pattern_design.zombie_killer.service.zombies.Enemy;
-import edu.puj.pattern_design.zombie_killer.service.zombies.Rastrero;
+import edu.puj.pattern_design.zombie_killer.service.zombies.DragZombie;
 import edu.puj.pattern_design.zombie_killer.service.zombies.Zombie;
 import edu.puj.pattern_design.zombie_killer.service.zombies.ZombieZigZag;
 import lombok.Getter;
@@ -37,6 +37,7 @@ import static edu.puj.pattern_design.zombie_killer.service.constants.WeaponsCons
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.ANCHO_IMAGEN;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.ATACANDO;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.CAMINANDO;
+import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.CREEPING_ZOMBIE;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.DERROTADO;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.MURIENDO;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.MURIENDO_INCENDIADO;
@@ -50,18 +51,16 @@ import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesCons
 @Slf4j
 public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
 
-    public static final int CREEPING_ZOMBIE = 1;
-
     /**
      * Zombie que no aparece en el juego pero sirve como nodo para modificar la
      * lista facilmente nodo mas cercano al personaje (abajo)
      */
-    private ZombieZigZag zombNodoLejano;
+    private ZombieZigZag zombieFarNode;
     /**
      * Zombie que no aparece en el juego pero sirve como nodo para modificar la
      * lista facilmente nodo mas lejano al personaje (arriba)
      */
-    private ZombieZigZag zombNodoCercano;
+    private ZombieZigZag zombieNearNode;
     /**
      * Personaje en el campo de batalla que esta disparando
      */
@@ -69,101 +68,64 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
     /**
      * Enemigo final, aparece en la ronda 10
      */
-    private Boss jefe;
+    private Boss boss;
     /**
      * estado del juego, puede ser pausado, en curso, sin partida o iniciando
      * ronda
      */
-    private char estadoJuego;
+    private char gameStatus;
     /**
      * ronda en la que se encuentra la partida actual, varia desde 1 a 10, en la
      * 10 solo puede estar el jefe
      */
-    private int rondaActual;
+    private int currentRound;
     /**
      * numero de zombies que han salido a dar la cara en el juego
      */
-    private int cantidadZombiesGenerados;
+    private int zombiesGeneratedCount;
     /**
      * numero que representa el arma que se esta mostrando en las
      * especificaciones del arma (panelArmas)
      */
-    private int armaMostrada;
+    private int showedWeapon;
     /**
      * arreglo de puntajes obtenidos por lo jugadores
      */
-    private ArrayList<CharacterScore> mejoresCharacterScores;
+    private ArrayList<CharacterScore> bestCharacterScores;
     /**
      * raiz del arbol binario de puntajes, tiene los mismos datos del arreglo
      * mejoresPuntajes pero estan ordenados por Score
      */
-    private CharacterScore raizPuntajes;
+    private CharacterScore rootScores;
 
-    private final Enemy enemyCaminante;
+    private final Enemy enemyWalker;
 
-    private Enemy enemyRastero;
+    private Enemy enemyDrag;
 
     /**
      * Constructor de la clase principal del mundo
      */
     public SurvivorCamp() {
-        enemyCaminante = new Caminante();
+        enemyWalker = new WalkerZombie();
         character = new Character();
-        estadoJuego = SIN_PARTIDA;
-        rondaActual = 0;
-        zombNodoLejano = new Caminante();
-        zombNodoCercano = new Caminante();
-        zombNodoLejano.setLentitud((short) 500);
-        zombNodoLejano.setAlFrente(zombNodoCercano);
-        zombNodoCercano.setAtras(zombNodoLejano);
-        mejoresCharacterScores = new ArrayList<>();
-        enemyRastero = new Rastrero((short) 0, zombNodoLejano);
-        jefe = new Boss();
-    }
-
-    /**
-     * obtiene el estado actual del juego
-     *
-     * @return estado del juego
-     */
-    public char getEstadoJuego() {
-        return estadoJuego;
-    }
-
-    /**
-     * cambia el estado del juego
-     *
-     * @param estadoJuego
-     */
-    public void setEstadoJuego(char estadoJuego) {
-        this.estadoJuego = estadoJuego;
-    }
-
-    /**
-     * obtiene la ronda en el instante en que se llama el metodo, 0 si el estado
-     * es sin partida
-     *
-     * @return ronda actual
-     */
-    public int getRondaActual() {
-        return rondaActual;
-    }
-
-    /**
-     * obtiene el jefe de la partida, null si no existe
-     *
-     * @return jefe
-     */
-    public Boss getJefe() {
-        return jefe;
+        gameStatus = SIN_PARTIDA;
+        currentRound = 0;
+        zombieFarNode = new WalkerZombie();
+        zombieNearNode = new WalkerZombie();
+        zombieFarNode.setLentitud((short) 500);
+        zombieFarNode.setInFront(zombieNearNode);
+        zombieNearNode.setInBack(zombieFarNode);
+        bestCharacterScores = new ArrayList<>();
+        enemyDrag = new DragZombie((short) 0, zombieFarNode);
+        boss = new Boss();
     }
 
     /**
      * cambia la ronda en la que se encuentra, en general sube una ronda, pero
      * si se carga una partida puede variar
      */
-    public void actualizarRondaActual(int rondaActual) {
-        this.rondaActual = rondaActual;
+    public void updateCurrentRound(int rondaActual) {
+        this.currentRound = rondaActual;
         improveGuns(rondaActual);
     }
 
@@ -178,53 +140,45 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         }
     }
 
-    /**
-     * obtiene el personaje que esta disparando
-     *
-     * @return personaje en juego
-     */
-    public Character getPersonaje() {
-        return character;
-    }
 
     /**
      * crea el jefe de la ronda 10
      *
      * @return jefe creado
      */
-    public Boss generarBoss() {
-        jefe = (Boss) jefe.clonar();
-        return jefe;
+    public Boss generateBoss() {
+        boss = (Boss) boss.cloneEnemy();
+        return boss;
     }
 
     /**
-     * Genera un zombie respecto al nivel en que se encuentra
+     * Genera un zombie respecto al level en que se encuentra
      * </pre>
      * la ronda va de 1 a 9
      *
-     * @param nivel o ronda en el que se genera
+     * @param level o ronda en el que se genera
      * @return zombie creado
      */
-    public Zombie generarZombie(int nivel) {
-        short level = (short) nivel;
+    public Zombie generateZombie(int level) {
+        short newLevel = (short) level;
         Zombie zombie;
-        int tipoZombie = 0;
+        int zombieType = 0;
 
-        if ((level == 3 || level == 4 || level == 8)) {
-            tipoZombie = (int) (Math.random() * 2);
-        } else if (level == 6 || level == 9) {
-            tipoZombie = CREEPING_ZOMBIE;
+        if ((newLevel == 3 || newLevel == 4 || newLevel == 8)) {
+            zombieType = (int) (Math.random() * 2);
+        } else if (newLevel == 6 || newLevel == 9) {
+            zombieType = CREEPING_ZOMBIE;
         }
 
-        if (tipoZombie == CREEPING_ZOMBIE) {
-            zombie = (Rastrero) enemyRastero.clonar();
+        if (zombieType == CREEPING_ZOMBIE) {
+            zombie = (DragZombie) enemyDrag.cloneEnemy();
         } else {
-            zombie = (Caminante) enemyCaminante.clonar();
+            zombie = (WalkerZombie) enemyWalker.cloneEnemy();
         }
 
-        zombie.inicializar(level, zombNodoLejano);
-        zombie.introducirse(zombNodoLejano.getAlFrente(), zombNodoLejano);
-        cantidadZombiesGenerados++;
+        zombie.inicialize(newLevel, zombieFarNode);
+        zombie.introduce(zombieFarNode.getInFront(), zombieFarNode);
+        zombiesGeneratedCount++;
         return zombie;
     }
 
@@ -234,12 +188,12 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
      * @return numero de zombies
      */
     public int contarZombies() {
-        Zombie actual = zombNodoCercano.getAtras();
+        Zombie actual = zombieNearNode.getInBack();
         int contador = 0;
 
         while (!actual.getEstadoActual().equals(NODO)) {
             contador++;
-            actual = actual.getAtras();
+            actual = actual.getInBack();
         }
 
         return contador;
@@ -250,32 +204,14 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
      *
      * @return estado final
      */
-    public char pausarJuego() {
-        if (estadoJuego == PAUSADO) {
-            estadoJuego = EN_CURSO;
+    public char pauseGame() {
+        if (gameStatus == PAUSADO) {
+            gameStatus = EN_CURSO;
         } else {
-            estadoJuego = PAUSADO;
+            gameStatus = PAUSADO;
         }
 
-        return estadoJuego;
-    }
-
-    /**
-     * obtiene el zombie nodo mas lejano al personaje
-     *
-     * @return zombie nodo de arriba
-     */
-    public ZombieZigZag getZombNodoLejano() {
-        return zombNodoLejano;
-    }
-
-    /**
-     * obtiene el zombie nodo mas cercano al personaje
-     *
-     * @return zombie nodo de abajo
-     */
-    public Zombie getZombNodoCercano() {
-        return zombNodoCercano;
+        return gameStatus;
     }
 
     /**
@@ -284,25 +220,27 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
      * @throws IOException            en caso de que no se haya guardado algun puntaje
      * @throws ClassNotFoundException en caso de que haya ocurrido un error al guardar los datos
      */
-    public void cargarPuntajes() throws IOException, ClassNotFoundException {
-        File carpeta = new File(System.getProperty("user.dir") + "/PartidasGuardadas");
-        File archivoPuntajes = new File(carpeta.getAbsolutePath() + "/puntajes.txt");
-        try (ObjectInputStream oIS = new ObjectInputStream(new FileInputStream(archivoPuntajes))) {
+    public void loadScores() throws IOException, ClassNotFoundException {
+        File directory = new File(System.getProperty("user.dir") + "/PartidasGuardadas");
+        File scoresFile = new File(directory.getAbsolutePath() + "/puntajes.txt");
+
+        try (ObjectInputStream oIS = new ObjectInputStream(new FileInputStream(scoresFile))) {
             CharacterScore characterScore = (CharacterScore) oIS.readObject();
-            actualizarPuntajes(characterScore);
+            updateScores(characterScore);
         }
     }
 
     /**
      * asigna la raiz del arbol binario y llena el arreglo de mejores puntajes
      *
-     * @param raiz
+     * @param root
      */
-    public void actualizarPuntajes(CharacterScore raiz) {
-        raizPuntajes = raiz;
-        if (raizPuntajes != null) {
-            mejoresCharacterScores = new ArrayList<>();
-            raizPuntajes.generarListaInOrden(mejoresCharacterScores);
+    public void updateScores(CharacterScore root) {
+        rootScores = root;
+
+        if (rootScores != null) {
+            bestCharacterScores = new ArrayList<>();
+            rootScores.generateInOrderList(bestCharacterScores);
         }
     }
 
@@ -313,13 +251,13 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
      * @return una partida con las caracteristicas de la nueva partida
      * @throws Exception de cualquier tipo para mostrar en pantalla
      */
-    public SurvivorCamp cargarPartida() throws Exception {
-        File carpeta = new File(System.getProperty("user.dir") + "/PartidasGuardadas");
-        File archivoPersonaje = new File(carpeta.getAbsolutePath() + "/personaje.txt");
+    public SurvivorCamp loadGame() throws Exception {
+        File directory = new File(System.getProperty("user.dir") + "/PartidasGuardadas");
+        File characterFile = new File(directory.getAbsolutePath() + "/personaje.txt");
 
-        try (ObjectInputStream oIS = new ObjectInputStream(new FileInputStream(archivoPersonaje))) {
+        try (ObjectInputStream oIS = new ObjectInputStream(new FileInputStream(characterFile))) {
             Character loadedCharacter = (Character) oIS.readObject();
-            cargarDatosCampo(carpeta, loadedCharacter);
+            loadCampData(directory, loadedCharacter);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
             throw new Exception(
@@ -342,10 +280,10 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
      * @param character para asignarselo a la partida si todos los datos son validos
      * @throws Exception si hay informacion invalida
      */
-    private void cargarDatosCampo(File carpeta, Character character) throws Exception {
-        File datosZombie = new File(carpeta.getAbsolutePath() + "/zombies.txt");
+    private void loadCampData(File carpeta, Character character) throws Exception {
+        File zombieData = new File(carpeta.getAbsolutePath() + "/zombies.txt");
 
-        try (BufferedReader bR = new BufferedReader(new FileReader(datosZombie))) {
+        try (BufferedReader bR = new BufferedReader(new FileReader(zombieData))) {
             int ronda;
 
             if (character.getKilling() % NUMERO_ZOMBIES_RONDA == NumberUtils.INTEGER_ZERO) {
@@ -376,17 +314,17 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
                             int direccionX = Integer.parseInt(datos[5]);
                             int direccionY = Integer.parseInt(datos[6]);
                             verificarDatosCaminante(direccionX, direccionY);
-                            aAgregar = new Caminante(posX, posY, direccionX, direccionY, estadoActual, frameActual, salud,
+                            aAgregar = new WalkerZombie(posX, posY, direccionX, direccionY, estadoActual, frameActual, salud,
                                     ronda);
                         } else if (datos.length == 5) {
-                            aAgregar = new Rastrero(posX, posY, estadoActual, frameActual, salud, ronda);
+                            aAgregar = new DragZombie(posX, posY, estadoActual, frameActual, salud, ronda);
                         }
                     }
 
                     if (aAgregar != null) {
                         if (masCercano != null) {
-                            ultimoAgregado.setAtras(aAgregar);
-                            aAgregar.setAlFrente(ultimoAgregado);
+                            ultimoAgregado.setInBack(aAgregar);
+                            aAgregar.setInFront(ultimoAgregado);
                         } else
                             masCercano = aAgregar;
                         ultimoAgregado = aAgregar;
@@ -409,8 +347,8 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
                 throw new DatosErroneosException(zombiesExcedidos);
             } else {
                 enlazaZombiesSiHabian(masCercano, ultimoAgregado);
-                rondaActual = (byte) ronda;
-                cantidadZombiesGenerados = character.getKilling() + contadorZombiesEnPantalla;
+                currentRound = (byte) ronda;
+                zombiesGeneratedCount = character.getKilling() + contadorZombiesEnPantalla;
                 this.character = character;
             }
         }
@@ -425,9 +363,9 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
      */
     private void cargaBossSiExiste(int ronda, byte salud) {
         if (ronda == 10) {
-            jefe = new Boss(salud);
-            zombNodoCercano.setAtras(zombNodoLejano);
-            zombNodoLejano.setAlFrente(zombNodoCercano);
+            boss = new Boss(salud);
+            zombieNearNode.setInBack(zombieFarNode);
+            zombieFarNode.setInFront(zombieNearNode);
         }
     }
 
@@ -439,11 +377,11 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
      */
     private void enlazaZombiesSiHabian(Zombie masCercano, Zombie ultimoAgregado) {
         if (ultimoAgregado != null) {
-            zombNodoCercano.setAtras(masCercano);
-            masCercano.setAlFrente(zombNodoCercano);
-            zombNodoLejano.setAlFrente(ultimoAgregado);
-            ultimoAgregado.setAtras(zombNodoLejano);
-            jefe = null;
+            zombieNearNode.setInBack(masCercano);
+            masCercano.setInFront(zombieNearNode);
+            zombieFarNode.setInFront(ultimoAgregado);
+            ultimoAgregado.setInBack(zombieFarNode);
+            boss = null;
         }
     }
 
@@ -513,10 +451,10 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         File datosZombie = new File(carpeta.getAbsolutePath() + "/zombies.txt");
         BufferedWriter bW = new BufferedWriter(new FileWriter(datosZombie));
         String texto = "/salud/posX/posY/estado/frame/dirX/dirY";
-        if (jefe != null)
-            texto += "\n" + jefe.getHealth();
+        if (boss != null)
+            texto += "\n" + boss.getHealth();
         else
-            texto = escribirDatosZombie(texto, zombNodoCercano.getAtras());
+            texto = escribirDatosZombie(texto, zombieNearNode.getInBack());
 
         bW.write(texto);
         bW.close();
@@ -534,11 +472,11 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
             return datos;
         datos += "\n" + actual.getHealth() + "_" + actual.getPosX() + "_" + actual.getPosY() + "_"
                 + actual.getEstadoActual() + "_" + actual.getFrameActual();
-        if (actual instanceof Caminante) {
-            datos += "_" + ((Caminante) actual).getDireccionX();
-            datos += "_" + ((Caminante) actual).getDireccionY();
+        if (actual instanceof WalkerZombie) {
+            datos += "_" + ((WalkerZombie) actual).getDirectionX();
+            datos += "_" + ((WalkerZombie) actual).getDirectionY();
         }
-        return escribirDatosZombie(datos, actual.getAtras());
+        return escribirDatosZombie(datos, actual.getInBack());
     }
 
     /**
@@ -567,12 +505,12 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
      * @return true si logra achuchillar a alguno
      */
     public boolean acuchilla(int x, int y) {
-        Zombie aAcuchillar = zombNodoCercano.getAtras();
+        Zombie aAcuchillar = zombieNearNode.getInBack();
         boolean seEncontro = false;
 
         while (!aAcuchillar.getEstadoActual().equals(NODO) && !seEncontro) {
             if (aAcuchillar.getEstadoActual().equals(ATACANDO)
-                    && aAcuchillar.comprobarDisparo(x, y, KNIFE_DAMAGE)) {
+                    && aAcuchillar.checkShoot(x, y, KNIFE_DAMAGE)) {
                 if (aAcuchillar.getEstadoActual().equals(MURIENDO)) {
                     character.increaseScore(40);
                 }
@@ -582,18 +520,18 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
                 character.getKnife().setEstado(CARGANDO);
             }
 
-            aAcuchillar = aAcuchillar.getAtras();
+            aAcuchillar = aAcuchillar.getInBack();
         }
 
-        if (jefe != null) {
-            if (jefe.getEstadoActual().equals(ATACANDO) && jefe.comprobarDisparo(x, y, KNIFE_DAMAGE)) {
+        if (boss != null) {
+            if (boss.getEstadoActual().equals(ATACANDO) && boss.checkShoot(x, y, KNIFE_DAMAGE)) {
                 character.setBlooded(false);
                 character.getKnife().setEstado(CARGANDO);
                 seEncontro = true;
 
-                if (jefe.getEstadoActual().equals(DERROTADO)) {
+                if (boss.getEstadoActual().equals(DERROTADO)) {
                     character.increaseScore(100);
-                    estadoJuego = SIN_PARTIDA;
+                    gameStatus = SIN_PARTIDA;
                 }
             }
         }
@@ -606,8 +544,8 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
      *
      * @return cantidad de zombies generados
      */
-    public int getCantidadZombiesGenerados() {
-        return cantidadZombiesGenerados;
+    public int getZombiesGeneratedCount() {
+        return zombiesGeneratedCount;
     }
 
     /**
@@ -617,11 +555,13 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
      * @return numero del arma Mostrada
      */
     public int moverArmaVisibleDerecha() {
-        if (armaMostrada == 3)
-            armaMostrada = 0;
-        else
-            armaMostrada = armaMostrada + CREEPING_ZOMBIE;
-        return armaMostrada;
+        if (showedWeapon == 3) {
+            showedWeapon = 0;
+        } else {
+            showedWeapon = showedWeapon + CREEPING_ZOMBIE;
+        }
+
+        return showedWeapon;
     }
 
     /**
@@ -631,11 +571,13 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
      * @return numero del arma Mostrada
      */
     public int moverArmaVisibleIzquierda() {
-        if (armaMostrada == 0)
-            armaMostrada = 3;
-        else
-            armaMostrada = armaMostrada - CREEPING_ZOMBIE;
-        return armaMostrada;
+        if (showedWeapon == 0) {
+            showedWeapon = 3;
+        } else {
+            showedWeapon = showedWeapon - CREEPING_ZOMBIE;
+        }
+
+        return showedWeapon;
     }
 
     /**
@@ -643,8 +585,8 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
      *
      * @return numero del arma mostrada
      */
-    public int getArmaMostrada() {
-        return armaMostrada;
+    public int getShowedWeapon() {
+        return showedWeapon;
     }
 
     /**
@@ -657,11 +599,11 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
     public void aniadirMejoresPuntajes(String nombreJugador) throws IOException {
         CharacterScore characterScore = new CharacterScore(character.getScore(), character.getHeadShots(), character.getKilling(),
                 nombreJugador);
-        if (raizPuntajes != null)
-            raizPuntajes.aniadirPorPuntaje(characterScore);
+        if (rootScores != null)
+            rootScores.aniadirPorPuntaje(characterScore);
         else
-            raizPuntajes = characterScore;
-        mejoresCharacterScores.add(characterScore);
+            rootScores = characterScore;
+        bestCharacterScores.add(characterScore);
         guardarPuntajes();
     }
 
@@ -677,7 +619,7 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         if (!carpeta.exists())
             carpeta.mkdirs();
         ObjectOutputStream escritor = new ObjectOutputStream(new FileOutputStream(archivoPuntajes));
-        escritor.writeObject(raizPuntajes);
+        escritor.writeObject(rootScores);
         escritor.close();
     }
 
@@ -687,26 +629,27 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
      * @return arreglo de puntajes
      */
     public List<CharacterScore> ordenarPuntajePorTirosALaCabeza() {
-        for (int i = 0; i < mejoresCharacterScores.size(); i++) {
-            CharacterScore masHeadShot = mejoresCharacterScores.get(i);
+        for (int i = 0; i < bestCharacterScores.size(); i++) {
+            CharacterScore masHeadShot = bestCharacterScores.get(i);
             int posACambiar = i;
-            for (int j = i; j < mejoresCharacterScores.size() - CREEPING_ZOMBIE; j++) {
-                if (masHeadShot.getHeadShoots() - mejoresCharacterScores.get(j + CREEPING_ZOMBIE).getHeadShoots() < 0) {
-                    masHeadShot = mejoresCharacterScores.get(j + CREEPING_ZOMBIE);
+
+            for (int j = i; j < bestCharacterScores.size() - CREEPING_ZOMBIE; j++) {
+                if (masHeadShot.getHeadShoots() - bestCharacterScores.get(j + CREEPING_ZOMBIE).getHeadShoots() < 0) {
+                    masHeadShot = bestCharacterScores.get(j + CREEPING_ZOMBIE);
                     posACambiar = j + CREEPING_ZOMBIE;
-                } else if (masHeadShot.getHeadShoots() - mejoresCharacterScores.get(j + CREEPING_ZOMBIE).getHeadShoots() == 0) {
-                    if (masHeadShot.compareTo(mejoresCharacterScores.get(j + CREEPING_ZOMBIE)) < 0) {
-                        masHeadShot = mejoresCharacterScores.get(j + CREEPING_ZOMBIE);
+                } else if (masHeadShot.getHeadShoots() - bestCharacterScores.get(j + CREEPING_ZOMBIE).getHeadShoots() == 0) {
+                    if (masHeadShot.compareTo(bestCharacterScores.get(j + CREEPING_ZOMBIE)) < 0) {
+                        masHeadShot = bestCharacterScores.get(j + CREEPING_ZOMBIE);
                         posACambiar = j + CREEPING_ZOMBIE;
                     }
                 }
             }
 
-            mejoresCharacterScores.set(posACambiar, mejoresCharacterScores.get(i));
-            mejoresCharacterScores.set(i, masHeadShot);
+            bestCharacterScores.set(posACambiar, bestCharacterScores.get(i));
+            bestCharacterScores.set(i, masHeadShot);
         }
 
-        return mejoresCharacterScores;
+        return bestCharacterScores;
     }
 
     /**
@@ -715,22 +658,22 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
      * @return arreglo de puntajes
      */
     public List<CharacterScore> ordenarPuntajePorBajas() {
-        for (int i = 0; i < mejoresCharacterScores.size(); i++) {
-            CharacterScore masKill = mejoresCharacterScores.get(i);
+        for (int i = 0; i < bestCharacterScores.size(); i++) {
+            CharacterScore masKill = bestCharacterScores.get(i);
             int posACambiar = i;
 
-            for (int j = i; j < mejoresCharacterScores.size() - CREEPING_ZOMBIE; j++) {
-                if (compare(masKill, mejoresCharacterScores.get(j + CREEPING_ZOMBIE)) < 0) {
-                    masKill = mejoresCharacterScores.get(j + CREEPING_ZOMBIE);
+            for (int j = i; j < bestCharacterScores.size() - CREEPING_ZOMBIE; j++) {
+                if (compare(masKill, bestCharacterScores.get(j + CREEPING_ZOMBIE)) < 0) {
+                    masKill = bestCharacterScores.get(j + CREEPING_ZOMBIE);
                     posACambiar = j + CREEPING_ZOMBIE;
                 }
             }
 
-            mejoresCharacterScores.set(posACambiar, mejoresCharacterScores.get(i));
-            mejoresCharacterScores.set(i, masKill);
+            bestCharacterScores.set(posACambiar, bestCharacterScores.get(i));
+            bestCharacterScores.set(i, masKill);
         }
 
-        return mejoresCharacterScores;
+        return bestCharacterScores;
     }
 
     /**
@@ -740,25 +683,19 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
      */
     public List<CharacterScore> ordenarPuntajePorScore() {
         List<CharacterScore> ordenados = new ArrayList<>();
-        if (raizPuntajes != null)
-            raizPuntajes.generarListaInOrden(ordenados);
+        if (rootScores != null)
+            rootScores.generateInOrderList(ordenados);
         return ordenados;
-    }
-
-    /**
-     * obtiene la raiz del arbol binario de Puntajes
-     *
-     * @return raizPuntajes
-     */
-    public CharacterScore getRaizPuntajes() {
-        return raizPuntajes;
     }
 
     @Override
     public int compare(CharacterScore o1, CharacterScore o2) {
         int porBajas = o1.getDowns() - o2.getDowns();
-        if (porBajas != 0)
+
+        if (porBajas != 0) {
             return porBajas;
+        }
+
         return o1.compareTo(o2);
     }
 
@@ -769,27 +706,27 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
      * @return mejor puntaje del nombre buscado
      */
     public CharacterScore buscarPuntajeDe(String nombre) {
-        mejoresCharacterScores.sort(new CompareScoresByName());
+        bestCharacterScores.sort(new CompareScoresByName());
         int inicio = 0;
-        int fin = mejoresCharacterScores.size() - CREEPING_ZOMBIE;
+        int fin = bestCharacterScores.size() - CREEPING_ZOMBIE;
         CharacterScore characterScoreBuscado = null;
         int medio = (inicio + fin) / 2;
         while (inicio <= fin && characterScoreBuscado == null) {
-            if (mejoresCharacterScores.get(medio).getKillerName().compareToIgnoreCase(nombre) == 0) {
-                characterScoreBuscado = mejoresCharacterScores.get(medio);
+            if (bestCharacterScores.get(medio).getKillerName().compareToIgnoreCase(nombre) == 0) {
+                characterScoreBuscado = bestCharacterScores.get(medio);
                 boolean hayMas = true;
                 medio = medio + CREEPING_ZOMBIE;
 
                 while (medio <= fin && hayMas) {
-                    if (mejoresCharacterScores.get(medio).getKillerName().compareToIgnoreCase(nombre) == 0) {
-                        characterScoreBuscado = mejoresCharacterScores.get(medio);
+                    if (bestCharacterScores.get(medio).getKillerName().compareToIgnoreCase(nombre) == 0) {
+                        characterScoreBuscado = bestCharacterScores.get(medio);
                     } else {
                         hayMas = false;
                     }
 
                     medio = medio + CREEPING_ZOMBIE;
                 }
-            } else if (mejoresCharacterScores.get(medio).getKillerName().compareToIgnoreCase(nombre) > 0) {
+            } else if (bestCharacterScores.get(medio).getKillerName().compareToIgnoreCase(nombre) > 0) {
                 fin = medio - CREEPING_ZOMBIE;
             } else {
                 inicio = medio + CREEPING_ZOMBIE;

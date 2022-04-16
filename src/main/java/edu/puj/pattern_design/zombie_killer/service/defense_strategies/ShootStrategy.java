@@ -3,10 +3,10 @@ package edu.puj.pattern_design.zombie_killer.service.defense_strategies;
 import edu.puj.pattern_design.zombie_killer.gui.ZombieKillerGUI;
 import edu.puj.pattern_design.zombie_killer.service.zombies.Zombie;
 
+import static edu.puj.pattern_design.zombie_killer.service.constants.WeaponsConstants.RECHARGING;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.DERROTADO;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.MURIENDO_HEADSHOT;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.NODO;
-import static edu.puj.pattern_design.zombie_killer.service.weapons.guns.GunWeapon.RECARGANDO;
 
 public class ShootStrategy extends DefenseStrategy {
 
@@ -23,9 +23,9 @@ public class ShootStrategy extends DefenseStrategy {
     @Override
     public void executeDefense() {
         if (shoot()) {
-            interfaz.reproducir("leDio" + interfaz.getCampo().getPersonaje().getPrincipalWeapon().getClass().getSimpleName());
+            interfaz.reproducir("leDio" + interfaz.getCamp().getCharacter().getPrincipalWeapon().getClass().getSimpleName());
         } else {
-            interfaz.reproducir("disparo" + interfaz.getCampo().getPersonaje().getPrincipalWeapon().getClass().getSimpleName());
+            interfaz.reproducir("disparo" + interfaz.getCamp().getCharacter().getPrincipalWeapon().getClass().getSimpleName());
         }
 
         interfaz.getPanelCampo().incorporarJefe(interfaz.getBoss());
@@ -34,39 +34,39 @@ public class ShootStrategy extends DefenseStrategy {
 
 
     public boolean shoot() {
-        interfaz.getCampo().getPersonaje().getPrincipalWeapon().shoot();
-        interfaz.getCampo().getPersonaje().getPrincipalWeapon().setEstado(RECARGANDO);
+        interfaz.getCamp().getCharacter().getPrincipalWeapon().shoot();
+        interfaz.getCamp().getCharacter().getPrincipalWeapon().setEstado(RECHARGING);
         boolean leDio = false;
-        Zombie actual = interfaz.getCampo().getZombNodoCercano().getAtras();
+        Zombie actual = interfaz.getCamp().getZombieNearNode().getInBack();
 
         while (!actual.getEstadoActual().equals(NODO) && !leDio) {
-            if (actual.comprobarDisparo(xPosition, yPosition, interfaz.getCampo().getPersonaje().getPrincipalWeapon().getDamage())) {
+            if (actual.checkShoot(xPosition, yPosition, interfaz.getCamp().getCharacter().getPrincipalWeapon().getDamage())) {
                 leDio = true;
-                interfaz.getCampo().getPersonaje().getPrincipalWeapon().setEnsangrentada(true);
+                interfaz.getCamp().getCharacter().getPrincipalWeapon().setBlooded(true);
 
                 if (actual.getHealth() <= 0) {
-                    interfaz.getCampo().getPersonaje().increaseScore(10 + actual.getHealth() * (-10));
+                    interfaz.getCamp().getCharacter().increaseScore(10 + actual.getHealth() * (-10));
 
                     if (actual.getEstadoActual().equals(MURIENDO_HEADSHOT)) {
-                        interfaz.getCampo().getPersonaje().increaseHeadShoots();
+                        interfaz.getCamp().getCharacter().increaseHeadShoots();
                     }
                 }
 
-                interfaz.getCampo().getPersonaje().setBlooded(false);
+                interfaz.getCamp().getCharacter().setBlooded(false);
             }
 
-            actual = actual.getAtras();
+            actual = actual.getInBack();
         }
 
-        if (interfaz.getCampo().getJefe() != null)
-            if (interfaz.getCampo().getJefe().comprobarDisparo(xPosition, yPosition, interfaz.getCampo().getPersonaje().getPrincipalWeapon().getDamage())) {
-                interfaz.getCampo().getPersonaje().getPrincipalWeapon().setEnsangrentada(true);
-                interfaz.getCampo().getPersonaje().setBlooded(false);
+        if (interfaz.getCamp().getBoss() != null)
+            if (interfaz.getCamp().getBoss().checkShoot(xPosition, yPosition, interfaz.getCamp().getCharacter().getPrincipalWeapon().getDamage())) {
+                interfaz.getCamp().getCharacter().getPrincipalWeapon().setBlooded(true);
+                interfaz.getCamp().getCharacter().setBlooded(false);
                 leDio = true;
 
-                if (interfaz.getCampo().getJefe().getEstadoActual().equals(DERROTADO)) {
-                    interfaz.getCampo().getPersonaje().increaseScore(20 + interfaz.getCampo().getJefe().getHealth() * (-20));
-                    interfaz.getCampo().setEstadoJuego(interfaz.getCampo().getSinPartida());
+                if (interfaz.getCamp().getBoss().getEstadoActual().equals(DERROTADO)) {
+                    interfaz.getCamp().getCharacter().increaseScore(20 + interfaz.getCamp().getBoss().getHealth() * (-20));
+                    interfaz.getCamp().setGameStatus(interfaz.getCamp().getSinPartida());
                 }
             }
 

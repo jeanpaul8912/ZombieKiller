@@ -2,7 +2,7 @@ package edu.puj.pattern_design.zombie_killer.gui.thread;
 
 import edu.puj.pattern_design.zombie_killer.gui.ZombieKillerGUI;
 import edu.puj.pattern_design.zombie_killer.service.attack_strategies.AttackStrategyContext;
-import edu.puj.pattern_design.zombie_killer.service.attack_strategies.BossAttackStrategy;
+import edu.puj.pattern_design.zombie_killer.service.attack_strategies.BossZombieAttackStrategy;
 import edu.puj.pattern_design.zombie_killer.service.camp.SurvivorCamp;
 import edu.puj.pattern_design.zombie_killer.service.zombies.Boss;
 
@@ -10,13 +10,13 @@ import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstan
 import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.SIN_PARTIDA;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.ATACANDO;
 
-public class HiloBoss extends Thread {
+public class WeaponBoss extends Thread {
 
     private final ZombieKillerGUI principal;
     private final Boss jefe;
     private final SurvivorCamp campo;
 
-    public HiloBoss(ZombieKillerGUI principal, Boss jefe, SurvivorCamp campo) {
+    public WeaponBoss(ZombieKillerGUI principal, Boss jefe, SurvivorCamp campo) {
         this.principal = principal;
         this.jefe = jefe;
         this.campo = campo;
@@ -26,9 +26,9 @@ public class HiloBoss extends Thread {
     public void run() {
         try {
             AttackStrategyContext attackStrategy;
-            attackStrategy = new AttackStrategyContext(new BossAttackStrategy());
+            attackStrategy = new AttackStrategyContext(new BossZombieAttackStrategy());
 
-            while (campo.getEstadoJuego() != SIN_PARTIDA) {
+            while (campo.getGameStatus() != SIN_PARTIDA) {
                 attackStrategy.executeAttack(jefe);
                 String estado = jefe.getEstadoActual();
 
@@ -36,11 +36,11 @@ public class HiloBoss extends Thread {
                     if (jefe.getFrameActual() == 19) {
                         principal.leDaAPersonaje();
                     } else if (jefe.getFrameActual() == 21) {
-                        attackStrategy.enemigoTerminaSuGolpe(campo);
+                        attackStrategy.enemyFinishAttack(campo);
                     }
                 }
 
-                while (campo.getEstadoJuego() == PAUSADO) {
+                while (campo.getGameStatus() == PAUSADO) {
                     sleep(500);
                 }
 

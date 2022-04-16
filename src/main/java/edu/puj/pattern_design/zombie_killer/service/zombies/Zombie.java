@@ -1,5 +1,8 @@
 package edu.puj.pattern_design.zombie_killer.service.zombies;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.CAMINANDO;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.LENTITUD1;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.LENTITUD2;
@@ -11,22 +14,24 @@ import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesCons
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.SALUD3;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.SALUD4;
 
+@Getter
+@Setter
 public abstract class Zombie extends Enemy {
 
     /**
      * zombie que se encuentra al frente o fue generado antes que este
      */
-    private Zombie alFrente;
+    private Zombie inFront;
     /**
      * zombie que se encuentra atras o fue generado despues que este
      */
-    private Zombie atras;
+    private Zombie inBack;
 
     public int posX;
 
-    protected int direccionX;
+    protected int directionX;
 
-    protected int direccionY;
+    protected int directionY;
 
     /**
      * Constructor de un zombie nodo
@@ -41,10 +46,10 @@ public abstract class Zombie extends Enemy {
         setHealth(salud);
     }
 
-    protected Zombie(short nivel, Zombie atras) {
+    protected Zombie(short nivel, Zombie inBack) {
         determinarDificultadZombie(nivel);
         setEstadoActual(CAMINANDO);
-        this.atras = atras;
+        this.inBack = inBack;
     }
 
     /**
@@ -90,51 +95,15 @@ public abstract class Zombie extends Enemy {
     }
 
     /**
-     * obtiene el zombie que fue creado antes que el correspondiente
-     *
-     * @return
-     */
-    public Zombie getAlFrente() {
-        return alFrente;
-    }
-
-    /**
-     * Cambia el zombie que se encuentra al frente del correspondiente
-     *
-     * @param alFrente
-     */
-    public void setAlFrente(Zombie alFrente) {
-        this.alFrente = alFrente;
-    }
-
-    /**
-     * obtiene el zombie que fue creado despues del correspondiente
-     *
-     * @return zombie de atras
-     */
-    public Zombie getAtras() {
-        return atras;
-    }
-
-    /**
-     * Cambia el zombie que se encuentra al atras del correspondiente
-     *
-     * @param atras
-     */
-    public void setAtras(Zombie atras) {
-        this.atras = atras;
-    }
-
-    /**
      * se elimina a si mismo cambiando las asociaciones de los zombies laterales
      */
-    public void eliminarse() {
-        atras.alFrente = alFrente;
-        alFrente.atras = atras;
+    public void eliminate() {
+        inBack.inFront = inFront;
+        inFront.inBack = inBack;
     }
 
     @Override
-    public abstract boolean comprobarDisparo(int x, int y, int damage);
+    public abstract boolean checkShoot(int x, int y, int damage);
 
     /**
      * entra en la lista enlazada relacionando los parametros zombie atras y al
@@ -143,38 +112,22 @@ public abstract class Zombie extends Enemy {
      * @param zombAlFrente
      * @param zombAtras
      */
-    public void introducirse(Zombie zombAlFrente, Zombie zombAtras) {
-        atras = zombAtras;
-        alFrente = zombAlFrente;
-        zombAlFrente.atras = this;
-        zombAtras.alFrente = this;
+    public void introduce(Zombie zombAlFrente, Zombie zombAtras) {
+        inBack = zombAtras;
+        inFront = zombAlFrente;
+        zombAlFrente.inBack = this;
+        zombAtras.inFront = this;
     }
 
-    public void inicializar(short nivel, Zombie atras) {
+    public void inicialize(short nivel, Zombie atras) {
         determinarDificultadZombie(nivel);
         setEstadoActual(CAMINANDO);
         setPosX();
-        this.atras = atras;
+        this.inBack = atras;
     }
 
     public void setPosX() {
         this.posX = posAleatoriaX();
-    }
-
-    public void setPosXForClone(int posX) {
-        this.posX = posX;
-    }
-
-    public int getPosX() {
-        return this.posX;
-    }
-
-    public void setDireccionX(int direccionX) {
-        this.direccionX = direccionX;
-    }
-
-    public void setDireccionY(int direccionY) {
-        this.direccionY = direccionY;
     }
 
 }

@@ -11,12 +11,12 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 
 @Slf4j
-public class HiloSonido extends Thread {
+public class SoundThread extends Thread {
 
     private final String ruta;
     private Clip sonido;
 
-    public HiloSonido(String ruta) {
+    public SoundThread(String ruta) {
         this.ruta = ruta;
     }
 

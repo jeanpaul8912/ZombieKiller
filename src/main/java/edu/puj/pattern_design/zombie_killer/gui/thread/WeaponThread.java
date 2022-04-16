@@ -9,14 +9,15 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import static edu.puj.pattern_design.zombie_killer.service.constants.WeaponsConstants.CARGANDO;
 import static edu.puj.pattern_design.zombie_killer.service.constants.WeaponsConstants.LISTA;
+import static edu.puj.pattern_design.zombie_killer.service.constants.WeaponsConstants.RECHARGING;
 
 @Slf4j
-public class HiloArma extends Thread {
+public class WeaponThread extends Thread {
 
     private final Weapon weapon;
     private final ZombieKillerGUI principal;
 
-    public HiloArma(ZombieKillerGUI inter, Weapon weapon) {
+    public WeaponThread(ZombieKillerGUI inter, Weapon weapon) {
         this.weapon = weapon;
         principal = inter;
     }
@@ -27,12 +28,12 @@ public class HiloArma extends Thread {
             if (weapon instanceof GunWeapon) {
                 GunWeapon armaDeFuego = (GunWeapon) weapon;
 
-                if (armaDeFuego.isEnsangrentada()) {
+                if (armaDeFuego.isBlooded()) {
                     sleep(100);
                     principal.terminarEfectoDeSangre();
                 }
 
-                if (weapon.getEstado().equals(GunWeapon.RECARGANDO)) {
+                if (weapon.getEstado().equals(RECHARGING)) {
                     // descanso mientras suena el disparo
                     sleep(200);
                     if (weapon instanceof Remington && armaDeFuego.getAvailableBullets() > NumberUtils.INTEGER_ZERO) {

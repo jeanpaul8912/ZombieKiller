@@ -68,4 +68,6 @@ public final class WeaponsConstants {
 
     public static final String LISTA = "ready";
 
+    public static final String RECHARGING = "recarga";
+
 }

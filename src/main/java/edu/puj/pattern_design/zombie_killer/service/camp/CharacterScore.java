@@ -83,22 +83,15 @@ public class CharacterScore implements Serializable, Comparable<CharacterScore> 
         }
     }
 
-
-    /**
-     * agrega elementos a la lista pasada por parametro de manera ordenada en forma
-     * ascendente
-     *
-     * @param lista
-     */
-    public void generarListaInOrden(List<CharacterScore> lista) {
+    public void generateInOrderList(List<CharacterScore> lista) {
         if (highest != null) {
-            highest.generarListaInOrden(lista);
+            highest.generateInOrderList(lista);
         }
 
         lista.add(this);
 
         if (lowest != null) {
-            lowest.generarListaInOrden(lista);
+            lowest.generateInOrderList(lista);
         }
     }
 

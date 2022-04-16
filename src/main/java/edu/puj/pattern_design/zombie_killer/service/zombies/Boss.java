@@ -1,5 +1,8 @@
 package edu.puj.pattern_design.zombie_killer.service.zombies;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Formatter;
 
 import static edu.puj.pattern_design.zombie_killer.service.constants.WeaponsConstants.REMINGTON_DAMAGE;
@@ -11,17 +14,19 @@ import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesCons
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.SALUD_BOSS;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.VOLANDO;
 
-public class Boss extends Enemy implements SeMueveEnZigzag {
+@Getter
+@Setter
+public class Boss extends Enemy implements ZigzagMoving {
 
 
     /**
      * valor numerico entero que representa la direccion o velocidad en el eje X
      */
-    private int direccionX;
+    private int directionX;
     /**
      * valor numerico entero que representa la direccion o velocidad en el eje Y
      */
-    private int direccionY;
+    private int directionY;
     /**
      * valor que representa la posicion en el eje X del jefe
      */
@@ -59,19 +64,19 @@ public class Boss extends Enemy implements SeMueveEnZigzag {
     }
 
     public void moverEnDireccion() {
-        direccionX = (int) (Math.random() * 13) - 6;
+        directionX = (int) (Math.random() * 13) - 6;
 
-        if (direccionX > 0 && direccionX < 6) {
-            direccionY = 6 - direccionX;
-        } else if (direccionX <= 0 && direccionX > -6) {
-            direccionY = 6 + direccionX;
+        if (directionX > 0 && directionX < 6) {
+            directionY = 6 - directionX;
+        } else if (directionX <= 0 && directionX > -6) {
+            directionY = 6 + directionX;
         } else {
-            direccionY = 2;
+            directionY = 2;
         }
     }
 
     @Override
-    public boolean comprobarDisparo(int x, int y, int danio) {
+    public boolean checkShoot(int x, int y, int danio) {
         boolean leDio = false;
         int danioResultante = danio;
 
@@ -113,21 +118,13 @@ public class Boss extends Enemy implements SeMueveEnZigzag {
     }
 
     @Override
-    public int getDireccionX() {
-        return direccionX;
-    }
-
-    public void setDireccionX(int direccionX) {
-        this.direccionX = direccionX;
+    public int getDirectionX() {
+        return directionX;
     }
 
     @Override
-    public int getDireccionY() {
-        return direccionY;
-    }
-
-    public void setDireccionY(int direccionY) {
-        this.direccionY = direccionY;
+    public int getDirectionY() {
+        return directionY;
     }
 
 }

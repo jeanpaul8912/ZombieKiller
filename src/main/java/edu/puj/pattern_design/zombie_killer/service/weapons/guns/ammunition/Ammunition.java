@@ -1,10 +1,15 @@
 package edu.puj.pattern_design.zombie_killer.service.weapons.guns.ammunition;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 import static edu.puj.pattern_design.zombie_killer.service.constants.WeaponsConstants.IMPROVE_RECHARGE_TIME;
 import static edu.puj.pattern_design.zombie_killer.service.constants.WeaponsConstants.MINIMUM_RECHARGE_TIME;
 
+@Getter
+@Setter
 public class Ammunition implements Serializable {
 
     private static final long serialVersionUID = 9091188907527072741L;
@@ -24,25 +29,10 @@ public class Ammunition implements Serializable {
         this.damage = damage;
     }
 
-    public int getRechargeTime() {
-        return rechargeTime;
-    }
-
-    public int getAvailableBullets() {
-        return availableBullets;
-    }
-
     public void setAvailableBullets(int availableBullets) {
         this.availableBullets = Math.max(availableBullets, 0);
     }
 
-    public int getMaxBullets() {
-        return maxBullets;
-    }
-
-    public int getDamage() {
-        return damage;
-    }
 
     public void reload() {
         this.availableBullets = maxBullets;

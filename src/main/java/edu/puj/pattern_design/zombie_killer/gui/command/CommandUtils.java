@@ -17,18 +17,18 @@ public final class CommandUtils {
         PanelCamp panelCamp = PanelCamp.getPanel();
         panelCamp.setPrincipal(zombieKillerGUI);
         zombieKillerGUI.setPanelCampo(panelCamp);
-        SurvivorCamp campo = zombieKillerGUI.getCampo();
+        SurvivorCamp campo = zombieKillerGUI.getCamp();
 
         if (campo == null) {
             SurvivorCamp survivorCamp = new SurvivorCamp();
-            zombieKillerGUI.setCampo(survivorCamp);
+            zombieKillerGUI.setCamp(survivorCamp);
         }
 
         Cursor remingtonCursor = CursorObjectPool.getCursor("/img/Fondo/mira1.png");
-        zombieKillerGUI.setMiraRemington(remingtonCursor);
+        zombieKillerGUI.setRemingtonCursor(remingtonCursor);
 
         Cursor knifeCursor = CursorObjectPool.getCursor("/img/Fondo/Cuchillo.png");
-        zombieKillerGUI.setCursorCuchillo(knifeCursor);
+        zombieKillerGUI.setKnifeCursor(knifeCursor);
     }
 
 }

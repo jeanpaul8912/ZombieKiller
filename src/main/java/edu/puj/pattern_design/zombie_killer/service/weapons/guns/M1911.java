@@ -13,9 +13,6 @@ public class M1911 extends GunWeapon {
 
     private static M1911 m1911;
 
-    /**
-     * Constructor del arma M1911 con sus caracteristicas
-     */
     private M1911() {
         super();
         setRetroceso(M1911_INITIAL_RECHARGE_TIME);

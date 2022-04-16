@@ -17,11 +17,11 @@ public class WeaponFactoryImpl implements WeaponFactory {
         if (typeWeapon.equalsIgnoreCase(WEAPON_GRENADE_TYPE)) {
             return Grenade.getInstance();
         } else if (typeWeapon.equalsIgnoreCase(WEAPON_REMINGTON_TYPE)) {
-            return Remington.getInstancia();
+            return Remington.getInstance();
         } else if (typeWeapon.equalsIgnoreCase(WEAPON_M1911_TYPE)) {
             return M1911.getInstance();
         } else if (typeWeapon.equalsIgnoreCase(WEAPON_KNIFE_TYPE)) {
-            return Knife.getInstancia();
+            return Knife.getInstance();
         } else {
             throw new IllegalStateException("Unexpected value: " + typeWeapon);
         }

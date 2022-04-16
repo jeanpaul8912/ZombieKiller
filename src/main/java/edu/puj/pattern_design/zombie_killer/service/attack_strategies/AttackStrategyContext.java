@@ -15,15 +15,11 @@ public class AttackStrategyContext {
         this.attackStrategy.executeAttack(enemy);
     }
 
-    public void terminaDeAtacar() {
-        this.attackStrategy.terminaDeAtacar();
+    public void enemyFinishAttack(SurvivorCamp campo) {
+        this.attackStrategy.enemyFinishAttack(campo);
     }
 
-    public void enemigoTerminaSuGolpe(SurvivorCamp campo) {
-        this.attackStrategy.enemigoTerminaSuGolpe(campo);
-    }
-
-    public void enemigoAtaca(SurvivorCamp campo) {
-        this.attackStrategy.enemigoAtaca(campo);
+    public void enemyAttacks(SurvivorCamp campo) {
+        this.attackStrategy.enemyAttacks(campo);
     }
 }

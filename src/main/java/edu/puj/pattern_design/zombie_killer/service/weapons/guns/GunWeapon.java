@@ -2,22 +2,22 @@ package edu.puj.pattern_design.zombie_killer.service.weapons.guns;
 
 import edu.puj.pattern_design.zombie_killer.service.weapons.Weapon;
 import edu.puj.pattern_design.zombie_killer.service.weapons.guns.ammunition.Ammunition;
+import lombok.Getter;
+import lombok.Setter;
 
 import static edu.puj.pattern_design.zombie_killer.service.constants.WeaponsConstants.CARGANDO;
+import static edu.puj.pattern_design.zombie_killer.service.constants.WeaponsConstants.RECHARGING;
 
+@Getter
+@Setter
 public abstract class GunWeapon extends Weapon {
 
     private static final long serialVersionUID = 1L;
-    /**
-     * Cadena de caracteres incambaible que representa el estado de recalentamiento
-     * o recarga de un arma de efuego
-     */
-    public static final String RECARGANDO = "recarga";
 
     /**
      * estado temporal para dibujar la sangre del zombie en pantalla
      */
-    private boolean ensangrentada;
+    private boolean blooded;
 
     protected Ammunition ammunition;
 
@@ -31,7 +31,7 @@ public abstract class GunWeapon extends Weapon {
     public long calcularDescanso() {
         long descanso = 0;
 
-        if (getEstado().equals(RECARGANDO)) {
+        if (getEstado().equals(RECHARGING)) {
             descanso = ammunition.getRechargeTime();
         } else if (getEstado().equals(CARGANDO)) {
             descanso = getRetroceso();
@@ -45,18 +45,10 @@ public abstract class GunWeapon extends Weapon {
      *
      * @return ensangrentada
      */
-    public boolean isEnsangrentada() {
-        return ensangrentada;
+    public boolean isBlooded() {
+        return blooded;
     }
 
-    /**
-     * cambia el estado ensangrentado
-     *
-     * @param ensangrentada
-     */
-    public void setEnsangrentada(boolean ensangrentada) {
-        this.ensangrentada = ensangrentada;
-    }
 
     public void shoot() {
         ammunition.setAvailableBullets(ammunition.getAvailableBullets() - 1);
@@ -83,7 +75,4 @@ public abstract class GunWeapon extends Weapon {
         return ammunition.getDamage();
     }
 
-    public void setAmmunition(Ammunition ammunition) {
-        this.ammunition = ammunition;
-    }
 }
