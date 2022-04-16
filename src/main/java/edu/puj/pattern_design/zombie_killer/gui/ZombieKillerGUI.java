@@ -7,8 +7,8 @@ import edu.puj.pattern_design.zombie_killer.gui.panel.PanelCreditos;
 import edu.puj.pattern_design.zombie_killer.gui.panel.PanelMenu;
 import edu.puj.pattern_design.zombie_killer.gui.panel.PanelPuntajes;
 import edu.puj.pattern_design.zombie_killer.service.attack_strategies.AttackStrategyContext;
-import edu.puj.pattern_design.zombie_killer.service.attack_strategies.BossAttackStrategy;
-import edu.puj.pattern_design.zombie_killer.service.attack_strategies.CaminanteAttackStrategy;
+import edu.puj.pattern_design.zombie_killer.service.attack_strategies.BossZombieAttackStrategy;
+import edu.puj.pattern_design.zombie_killer.service.attack_strategies.WalkerZombieAttackStrategy;
 import edu.puj.pattern_design.zombie_killer.service.camp.CharacterScore;
 import edu.puj.pattern_design.zombie_killer.service.camp.SurvivorCamp;
 import edu.puj.pattern_design.zombie_killer.service.exceptions.NombreInvalidoException;
@@ -16,8 +16,10 @@ import edu.puj.pattern_design.zombie_killer.service.weapons.Weapon;
 import edu.puj.pattern_design.zombie_killer.service.weapons.guns.GunWeapon;
 import edu.puj.pattern_design.zombie_killer.service.weapons.guns.Remington;
 import edu.puj.pattern_design.zombie_killer.service.zombies.Boss;
-import edu.puj.pattern_design.zombie_killer.service.zombies.Caminante;
+import edu.puj.pattern_design.zombie_killer.service.zombies.WalkerZombie;
 import edu.puj.pattern_design.zombie_killer.service.zombies.Zombie;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -32,20 +34,19 @@ import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstan
 import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.SIN_PARTIDA;
 
 @Slf4j
+@Getter
+@Setter
 public class ZombieKillerGUI extends JFrame {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
     /**
      * Campo de juego que contiene a todo el mundo
      */
-    private SurvivorCamp campo;
+    private SurvivorCamp camp;
     /**
      * Arma que el jugador tiene equipada
      */
-    private GunWeapon armaActual;
+    private GunWeapon currentWeapon;
     /**
      * Panel del menu principal cualquier boton muestra otro panel representatitvo a
      * el
@@ -71,21 +72,21 @@ public class ZombieKillerGUI extends JFrame {
     /**
      * Cursor de la mira de la pistola
      */
-    private final Cursor miraM1911;
+    private final Cursor m1911Cursor;
     /**
      * Cursor de la mira de la escopeta
      */
-    private Cursor miraRemington;
+    private Cursor remingtonCursor;
     /**
      * Cursor temporal del cuchillo
      */
-    private Cursor cursorCuchillo;
+    private Cursor knifeCursor;
 
     private Boss boss;
 
-    private GunWeapon granada;
+    private GunWeapon grenade;
 
-    private Weapon cuchillo;
+    private Weapon knife;
 
     private ThreadsFacade facade;
 
@@ -104,8 +105,8 @@ public class ZombieKillerGUI extends JFrame {
         new ImageIcon(getClass().getResource("/img/Fondo/iconozombie.png"));
         new ImageIcon(getClass().getResource("/img/Fondo/fondoMenu.png"));
 
-        miraM1911 = CursorObjectPool.getCursor("/img/Fondo/mira1p.png");
-        setCursor(miraM1911);
+        m1911Cursor = CursorObjectPool.getCursor("/img/Fondo/mira1p.png");
+        setCursor(m1911Cursor);
         panelMenu = new PanelMenu(this);
         add(panelMenu, BorderLayout.CENTER);
         setSize(ANCHO_PANTALLA, ALTO_PANTALLA);
@@ -127,24 +128,24 @@ public class ZombieKillerGUI extends JFrame {
      * @return estado
      */
     public char getEstadoPartida() {
-        if (campo == null) {
+        if (camp == null) {
             return SIN_PARTIDA;
         }
 
-        return campo.getEstadoJuego();
+        return camp.getGameStatus();
     }
 
     /**
      * Inicia una partida desde 0
      */
     public void iniciarNuevaPartida() {
-        if (campo.getEstadoJuego() != SIN_PARTIDA) {
+        if (camp.getGameStatus() != SIN_PARTIDA) {
             int respuesta = JOptionPane.showConfirmDialog(this,
                     "En este momento se encuentra en una partida, segudo que desea salir?", "Iniciar Nueva Partida",
                     JOptionPane.YES_NO_OPTION);
 
             if (respuesta == JOptionPane.YES_OPTION) {
-                campo.setEstadoJuego(SIN_PARTIDA);
+                camp.setGameStatus(SIN_PARTIDA);
                 partidaIniciada();
             }
         } else {
@@ -157,15 +158,15 @@ public class ZombieKillerGUI extends JFrame {
      * visibles
      */
     private void partidaIniciada() {
-        setCursor(cursorCuchillo);
-        CharacterScore actual = campo.getRaizPuntajes();
-        campo = new SurvivorCamp();
-        campo.actualizarPuntajes(actual);
-        campo.setEstadoJuego(EN_CURSO);
-        armaActual = campo.getPersonaje().getPrincipalWeapon();
-        panelCampo.actualizarMatador(campo.getPersonaje());
-        panelCampo.actualizarEquipada(armaActual);
-        panelCampo.actualizarChombis(campo.getZombNodoLejano());
+        setCursor(knifeCursor);
+        CharacterScore actual = camp.getRootScores();
+        camp = new SurvivorCamp();
+        camp.updateScores(actual);
+        camp.setGameStatus(EN_CURSO);
+        currentWeapon = camp.getCharacter().getPrincipalWeapon();
+        panelCampo.actualizarMatador(camp.getCharacter());
+        panelCampo.actualizarEquipada(currentWeapon);
+        panelCampo.actualizarChombis(camp.getZombieFarNode());
         panelCampo.incorporarJefe(null);
         add(panelCampo, BorderLayout.CENTER);
         panelCampo.requestFocusInWindow();
@@ -189,7 +190,7 @@ public class ZombieKillerGUI extends JFrame {
      * @return puntaje
      */
     public int getPuntajeActual() {
-        return campo.getPersonaje().getScore();
+        return camp.getCharacter().getScore();
     }
 
     /**
@@ -197,20 +198,20 @@ public class ZombieKillerGUI extends JFrame {
      */
     public void cargarJuego() {
         try {
-            CharacterScore actuales = campo.getRaizPuntajes();
-            SurvivorCamp partida = campo.cargarPartida();
-            campo.setEstadoJuego(SIN_PARTIDA);
-            campo = partida;
-            campo.actualizarPuntajes(actuales);
-            panelCampo.actualizarMatador(campo.getPersonaje());
-            panelCampo.actualizarChombis(campo.getZombNodoLejano());
-            armaActual = campo.getPersonaje().getPrincipalWeapon();
-            panelCampo.actualizarEquipada(armaActual);
+            CharacterScore actuales = camp.getRootScores();
+            SurvivorCamp partida = camp.loadGame();
+            camp.setGameStatus(SIN_PARTIDA);
+            camp = partida;
+            camp.updateScores(actuales);
+            panelCampo.actualizarMatador(camp.getCharacter());
+            panelCampo.actualizarChombis(camp.getZombieFarNode());
+            currentWeapon = camp.getCharacter().getPrincipalWeapon();
+            panelCampo.actualizarEquipada(currentWeapon);
             panelCampo.actualizarRonda();
             cambiarPuntero();
             panelMenu.setVisible(false);
             panelCampo.setVisible(true);
-            campo.setEstadoJuego(EN_CURSO);
+            camp.setGameStatus(EN_CURSO);
             add(panelCampo, BorderLayout.CENTER);
             panelCampo.requestFocusInWindow();
             panelCampo.requestFocusInWindow();
@@ -226,7 +227,7 @@ public class ZombieKillerGUI extends JFrame {
      */
     public void guardarJuego() {
         try {
-            campo.guardarPartida();
+            camp.guardarPartida();
             JOptionPane.showMessageDialog(this, "Partida Guardada");
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
@@ -260,12 +261,12 @@ public class ZombieKillerGUI extends JFrame {
      * @param nivel
      */
     public void generarZombie(int nivel) {
-        Zombie chombi = campo.generarZombie(nivel);
+        Zombie chombi = camp.generateZombie(nivel);
 
-        if (chombi instanceof Caminante) {
-            attackStrategy = new AttackStrategyContext(new CaminanteAttackStrategy());
-            CaminanteAttackStrategy caminanteAttackStrategy = new CaminanteAttackStrategy();
-            caminanteAttackStrategy.moverEnDireccion(chombi);
+        if (chombi instanceof WalkerZombie) {
+            attackStrategy = new AttackStrategyContext(new WalkerZombieAttackStrategy());
+            WalkerZombieAttackStrategy walkerZombieAttackStrategy = new WalkerZombieAttackStrategy();
+            walkerZombieAttackStrategy.moveInDirection(chombi);
         }
     }
 
@@ -274,8 +275,8 @@ public class ZombieKillerGUI extends JFrame {
      */
     public void leDaAPersonaje() {
         reproducir("meDio");
-        attackStrategy = new AttackStrategyContext(new BossAttackStrategy());
-        attackStrategy.enemigoAtaca(campo);
+        attackStrategy = new AttackStrategyContext(new BossZombieAttackStrategy());
+        attackStrategy.enemyAttacks(camp);
         panelCampo.zombieAtaco();
     }
 
@@ -283,7 +284,7 @@ public class ZombieKillerGUI extends JFrame {
      * Pausa y despausa el juego
      */
     public void pausarJuego() {
-        char estado = campo.pausarJuego();
+        char estado = camp.pauseGame();
 
         if (estado == PAUSADO) {
             terminarGemi2();
@@ -304,8 +305,8 @@ public class ZombieKillerGUI extends JFrame {
      * reabastece la carga del arma principal
      */
     public void cargarArmaPersonaje() {
-        campo.getPersonaje().reloadPrincipalWeapon();
-        reproducir("carga" + armaActual.getClass().getSimpleName());
+        camp.getCharacter().reloadPrincipalWeapon();
+        reproducir("carga" + currentWeapon.getClass().getSimpleName());
         facade.initializeWeaponsThread("armaDeFuego");
     }
 
@@ -322,8 +323,8 @@ public class ZombieKillerGUI extends JFrame {
      * cambia el arma del personaje y actualiza aqui
      */
     public void cambiarArma() {
-        campo.cambiarArma();
-        armaActual = campo.getPersonaje().getPrincipalWeapon();
+        camp.cambiarArma();
+        currentWeapon = camp.getCharacter().getPrincipalWeapon();
         cambiarPuntero();
     }
 
@@ -331,17 +332,17 @@ public class ZombieKillerGUI extends JFrame {
      * cambia el cursor de acuerdo al arma principal
      */
     public void cambiarPuntero() {
-        if (armaActual instanceof Remington)
-            setCursor(miraRemington);
+        if (currentWeapon instanceof Remington)
+            setCursor(remingtonCursor);
         else
-            setCursor(miraM1911);
+            setCursor(m1911Cursor);
     }
 
     /**
      * termina el efecto del disparo con sangre
      */
     public void terminarEfectoDeSangre() {
-        armaActual.setEnsangrentada(false);
+        currentWeapon.setBlooded(false);
         panelCampo.quitarSangreZombie();
     }
 
@@ -349,7 +350,7 @@ public class ZombieKillerGUI extends JFrame {
      * obtiene la ronda en la que se encuentra
      */
     public int darRondaActual() {
-        return campo.getRondaActual();
+        return camp.getCurrentRound();
     }
 
     /**
@@ -360,8 +361,8 @@ public class ZombieKillerGUI extends JFrame {
     public void subirDeRonda(int nivel) {
         terminarGemi2();
         reproducir("sirena");
-        campo.actualizarRondaActual(nivel);
-        campo.setEstadoJuego(INICIANDO_RONDA);
+        camp.updateCurrentRound(nivel);
+        camp.setGameStatus(INICIANDO_RONDA);
         panelCampo.actualizarRonda();
     }
 
@@ -369,11 +370,11 @@ public class ZombieKillerGUI extends JFrame {
      * genera el jefe con su respectivo hilo
      */
     public void generarBoss() {
-        boss = campo.generarBoss();
+        boss = camp.generateBoss();
         panelCampo.incorporarJefe(boss);
-        BossAttackStrategy bossAttackStrategy = new BossAttackStrategy();
-        attackStrategy = new AttackStrategyContext(bossAttackStrategy);
-        bossAttackStrategy.moverEnDireccion(boss);
+        BossZombieAttackStrategy bossZombieAttackStrategy = new BossZombieAttackStrategy();
+        attackStrategy = new AttackStrategyContext(bossZombieAttackStrategy);
+        bossZombieAttackStrategy.moveInDirection(boss);
         facade.initializeBossThread();
     }
 
@@ -396,7 +397,7 @@ public class ZombieKillerGUI extends JFrame {
      */
     public void mostrarPuntajes() {
         if (panelMenu.isVisible()) {
-            panelPuntajes.actualizarPuntajes(campo.ordenarPuntajePorScore());
+            panelPuntajes.actualizarPuntajes(camp.ordenarPuntajePorScore());
             panelMenu.setVisible(false);
             panelPuntajes.setVisible(true);
             add(panelPuntajes, BorderLayout.CENTER);
@@ -421,21 +422,12 @@ public class ZombieKillerGUI extends JFrame {
     }
 
     /**
-     * obtiene el numero de referencia al arma que se muestra en el panelArmas
-     *
-     * @return numero de referencia
-     */
-    public int darArmaMostrada() {
-        return campo.getArmaMostrada();
-    }
-
-    /**
      * Cambia el arma que se esta viendo por el de la derecha
      *
      * @return numero de referencia al arma de la derecha
      */
     public int cambiarArmaVisibleDerecha() {
-        return campo.moverArmaVisibleDerecha();
+        return camp.moverArmaVisibleDerecha();
     }
 
     /**
@@ -444,7 +436,7 @@ public class ZombieKillerGUI extends JFrame {
      * @return numero de referencia al arma de la izquierda
      */
     public int cambiarArmaVisibleIzquierda() {
-        return campo.moverArmaVisibleIzquierda();
+        return camp.moverArmaVisibleIzquierda();
     }
 
     /**
@@ -454,16 +446,16 @@ public class ZombieKillerGUI extends JFrame {
     public void juegoTerminado() {
         boolean seLlamoDeNuevo = false;
         int aceptoGuardarScore = JOptionPane.showConfirmDialog(this,
-                "Su puntaje fue: " + campo.getPersonaje().getScore() + ", con " + campo.getPersonaje().getKilling()
-                        + " bajas y en la Ronda " + campo.getRondaActual() + ". Desea guardar su puntaje?",
+                "Su puntaje fue: " + camp.getCharacter().getScore() + ", con " + camp.getCharacter().getKilling()
+                        + " bajas y en la Ronda " + camp.getCurrentRound() + ". Desea guardar su puntaje?",
                 "Juego Terminado", JOptionPane.YES_NO_OPTION);
         if (aceptoGuardarScore == JOptionPane.YES_OPTION) {
             String nombrePlayer = JOptionPane.showInputDialog(this, "Escribe tu nombre");
 
             if (nombrePlayer != null && !nombrePlayer.equals(""))
                 try {
-                    campo.verificarNombre(nombrePlayer);
-                    campo.aniadirMejoresPuntajes(nombrePlayer);
+                    camp.verificarNombre(nombrePlayer);
+                    camp.aniadirMejoresPuntajes(nombrePlayer);
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(this,
                             "Error al guardar el puntaje, es posible que haya abierto el juego desde \"Acceso rapido\"");
@@ -498,12 +490,12 @@ public class ZombieKillerGUI extends JFrame {
     public void victoria() {
         String nombrePlayer = JOptionPane.showInputDialog(this,
                 "Enhorabuena, has pasado todas los niveles de dificultad. Su puntaje final es: "
-                        + campo.getPersonaje().getScore() + ". Escribe tu nombre");
+                        + camp.getCharacter().getScore() + ". Escribe tu nombre");
 
         if (nombrePlayer != null && !nombrePlayer.equals(""))
             try {
-                campo.verificarNombre(nombrePlayer);
-                campo.aniadirMejoresPuntajes(nombrePlayer);
+                camp.verificarNombre(nombrePlayer);
+                camp.aniadirMejoresPuntajes(nombrePlayer);
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this,
                         "Error al guardar el puntaje, es posible que haya abierto el juego desde \"Acceso rapido\"");
@@ -524,14 +516,14 @@ public class ZombieKillerGUI extends JFrame {
      * Llama al metodo de ordenar por bajas
      */
     public void ordenarPorBajas() {
-        panelPuntajes.actualizarPuntajes(campo.ordenarPuntajePorBajas());
+        panelPuntajes.actualizarPuntajes(camp.ordenarPuntajePorBajas());
     }
 
     /**
      * Llama al metodo de ordenar por bajas con tiro a la cabeza
      */
     public void ordenarPorHeadshot() {
-        panelPuntajes.actualizarPuntajes(campo.ordenarPuntajePorTirosALaCabeza());
+        panelPuntajes.actualizarPuntajes(camp.ordenarPuntajePorTirosALaCabeza());
     }
 
     /**
@@ -539,7 +531,7 @@ public class ZombieKillerGUI extends JFrame {
      */
     public void buscarPorNombre(String nombreBuscado) {
         if (nombreBuscado != null) {
-            CharacterScore buscado = campo.buscarPuntajeDe(nombreBuscado);
+            CharacterScore buscado = camp.buscarPuntajeDe(nombreBuscado);
             panelPuntajes.mostrarPuntajeDe(buscado);
         }
     }
@@ -548,82 +540,7 @@ public class ZombieKillerGUI extends JFrame {
      * Llama al metodo de ordenar por puntaje
      */
     public void ordenarPorScore() {
-        panelPuntajes.actualizarPuntajes(campo.ordenarPuntajePorScore());
+        panelPuntajes.actualizarPuntajes(camp.ordenarPuntajePorScore());
     }
 
-    public void setPanelCampo(PanelCamp panelCampo) {
-        this.panelCampo = panelCampo;
-    }
-
-    public void setPanelComoJugar(PanelComoJugar panelComoJugar) {
-        this.panelComoJugar = panelComoJugar;
-    }
-
-    public void setPanelPuntajes(PanelPuntajes panelPuntajes) {
-        this.panelPuntajes = panelPuntajes;
-    }
-
-    public void setPanelCreditos(PanelCreditos panelCreditos) {
-        this.panelCreditos = panelCreditos;
-    }
-
-    public SurvivorCamp getCampo() {
-        return campo;
-    }
-
-    public void setCampo(SurvivorCamp campo) {
-        this.campo = campo;
-    }
-
-    public void setMiraRemington(Cursor miraRemington) {
-        this.miraRemington = miraRemington;
-    }
-
-    public void setCursorCuchillo(Cursor cursorCuchillo) {
-        this.cursorCuchillo = cursorCuchillo;
-    }
-
-    public GunWeapon getArmaActual() {
-        return armaActual;
-    }
-
-    public Boss getBoss() {
-        return boss;
-    }
-
-    public void setBoss(Boss boss) {
-        this.boss = boss;
-    }
-
-    public GunWeapon getGranada() {
-        return granada;
-    }
-
-    public void setGranada(GunWeapon granada) {
-        this.granada = granada;
-    }
-
-    public Weapon getCuchillo() {
-        return cuchillo;
-    }
-
-    public void setCuchillo(Weapon cuchillo) {
-        this.cuchillo = cuchillo;
-    }
-
-    public ThreadsFacade getFacade() {
-        return facade;
-    }
-
-    public void setFacade(ThreadsFacade facade) {
-        this.facade = facade;
-    }
-
-    public PanelCamp getPanelCampo() {
-        return panelCampo;
-    }
-
-    public Cursor getCursorCuchillo() {
-        return cursorCuchillo;
-    }
 }

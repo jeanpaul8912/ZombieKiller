@@ -5,7 +5,7 @@ import static edu.puj.pattern_design.zombie_killer.service.constants.WeaponsCons
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.MURIENDO;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.POS_ATAQUE;
 
-public abstract class ZombieZigZag extends Zombie implements SeMueveEnZigzag {
+public abstract class ZombieZigZag extends Zombie implements ZigzagMoving {
 
     private int direccionX;
 
@@ -13,11 +13,6 @@ public abstract class ZombieZigZag extends Zombie implements SeMueveEnZigzag {
 
     public ZombieZigZag() {
 
-    }
-
-    public ZombieZigZag(short round, Zombie next) {
-        super(round, next);
-        this.posX = posAleatoriaX();
     }
 
     public ZombieZigZag(int posX, int posY, int direccionX, int direccionY, String estadoActual,
@@ -29,7 +24,7 @@ public abstract class ZombieZigZag extends Zombie implements SeMueveEnZigzag {
     }
 
     @Override
-    public boolean comprobarDisparo(int x, int y, int damage) {
+    public boolean checkShoot(int x, int y, int damage) {
         boolean leDio = false;
         int resultDamage = damage;
 
@@ -57,24 +52,22 @@ public abstract class ZombieZigZag extends Zombie implements SeMueveEnZigzag {
         return leDio;
     }
 
-    public abstract String getImageUrl();
-
     @Override
-    public int getDireccionX() {
+    public int getDirectionX() {
         return direccionX;
     }
 
     @Override
-    public int getDireccionY() {
+    public int getDirectionY() {
         return direccionY;
     }
 
-    public void setDireccionX(int direccionX) {
-        this.direccionX = direccionX;
+    public void setDirectionX(int directionX) {
+        this.direccionX = directionX;
     }
 
-    public void setDireccionY(int direccionY) {
-        this.direccionY = direccionY;
+    public void setDirectionY(int directionY) {
+        this.direccionY = directionY;
     }
 
 }

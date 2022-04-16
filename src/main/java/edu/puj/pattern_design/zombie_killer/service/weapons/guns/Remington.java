@@ -18,7 +18,7 @@ public class Remington extends GunWeapon {
         setRetroceso(REMINGTON_INITIAL_RECHARGE_TIME);
     }
 
-    public static Remington getInstancia() {
+    public static Remington getInstance() {
         if (remington == null) {
             remington = new Remington();
         }

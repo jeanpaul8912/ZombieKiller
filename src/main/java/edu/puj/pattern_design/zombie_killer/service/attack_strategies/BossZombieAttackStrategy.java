@@ -10,7 +10,7 @@ import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesCons
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.POS_INICIAL;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.VOLANDO;
 
-public class BossAttackStrategy extends AttackStrategy implements IAttackMovement {
+public class BossZombieAttackStrategy extends AttackStrategy implements IAttackMovement {
 
     private Boss boss;
 
@@ -26,10 +26,10 @@ public class BossAttackStrategy extends AttackStrategy implements IAttackMovemen
                 boss.setEstadoActual(ATACANDO);
             } else {
                 if (boss.getPosX() > ANCHO_PANTALLA - ANCHO_IMAGEN || boss.getPosX() < 0) {
-                    moverEnDireccion(boss);
+                    moveInDirection(boss);
                 }
-                boss.setPosX(boss.getPosX() + boss.getDireccionX());
-                boss.setPosY(boss.getPosY() + boss.getDireccionY());
+                boss.setPosX(boss.getPosX() + boss.getDirectionX());
+                boss.setPosY(boss.getPosY() + boss.getDirectionY());
 
                 if (boss.getFrameActual() < 13) {
                     boss.setFrameActual((byte) (boss.getFrameActual() + 1));
@@ -45,23 +45,23 @@ public class BossAttackStrategy extends AttackStrategy implements IAttackMovemen
     }
 
     @Override
-    public void moverEnDireccion(Enemy enemy) {
+    public void moveInDirection(Enemy enemy) {
         Boss bossEnemy = (Boss) enemy;
-        bossEnemy.setDireccionX((int) (Math.random() * 13) - 6);
+        bossEnemy.setDirectionX((int) (Math.random() * 13) - 6);
 
-        if (bossEnemy.getDireccionX() > 0 && bossEnemy.getDireccionX() < 6) {
-            bossEnemy.setDireccionY(6 - bossEnemy.getDireccionX());
-        } else if (bossEnemy.getDireccionX() <= 0 && bossEnemy.getDireccionX() > -6) {
-            bossEnemy.setDireccionY(6 + bossEnemy.getDireccionX());
+        if (bossEnemy.getDirectionX() > 0 && bossEnemy.getDirectionX() < 6) {
+            bossEnemy.setDirectionY(6 - bossEnemy.getDirectionX());
+        } else if (bossEnemy.getDirectionX() <= 0 && bossEnemy.getDirectionX() > -6) {
+            bossEnemy.setDirectionY(6 + bossEnemy.getDirectionX());
         } else {
-            bossEnemy.setDireccionY(2);
+            bossEnemy.setDirectionY(2);
         }
     }
 
-    public void terminaDeAtacar() {
+    public void finishAttack() {
         boss.setEstadoActual(VOLANDO);
         boss.setPosY(POS_INICIAL);
-        moverEnDireccion(boss);
+        moveInDirection(boss);
         boss.setPosX(boss.posAleatoriaX());
     }
 }

@@ -1,15 +1,18 @@
 package edu.puj.pattern_design.zombie_killer.gui.facade;
 
 import edu.puj.pattern_design.zombie_killer.gui.ZombieKillerGUI;
-import edu.puj.pattern_design.zombie_killer.gui.thread.HiloArma;
-import edu.puj.pattern_design.zombie_killer.gui.thread.HiloBoss;
-import edu.puj.pattern_design.zombie_killer.gui.thread.HiloEnemigo;
-import edu.puj.pattern_design.zombie_killer.gui.thread.HiloGeneradorDeZombies;
-import edu.puj.pattern_design.zombie_killer.gui.thread.HiloSonido;
+import edu.puj.pattern_design.zombie_killer.gui.thread.WeaponThread;
+import edu.puj.pattern_design.zombie_killer.gui.thread.WeaponBoss;
+import edu.puj.pattern_design.zombie_killer.gui.thread.EnemyThread;
+import edu.puj.pattern_design.zombie_killer.gui.thread.ZombieGeneratorThread;
+import edu.puj.pattern_design.zombie_killer.gui.thread.SoundThread;
+
+import static edu.puj.pattern_design.zombie_killer.service.constants.WeaponsConstants.WEAPON_GRENADE_TYPE;
+import static edu.puj.pattern_design.zombie_killer.service.constants.WeaponsConstants.WEAPON_KNIFE_TYPE;
 
 public class ThreadsFacade {
 
-    private HiloSonido zombieSoundThread;
+    private SoundThread zombieSoundThread;
     private final ZombieKillerGUI zombieInterface;
 
     public ThreadsFacade(ZombieKillerGUI zombieInterface) {
@@ -17,20 +20,20 @@ public class ThreadsFacade {
     }
 
     public void initializeEnemyThreads() {
-        HiloGeneradorDeZombies zombieGeneratorThread = new HiloGeneradorDeZombies(zombieInterface, zombieInterface.getCampo());
+        ZombieGeneratorThread zombieGeneratorThread = new ZombieGeneratorThread(zombieInterface, zombieInterface.getCamp());
         zombieGeneratorThread.start();
-        HiloEnemigo enemyThread = new HiloEnemigo(zombieInterface, zombieInterface.getCampo().getZombNodoCercano(),
-                zombieInterface.getCampo());
+        EnemyThread enemyThread = new EnemyThread(zombieInterface, zombieInterface.getCamp().getZombieNearNode(),
+                zombieInterface.getCamp());
         enemyThread.start();
     }
 
     public void initializeGeneralSoundThread(String soundType) {
-        HiloSonido generalSoundThread = new HiloSonido(soundType);
+        SoundThread generalSoundThread = new SoundThread(soundType);
         generalSoundThread.start();
     }
 
     public void initializeZombieSoundThread(String soundType) {
-        zombieSoundThread = new HiloSonido(soundType);
+        zombieSoundThread = new SoundThread(soundType);
         zombieSoundThread.start();
     }
 
@@ -41,20 +44,20 @@ public class ThreadsFacade {
     }
 
     public void initializeWeaponsThread(String weaponType) {
-        HiloArma weaponThread;
-        if (weaponType.equals("granada")) {
-            weaponThread = new HiloArma(zombieInterface, zombieInterface.getGranada());
-        } else if (weaponType.equals("cuchillo")) {
-            weaponThread = new HiloArma(zombieInterface, zombieInterface.getCuchillo());
+        WeaponThread weaponThread;
+        if (weaponType.equals(WEAPON_GRENADE_TYPE)) {
+            weaponThread = new WeaponThread(zombieInterface, zombieInterface.getGrenade());
+        } else if (weaponType.equals(WEAPON_KNIFE_TYPE)) {
+            weaponThread = new WeaponThread(zombieInterface, zombieInterface.getKnife());
         } else {
-            weaponThread = new HiloArma(zombieInterface, zombieInterface.getArmaActual());
+            weaponThread = new WeaponThread(zombieInterface, zombieInterface.getCurrentWeapon());
         }
 
         weaponThread.start();
     }
 
     public void initializeBossThread() {
-        HiloBoss boss = new HiloBoss(zombieInterface, zombieInterface.getBoss(), zombieInterface.getCampo());
+        WeaponBoss boss = new WeaponBoss(zombieInterface, zombieInterface.getBoss(), zombieInterface.getCamp());
         boss.start();
     }
 }

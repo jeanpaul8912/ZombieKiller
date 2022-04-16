@@ -27,44 +27,44 @@ public class SlashStrategy extends DefenseStrategy {
 
     @Override
     public void executeDefense() {
-        interfaz.setCuchillo(interfaz.getCampo().getPersonaje().getKnife());
+        interfaz.setKnife(interfaz.getCamp().getCharacter().getKnife());
 
         if (slash()) {
-            interfaz.setCursor(interfaz.getCursorCuchillo());
+            interfaz.setCursor(interfaz.getKnifeCursor());
             interfaz.reproducir("leDioCuchillo");
             interfaz.getFacade().initializeWeaponsThread("cuchillo");
-        } else if (interfaz.getCampo().getPersonaje().getPrincipalWeapon().getAvailableBullets() == NumberUtils.INTEGER_ZERO) {
+        } else if (interfaz.getCamp().getCharacter().getPrincipalWeapon().getAvailableBullets() == NumberUtils.INTEGER_ZERO) {
             interfaz.reproducir("sin_balas");
         }
     }
 
 
     public boolean slash() {
-        Zombie aAcuchillar = interfaz.getCampo().getZombNodoCercano().getAtras();
+        Zombie aAcuchillar = interfaz.getCamp().getZombieNearNode().getInBack();
         boolean seEncontro = false;
 
         while (!aAcuchillar.getEstadoActual().equals(NODO) && !seEncontro) {
             if (aAcuchillar.getEstadoActual().equals(ATACANDO)
-                    && aAcuchillar.comprobarDisparo(xPosition, yPosition, KNIFE_DAMAGE)) {
+                    && aAcuchillar.checkShoot(xPosition, yPosition, KNIFE_DAMAGE)) {
                 if (aAcuchillar.getEstadoActual().equals(MURIENDO))
-                    interfaz.getCampo().getPersonaje().increaseScore(40);
+                    interfaz.getCamp().getCharacter().increaseScore(40);
                 seEncontro = true;
-                interfaz.getCampo().getPersonaje().setBlooded(false);
-                interfaz.getCampo().getPersonaje().getKnife().setEstado(CARGANDO);
+                interfaz.getCamp().getCharacter().setBlooded(false);
+                interfaz.getCamp().getCharacter().getKnife().setEstado(CARGANDO);
             }
-            aAcuchillar = aAcuchillar.getAtras();
+            aAcuchillar = aAcuchillar.getInBack();
         }
 
-        if (interfaz.getCampo().getJefe() != null) {
-            if (interfaz.getCampo().getJefe().getEstadoActual().equals(ATACANDO) &&
-                    interfaz.getCampo().getJefe().comprobarDisparo(xPosition, yPosition, KNIFE_DAMAGE)) {
-                interfaz.getCampo().getPersonaje().setBlooded(false);
-                interfaz.getCampo().getPersonaje().getKnife().setEstado(CARGANDO);
+        if (interfaz.getCamp().getBoss() != null) {
+            if (interfaz.getCamp().getBoss().getEstadoActual().equals(ATACANDO) &&
+                    interfaz.getCamp().getBoss().checkShoot(xPosition, yPosition, KNIFE_DAMAGE)) {
+                interfaz.getCamp().getCharacter().setBlooded(false);
+                interfaz.getCamp().getCharacter().getKnife().setEstado(CARGANDO);
                 seEncontro = true;
 
-                if (interfaz.getCampo().getJefe().getEstadoActual().equals(DERROTADO)) {
-                    interfaz.getCampo().getPersonaje().increaseScore(100);
-                    interfaz.getCampo().setEstadoJuego(interfaz.getCampo().getSinPartida());
+                if (interfaz.getCamp().getBoss().getEstadoActual().equals(DERROTADO)) {
+                    interfaz.getCamp().getCharacter().increaseScore(100);
+                    interfaz.getCamp().setGameStatus(interfaz.getCamp().getSinPartida());
                 }
             }
         }

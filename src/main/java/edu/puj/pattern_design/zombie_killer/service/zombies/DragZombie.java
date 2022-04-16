@@ -7,7 +7,7 @@ import static edu.puj.pattern_design.zombie_killer.service.constants.WeaponsCons
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.MURIENDO;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.POS_ATAQUE;
 
-public class Rastrero extends Zombie {
+public class DragZombie extends Zombie {
 
     /**
      * Constructor del zombie rastrero con sus caracteristicas con corde a la ronda
@@ -15,7 +15,7 @@ public class Rastrero extends Zombie {
      * @param ronda
      * @param siguiente
      */
-    public Rastrero(short ronda, Zombie siguiente) {
+    public DragZombie(short ronda, Zombie siguiente) {
         super(ronda, siguiente);
     }
 
@@ -29,13 +29,13 @@ public class Rastrero extends Zombie {
      * @param salud
      * @param ronda
      */
-    public Rastrero(int posX, int posY, String estadoActual, byte frameActual, byte salud, int ronda) {
+    public DragZombie(int posX, int posY, String estadoActual, byte frameActual, byte salud, int ronda) {
         super(posY, estadoActual, frameActual, salud, ronda);
         this.posX = posX;
     }
 
     @Override
-    public boolean comprobarDisparo(int x, int y, int damage) {
+    public boolean checkShoot(int x, int y, int damage) {
         boolean leDio = false;
         int resultDamage = damage;
 

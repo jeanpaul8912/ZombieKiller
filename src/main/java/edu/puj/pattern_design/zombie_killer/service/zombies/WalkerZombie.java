@@ -6,9 +6,9 @@ import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesCons
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.CAMINANDO;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.GRUNIENDO;
 
-public class Caminante extends ZombieZigZag {
+public class WalkerZombie extends ZombieZigZag {
 
-    public Caminante() {
+    public WalkerZombie() {
 
     }
 
@@ -28,14 +28,9 @@ public class Caminante extends ZombieZigZag {
         }
     }
 
-    public Caminante(int posX, int posY, int direccionX, int direccionY, String estadoActual, byte frameActual,
-                     byte salud, int ronda) {
+    public WalkerZombie(int posX, int posY, int direccionX, int direccionY, String estadoActual, byte frameActual,
+                        byte salud, int ronda) {
         super(posX, posY, direccionX, direccionY, estadoActual, frameActual, salud, ronda);
-    }
-
-    @Override
-    public String getImageUrl() {
-        return null;
     }
 
 }

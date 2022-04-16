@@ -15,7 +15,7 @@ public class Knife extends Weapon {
         setDamage(KNIFE_DAMAGE);
     }
 
-    public static Knife getInstancia() {
+    public static Knife getInstance() {
         if (knife == null) {
             knife = new Knife();
         }

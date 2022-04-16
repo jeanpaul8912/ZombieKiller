@@ -17,14 +17,14 @@ public class BestScoresCommand implements Command {
             PanelPuntajes panelPuntajes = PanelPuntajes.getPanel();
             panelPuntajes.setPrincipal(zombieKillerGUI);
             zombieKillerGUI.setPanelPuntajes(panelPuntajes);
-            SurvivorCamp camp = zombieKillerGUI.getCampo();
+            SurvivorCamp camp = zombieKillerGUI.getCamp();
 
             if (camp == null) {
                 camp = new SurvivorCamp();
-                zombieKillerGUI.setCampo(camp);
+                zombieKillerGUI.setCamp(camp);
             }
 
-            camp.cargarPuntajes();
+            camp.loadScores();
             zombieKillerGUI.mostrarPuntajes();
         } catch (ClassNotFoundException e) {
             log.error(e.getMessage(), e);

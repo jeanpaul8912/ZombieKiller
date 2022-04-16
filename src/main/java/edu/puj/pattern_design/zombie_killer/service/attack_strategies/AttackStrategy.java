@@ -10,18 +10,19 @@ public abstract class AttackStrategy {
 
     public abstract void executeAttack(Enemy enemy);
 
-    public abstract void terminaDeAtacar();
+    public abstract void finishAttack();
 
-    public void enemigoTerminaSuGolpe(SurvivorCamp campo) {
-        campo.getPersonaje().setBlooded(false);
-        terminaDeAtacar();
+    public void enemyFinishAttack(SurvivorCamp campo) {
+        campo.getCharacter().setBlooded(false);
+        finishAttack();
     }
 
-    public void enemigoAtaca(SurvivorCamp campo) {
-        campo.getPersonaje().setBlooded(true);
-        campo.getPersonaje().setHealth((byte) (campo.getPersonaje().getHealth() - 1));
-        if (campo.getPersonaje().getHealth() <= NumberUtils.INTEGER_ZERO) {
-            campo.setEstadoJuego(SIN_PARTIDA);
+    public void enemyAttacks(SurvivorCamp campo) {
+        campo.getCharacter().setBlooded(true);
+        campo.getCharacter().setHealth((byte) (campo.getCharacter().getHealth() - 1));
+
+        if (campo.getCharacter().getHealth() <= NumberUtils.INTEGER_ZERO) {
+            campo.setGameStatus(SIN_PARTIDA);
         }
     }
 }

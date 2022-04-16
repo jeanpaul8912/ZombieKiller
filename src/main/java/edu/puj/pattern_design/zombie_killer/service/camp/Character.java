@@ -5,7 +5,7 @@ import edu.puj.pattern_design.zombie_killer.service.weapons.WeaponFactory;
 import edu.puj.pattern_design.zombie_killer.service.weapons.WeaponFactoryImpl;
 import edu.puj.pattern_design.zombie_killer.service.weapons.guns.Grenade;
 import edu.puj.pattern_design.zombie_killer.service.weapons.guns.GunWeapon;
-import edu.puj.pattern_design.zombie_killer.service.zombies.SerViviente;
+import edu.puj.pattern_design.zombie_killer.service.zombies.LivingBeing;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +20,7 @@ import static edu.puj.pattern_design.zombie_killer.service.constants.WeaponsCons
 
 @Getter
 @Setter
-public class Character implements SerViviente, Serializable {
+public class Character implements LivingBeing, Serializable {
 
     private static final long serialVersionUID = -9073363089990894813L;
 

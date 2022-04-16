@@ -4,5 +4,5 @@ import edu.puj.pattern_design.zombie_killer.service.zombies.Enemy;
 
 public interface IAttackMovement {
 
-    void moverEnDireccion(Enemy enemy);
+    void moveInDirection(Enemy enemy);
 }

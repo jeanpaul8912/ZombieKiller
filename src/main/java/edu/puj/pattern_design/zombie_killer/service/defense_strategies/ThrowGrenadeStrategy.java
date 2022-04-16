@@ -20,24 +20,24 @@ public class ThrowGrenadeStrategy extends DefenseStrategy {
     public void executeDefense() {
 
         throwGranada();
-        interfaz.setGranada(interfaz.getCampo().getPersonaje().getGrenades());
+        interfaz.setGrenade(interfaz.getCamp().getCharacter().getGrenades());
         interfaz.getFacade().initializeWeaponsThread("granada");
         interfaz.reproducir("bomba");
     }
 
     public void throwGranada() {
-        Zombie actual = interfaz.getCampo().getZombNodoCercano().getAtras();
-        interfaz.getCampo().getPersonaje().setBlooded(false);
+        Zombie actual = interfaz.getCamp().getZombieNearNode().getInBack();
+        interfaz.getCamp().getCharacter().setBlooded(false);
         while (!actual.getEstadoActual().equals(NODO)) {
 
             if (!actual.getEstadoActual().equals(MURIENDO) && !actual.getEstadoActual().equals(MURIENDO_INCENDIADO)) {
                 actual.setEstadoActual(MURIENDO_INCENDIADO);
-                interfaz.getCampo().getPersonaje().increaseScore(50);
-                actual = actual.getAtras();
+                interfaz.getCamp().getCharacter().increaseScore(50);
+                actual = actual.getInBack();
             }
         }
 
-        interfaz.getCampo().getPersonaje().getGrenades().shoot();
-        interfaz.getCampo().getPersonaje().getGrenades().setEstado(CARGANDO);
+        interfaz.getCamp().getCharacter().getGrenades().shoot();
+        interfaz.getCamp().getCharacter().getGrenades().setEstado(CARGANDO);
     }
 }

@@ -13,9 +13,6 @@ public class Grenade extends GunWeapon {
 
     private static Grenade grenade;
 
-    /**
-     * Constructor de la granada con su respectiva cantidad y danio
-     */
     private Grenade() {
         super();
         setRetroceso(0);
