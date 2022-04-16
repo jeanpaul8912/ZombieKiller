@@ -298,7 +298,7 @@
   </generalization>  
   <association id="57">    
     <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="58" name="personaje"/>      
+      <attribute id="58" name="character"/>
       <multiplicity id="59" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="8" navigable="true"/>    
