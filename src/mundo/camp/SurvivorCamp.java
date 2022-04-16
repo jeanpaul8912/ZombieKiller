@@ -187,7 +187,8 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
      * @return jefe creado
      */
     public Boss generarBoss() {
-        return (Boss) jefe.clonar();
+    	jefe = (Boss) jefe.clonar();
+        return jefe;
     }
 
     /**
