@@ -23,10 +23,10 @@ public class WalkerZombieAttackStrategy extends AttackStrategy implements IAttac
     }
 
     public void attack(WalkerZombie walkerZombie) {
-        switch (walkerZombie.getEstadoActual()) {
+        switch (walkerZombie.getCurrentStatus()) {
             case CAMINANDO:
                 if (walkerZombie.getPosY() > POS_ATAQUE) {
-                    walkerZombie.setEstadoActual(ATACANDO);
+                    walkerZombie.setCurrentStatus(ATACANDO);
                 } else {
                     if (walkerZombie.getPosX() > ANCHO_PANTALLA - ANCHO_IMAGEN || walkerZombie.getPosX() < 0) {
                         moveInDirection(walkerZombie);
@@ -35,29 +35,29 @@ public class WalkerZombieAttackStrategy extends AttackStrategy implements IAttac
                     walkerZombie.posX = walkerZombie.getPosX() + walkerZombie.getDirectionX();
                     walkerZombie.setPosY(walkerZombie.getPosY() + walkerZombie.getDirectionY());
 
-                    if (walkerZombie.getFrameActual() == 24) {
-                        walkerZombie.setFrameActual((byte) 0);
+                    if (walkerZombie.getCurrentFrame() == 24) {
+                        walkerZombie.setCurrentFrame((byte) 0);
                     } else {
-                        walkerZombie.setFrameActual((byte) (walkerZombie.getFrameActual() + 1));
+                        walkerZombie.setCurrentFrame((byte) (walkerZombie.getCurrentFrame() + 1));
                     }
                 }
                 break;
             case ATACANDO:
-                if (walkerZombie.getFrameActual() < 16) {
-                    walkerZombie.setFrameActual((byte) (walkerZombie.getFrameActual() + 1));
+                if (walkerZombie.getCurrentFrame() < 16) {
+                    walkerZombie.setCurrentFrame((byte) (walkerZombie.getCurrentFrame() + 1));
                 }
                 break;
             case MURIENDO:
             case MURIENDO_INCENDIADO:
-                if (walkerZombie.getFrameActual() < 17) {
-                    walkerZombie.setFrameActual((byte) (walkerZombie.getFrameActual() + 1));
+                if (walkerZombie.getCurrentFrame() < 17) {
+                    walkerZombie.setCurrentFrame((byte) (walkerZombie.getCurrentFrame() + 1));
                 }
                 break;
             case GRUNIENDO:
-                if (walkerZombie.getFrameActual() < 17) {
-                    walkerZombie.setFrameActual((byte) (walkerZombie.getFrameActual() + 1));
+                if (walkerZombie.getCurrentFrame() < 17) {
+                    walkerZombie.setCurrentFrame((byte) (walkerZombie.getCurrentFrame() + 1));
                 } else {
-                    walkerZombie.setEstadoActual(ATACANDO);
+                    walkerZombie.setCurrentStatus(ATACANDO);
                 }
                 break;
         }
@@ -76,6 +76,6 @@ public class WalkerZombieAttackStrategy extends AttackStrategy implements IAttac
     }
 
     public void finishAttack() {
-        walkerZombie.setEstadoActual(GRUNIENDO);
+        walkerZombie.setCurrentStatus(GRUNIENDO);
     }
 }

@@ -70,4 +70,24 @@ public final class WeaponsConstants {
 
     public static final String RECHARGING = "recarga";
 
+    //GUI
+    public static final String IMG_FONDO_PERFIL_REMINGTON_PNG = "/img/Fondo/perfilRemington.png";
+
+    public static final String IMG_FONDO_PERFIL_M_1911_PNG = "/img/Fondo/perfilM1911.png";
+
+    public static final String IMG_FONDO_PERFIL_GRANADA_PNG = "/img/Fondo/perfilGranada.png";
+
+    public static final String IMG_FONDO_PERFIL_CUCHILLO_PNG = "/img/Fondo/perfilCuchillo.png";
+
+    public static final String INITIAL_DAMAGE = "Daño inicial";
+
+    public static final String INITIAL_BACKWARD = "Retroceso inicial";
+
+    public static final String INITIAL_RECHARGE_TIME = "Tiempo de Carga Inicial";
+
+    public static final String DAMAGE = "Daño";
+
+
+
+
 }

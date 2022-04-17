@@ -37,9 +37,9 @@ public class Boss extends Enemy implements ZigzagMoving {
      */
     public Boss() {
         super();
-        setEstadoActual(VOLANDO);
+        setCurrentStatus(VOLANDO);
         setHealth(SALUD_BOSS);
-        setLentitud(LENTITUD_BOSS);
+        setSpeed(LENTITUD_BOSS);
     }
 
     /**
@@ -50,17 +50,17 @@ public class Boss extends Enemy implements ZigzagMoving {
      */
     public Boss(byte salud) {
         super();
-        setEstadoActual(VOLANDO);
+        setCurrentStatus(VOLANDO);
         setHealth(salud);
-        setLentitud(LENTITUD_BOSS);
+        setSpeed(LENTITUD_BOSS);
         moverEnDireccion();
     }
 
     public void terminaDeAtacar() {
-        setEstadoActual(VOLANDO);
+        setCurrentStatus(VOLANDO);
         setPosY(POS_INICIAL);
         moverEnDireccion();
-        posHorizontal = posAleatoriaX();
+        posHorizontal = aleatoryPositionX();
     }
 
     public void moverEnDireccion() {
@@ -76,12 +76,12 @@ public class Boss extends Enemy implements ZigzagMoving {
     }
 
     @Override
-    public boolean checkShoot(int x, int y, int danio) {
+    public boolean checkShoot(int x, int y, int damage) {
         boolean leDio = false;
-        int danioResultante = danio;
+        int danioResultante = damage;
 
         if (x > posHorizontal + 108 && x < posHorizontal + 160 && y > getPosY() + 110 && y < getPosY() + 190) {
-            if (danio == REMINGTON_DAMAGE) {
+            if (damage == REMINGTON_DAMAGE) {
                 danioResultante = danioResultante - (POS_ATAQUE - getPosY()) / REMINGTON_RANGE;
             }
 
@@ -89,7 +89,7 @@ public class Boss extends Enemy implements ZigzagMoving {
             terminaDeAtacar();
 
             if (getHealth() <= 0) {
-                setEstadoActual(DERROTADO);
+                setCurrentStatus(DERROTADO);
                 posHorizontal = 365;
                 setPosY(POS_INICIAL);
             }
@@ -103,8 +103,8 @@ public class Boss extends Enemy implements ZigzagMoving {
     @Override
     public String getURL(int level) {
         try (Formatter formatter = new Formatter()) {
-            return "/img/" + getClass().getSimpleName() + "/" + getEstadoActual() + "/"
-                    + formatter.format("%02d", getFrameActual()) + ".png";
+            return "/img/" + getClass().getSimpleName() + "/" + getCurrentStatus() + "/"
+                    + formatter.format("%02d", getCurrentFrame()) + ".png";
         }
     }
 

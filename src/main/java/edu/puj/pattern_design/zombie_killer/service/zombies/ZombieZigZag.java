@@ -29,7 +29,7 @@ public abstract class ZombieZigZag extends Zombie implements ZigzagMoving {
         int resultDamage = damage;
 
         if (x > posX + 36 && x < posX + 118 && y > getPosY() + 5 && y < getPosY() + 188) {
-            if (!getEstadoActual().equals(MURIENDO)) {
+            if (!getCurrentStatus().equals(MURIENDO)) {
                 if (y < getPosY() + 54) {
                     resultDamage = ((byte) (damage + 2));
                 }
@@ -42,7 +42,7 @@ public abstract class ZombieZigZag extends Zombie implements ZigzagMoving {
                 setHealth((byte) (getHealth() - resultDamage));
 
                 if (getHealth() <= 0) {
-                    setEstadoActual(MURIENDO);
+                    setCurrentStatus(MURIENDO);
                 }
 
                 leDio = true;

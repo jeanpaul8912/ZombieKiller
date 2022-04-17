@@ -34,7 +34,7 @@ public class ZombieGeneratorThread extends Thread {
 
             while (campo.getGameStatus() != SIN_PARTIDA) {
                 if (contadorZombiesPorNivel % NUMERO_ZOMBIES_RONDA == NumberUtils.INTEGER_ZERO) { // Si se terminan los Zombies
-                    while (!campo.getZombieFarNode().getInFront().getEstadoActual().equals(NODO) && campo.getCharacter().getHealth() > 0) {
+                    while (!campo.getZombieFarNode().getInFront().getCurrentStatus().equals(NODO) && campo.getCharacter().getHealth() > 0) {
                         sleep(1000);
                     }
 
@@ -53,7 +53,7 @@ public class ZombieGeneratorThread extends Thread {
                 }
 
                 if (nivel < 10 && campo.getGameStatus() != SIN_PARTIDA) {
-                    if (!campo.getZombieFarNode().getInFront().getEstadoActual().equals(MURIENDO_INCENDIADO))
+                    if (!campo.getZombieFarNode().getInFront().getCurrentStatus().equals(MURIENDO_INCENDIADO))
                         principal.generarZombie(nivel);
                     contadorZombiesPorNivel++;
                     sleep(1400);

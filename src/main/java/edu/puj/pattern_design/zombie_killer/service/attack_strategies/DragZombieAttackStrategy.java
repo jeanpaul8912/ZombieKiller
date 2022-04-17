@@ -20,34 +20,34 @@ public class DragZombieAttackStrategy extends AttackStrategy {
     }
 
     public void attack(DragZombie dragZombie) {
-        switch (dragZombie.getEstadoActual()) {
+        switch (dragZombie.getCurrentStatus()) {
             case CAMINANDO:
                 if (dragZombie.getPosY() > POS_ATAQUE) {
-                    dragZombie.setEstadoActual(ATACANDO);
+                    dragZombie.setCurrentStatus(ATACANDO);
                 } else {
                     dragZombie.setPosY(dragZombie.getPosY() + 3);
-                    if (dragZombie.getFrameActual() == 31) {
-                        dragZombie.setFrameActual((byte) 0);
+                    if (dragZombie.getCurrentFrame() == 31) {
+                        dragZombie.setCurrentFrame((byte) 0);
                     } else {
-                        dragZombie.setFrameActual((byte) (dragZombie.getFrameActual() + 1));
+                        dragZombie.setCurrentFrame((byte) (dragZombie.getCurrentFrame() + 1));
                     }
                 }
                 break;
             case ATACANDO:
-                if (dragZombie.getFrameActual() < 16) {
-                    dragZombie.setFrameActual((byte) (dragZombie.getFrameActual() + 1));
+                if (dragZombie.getCurrentFrame() < 16) {
+                    dragZombie.setCurrentFrame((byte) (dragZombie.getCurrentFrame() + 1));
                 }
                 break;
             case MURIENDO:
             case MURIENDO_INCENDIADO:
-                if (dragZombie.getFrameActual() < 11) {
-                    dragZombie.setFrameActual((byte) (dragZombie.getFrameActual() + 1));
+                if (dragZombie.getCurrentFrame() < 11) {
+                    dragZombie.setCurrentFrame((byte) (dragZombie.getCurrentFrame() + 1));
                 }
                 break;
         }
     }
 
     public void finishAttack() {
-        dragZombie.setEstadoActual(MURIENDO);
+        dragZombie.setCurrentStatus(MURIENDO);
     }
 }

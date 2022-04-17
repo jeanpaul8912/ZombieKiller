@@ -30,12 +30,12 @@ public class WeaponBoss extends Thread {
 
             while (campo.getGameStatus() != SIN_PARTIDA) {
                 attackStrategy.executeAttack(jefe);
-                String estado = jefe.getEstadoActual();
+                String estado = jefe.getCurrentStatus();
 
                 if (estado.equals(ATACANDO)) {
-                    if (jefe.getFrameActual() == 19) {
+                    if (jefe.getCurrentFrame() == 19) {
                         principal.leDaAPersonaje();
-                    } else if (jefe.getFrameActual() == 21) {
+                    } else if (jefe.getCurrentFrame() == 21) {
                         attackStrategy.enemyFinishAttack(campo);
                     }
                 }
@@ -44,7 +44,7 @@ public class WeaponBoss extends Thread {
                     sleep(500);
                 }
 
-                sleep(jefe.getLentitud());
+                sleep(jefe.getSpeed());
                 principal.refrescar();
             }
         } catch (InterruptedException e) {

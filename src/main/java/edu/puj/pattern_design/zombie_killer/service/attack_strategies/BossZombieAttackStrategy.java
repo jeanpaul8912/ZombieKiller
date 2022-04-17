@@ -21,9 +21,9 @@ public class BossZombieAttackStrategy extends AttackStrategy implements IAttackM
     }
 
     public void attack(Boss boss) {
-        if (boss.getEstadoActual().equals(VOLANDO)) {
+        if (boss.getCurrentStatus().equals(VOLANDO)) {
             if (boss.getPosY() > POS_ATAQUE) {
-                boss.setEstadoActual(ATACANDO);
+                boss.setCurrentStatus(ATACANDO);
             } else {
                 if (boss.getPosX() > ANCHO_PANTALLA - ANCHO_IMAGEN || boss.getPosX() < 0) {
                     moveInDirection(boss);
@@ -31,15 +31,15 @@ public class BossZombieAttackStrategy extends AttackStrategy implements IAttackM
                 boss.setPosX(boss.getPosX() + boss.getDirectionX());
                 boss.setPosY(boss.getPosY() + boss.getDirectionY());
 
-                if (boss.getFrameActual() < 13) {
-                    boss.setFrameActual((byte) (boss.getFrameActual() + 1));
+                if (boss.getCurrentFrame() < 13) {
+                    boss.setCurrentFrame((byte) (boss.getCurrentFrame() + 1));
                 } else {
-                    boss.setFrameActual((byte) 0);
+                    boss.setCurrentFrame((byte) 0);
                 }
             }
-        } else if (boss.getEstadoActual().equals(ATACANDO)) {
-            if (boss.getFrameActual() < 21) {
-                boss.setFrameActual((byte) (boss.getFrameActual() + 1));
+        } else if (boss.getCurrentStatus().equals(ATACANDO)) {
+            if (boss.getCurrentFrame() < 21) {
+                boss.setCurrentFrame((byte) (boss.getCurrentFrame() + 1));
             }
         }
     }
@@ -59,9 +59,9 @@ public class BossZombieAttackStrategy extends AttackStrategy implements IAttackM
     }
 
     public void finishAttack() {
-        boss.setEstadoActual(VOLANDO);
+        boss.setCurrentStatus(VOLANDO);
         boss.setPosY(POS_INICIAL);
         moveInDirection(boss);
-        boss.setPosX(boss.posAleatoriaX());
+        boss.setPosX(boss.aleatoryPositionX());
     }
 }

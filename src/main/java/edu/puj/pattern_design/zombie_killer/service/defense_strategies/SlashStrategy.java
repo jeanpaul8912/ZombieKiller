@@ -43,10 +43,10 @@ public class SlashStrategy extends DefenseStrategy {
         Zombie aAcuchillar = interfaz.getCamp().getZombieNearNode().getInBack();
         boolean seEncontro = false;
 
-        while (!aAcuchillar.getEstadoActual().equals(NODO) && !seEncontro) {
-            if (aAcuchillar.getEstadoActual().equals(ATACANDO)
+        while (!aAcuchillar.getCurrentStatus().equals(NODO) && !seEncontro) {
+            if (aAcuchillar.getCurrentStatus().equals(ATACANDO)
                     && aAcuchillar.checkShoot(xPosition, yPosition, KNIFE_DAMAGE)) {
-                if (aAcuchillar.getEstadoActual().equals(MURIENDO))
+                if (aAcuchillar.getCurrentStatus().equals(MURIENDO))
                     interfaz.getCamp().getCharacter().increaseScore(40);
                 seEncontro = true;
                 interfaz.getCamp().getCharacter().setBlooded(false);
@@ -56,13 +56,13 @@ public class SlashStrategy extends DefenseStrategy {
         }
 
         if (interfaz.getCamp().getBoss() != null) {
-            if (interfaz.getCamp().getBoss().getEstadoActual().equals(ATACANDO) &&
+            if (interfaz.getCamp().getBoss().getCurrentStatus().equals(ATACANDO) &&
                     interfaz.getCamp().getBoss().checkShoot(xPosition, yPosition, KNIFE_DAMAGE)) {
                 interfaz.getCamp().getCharacter().setBlooded(false);
                 interfaz.getCamp().getCharacter().getKnife().setEstado(CARGANDO);
                 seEncontro = true;
 
-                if (interfaz.getCamp().getBoss().getEstadoActual().equals(DERROTADO)) {
+                if (interfaz.getCamp().getBoss().getCurrentStatus().equals(DERROTADO)) {
                     interfaz.getCamp().getCharacter().increaseScore(100);
                     interfaz.getCamp().setGameStatus(interfaz.getCamp().getSinPartida());
                 }

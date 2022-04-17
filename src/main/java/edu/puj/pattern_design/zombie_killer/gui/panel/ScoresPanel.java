@@ -14,11 +14,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PanelPuntajes extends JPanel implements ActionListener {
+public class ScoresPanel extends JPanel implements ActionListener {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
     private static final String ORDEN_HEADSHOT = "Filtrar por tiros a la cabeza";
     private static final String ORDEN_BAJAS = "Filtrar por bajas";
@@ -34,9 +31,9 @@ public class PanelPuntajes extends JPanel implements ActionListener {
     private ZombieKillerGUI principal;
     private JTextField entradaBusqueda;
 
-    private static PanelPuntajes panelSingleton;
+    private static ScoresPanel panelSingleton;
 
-    public PanelPuntajes() {
+    public ScoresPanel() {
         setBackground(Color.BLACK);
         this.setBorder(new EmptyBorder(0, 0, 20, 0));
         Font f = new Font("Agency FB", Font.BOLD, 50);
@@ -66,9 +63,9 @@ public class PanelPuntajes extends JPanel implements ActionListener {
         add(butSalir, BorderLayout.SOUTH);
     }
 
-    public static PanelPuntajes getPanel() {
+    public static ScoresPanel getPanel() {
         if (panelSingleton == null) {
-            panelSingleton = new PanelPuntajes();
+            panelSingleton = new ScoresPanel();
         }
 
         return panelSingleton;

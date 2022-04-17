@@ -35,7 +35,7 @@ public class EnemyThread extends Thread {
                 Zombie enMovimiento = nodoCercano.getInBack();
                 AttackStrategyContext attackStrategy = null;
 
-                while (!enMovimiento.getEstadoActual().equals(NODO)) {
+                while (!enMovimiento.getCurrentStatus().equals(NODO)) {
                     if (enMovimiento instanceof WalkerZombie) {
                         attackStrategy = new AttackStrategyContext(new WalkerZombieAttackStrategy());
                     } else if (enMovimiento instanceof DragZombie) {
@@ -44,24 +44,24 @@ public class EnemyThread extends Thread {
 
                     attackStrategy.executeAttack(enMovimiento);
 
-                    String estado = enMovimiento.getEstadoActual();
+                    String estado = enMovimiento.getCurrentStatus();
                     if (estado.equals(ATACANDO)) {
                         if (enMovimiento instanceof WalkerZombie) {
-                            if (enMovimiento.getFrameActual() == 8) {
+                            if (enMovimiento.getCurrentFrame() == 8) {
                                 principal.leDaAPersonaje();
-                            } else if (enMovimiento.getFrameActual() == 13) {
+                            } else if (enMovimiento.getCurrentFrame() == 13) {
                                 attackStrategy.enemyFinishAttack(campo);
                             }
                         } else if (enMovimiento instanceof DragZombie) {
-                            if (enMovimiento.getFrameActual() == 13) {
+                            if (enMovimiento.getCurrentFrame() == 13) {
                                 principal.leDaAPersonaje();
-                            } else if (enMovimiento.getFrameActual() == 16) {
+                            } else if (enMovimiento.getCurrentFrame() == 16) {
                                 attackStrategy.enemyFinishAttack(campo);
                             }
                         }
                     } else if (estado.equals(MURIENDO) || estado.equals(MURIENDO_INCENDIADO)) {
                         if (enMovimiento instanceof WalkerZombie) {
-                            if (enMovimiento.getFrameActual() == 17) {
+                            if (enMovimiento.getCurrentFrame() == 17) {
                                 if (estado.equals(MURIENDO)) {
                                     enMovimiento.eliminate();
                                 } else {
@@ -71,7 +71,7 @@ public class EnemyThread extends Thread {
                                 }
                             }
                         } else if (enMovimiento instanceof DragZombie) {
-                            if (enMovimiento.getFrameActual() == 11) {
+                            if (enMovimiento.getCurrentFrame() == 11) {
                                 if (estado.equals(MURIENDO)) {
                                     enMovimiento.eliminate();
                                 } else {
@@ -90,7 +90,7 @@ public class EnemyThread extends Thread {
                     sleep(500);
                 }
 
-                sleep(nodoCercano.getInBack().getLentitud());
+                sleep(nodoCercano.getInBack().getSpeed());
                 principal.refrescar();
             }
         } catch (InterruptedException e) {

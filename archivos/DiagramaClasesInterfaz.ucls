@@ -102,7 +102,7 @@
   <association id="16">    
     <bendpoint x="1123" y="1393"/>    
     <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="17" name="panelCreditos"/>      
+      <attribute id="17" name="creditsPanel"/>
       <multiplicity id="18" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
@@ -128,7 +128,7 @@
   <association id="25">    
     <bendpoint x="1105" y="255"/>    
     <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="26" name="panelComoJugar"/>      
+      <attribute id="26" name="howToPlayPanel"/>
       <multiplicity id="27" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
@@ -146,7 +146,7 @@
   <association id="31">    
     <bendpoint x="1241" y="1299"/>    
     <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="32" name="panelPuntajes"/>      
+      <attribute id="32" name="scoresPanel"/>
       <multiplicity id="33" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
@@ -199,7 +199,7 @@
   <association id="49">    
     <bendpoint x="941" y="221"/>    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="50" name="panelArmas"/>      
+      <attribute id="50" name="weaponsPanel"/>
       <multiplicity id="51" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="9" navigable="true"/>    

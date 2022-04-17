@@ -112,7 +112,7 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         currentRound = 0;
         zombieFarNode = new WalkerZombie();
         zombieNearNode = new WalkerZombie();
-        zombieFarNode.setLentitud((short) 500);
+        zombieFarNode.setSpeed((short) 500);
         zombieFarNode.setInFront(zombieNearNode);
         zombieNearNode.setInBack(zombieFarNode);
         bestCharacterScores = new ArrayList<>();
@@ -191,7 +191,7 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         Zombie actual = zombieNearNode.getInBack();
         int contador = 0;
 
-        while (!actual.getEstadoActual().equals(NODO)) {
+        while (!actual.getCurrentStatus().equals(NODO)) {
             contador++;
             actual = actual.getInBack();
         }
@@ -328,8 +328,8 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
                         } else
                             masCercano = aAgregar;
                         ultimoAgregado = aAgregar;
-                        if (!aAgregar.getEstadoActual().equals(MURIENDO)
-                                && !aAgregar.getEstadoActual().equals(MURIENDO_INCENDIADO)) {
+                        if (!aAgregar.getCurrentStatus().equals(MURIENDO)
+                                && !aAgregar.getCurrentStatus().equals(MURIENDO_INCENDIADO)) {
                             contadorZombiesEnPantalla++;
                         }
                     } else {
@@ -468,10 +468,10 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
      * @return el texto con la informacion de los zombies
      */
     private String escribirDatosZombie(String datos, Zombie actual) {
-        if (actual.getEstadoActual().equals(NODO))
+        if (actual.getCurrentStatus().equals(NODO))
             return datos;
         datos += "\n" + actual.getHealth() + "_" + actual.getPosX() + "_" + actual.getPosY() + "_"
-                + actual.getEstadoActual() + "_" + actual.getFrameActual();
+                + actual.getCurrentStatus() + "_" + actual.getCurrentFrame();
         if (actual instanceof WalkerZombie) {
             datos += "_" + ((WalkerZombie) actual).getDirectionX();
             datos += "_" + ((WalkerZombie) actual).getDirectionY();
@@ -508,10 +508,10 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         Zombie aAcuchillar = zombieNearNode.getInBack();
         boolean seEncontro = false;
 
-        while (!aAcuchillar.getEstadoActual().equals(NODO) && !seEncontro) {
-            if (aAcuchillar.getEstadoActual().equals(ATACANDO)
+        while (!aAcuchillar.getCurrentStatus().equals(NODO) && !seEncontro) {
+            if (aAcuchillar.getCurrentStatus().equals(ATACANDO)
                     && aAcuchillar.checkShoot(x, y, KNIFE_DAMAGE)) {
-                if (aAcuchillar.getEstadoActual().equals(MURIENDO)) {
+                if (aAcuchillar.getCurrentStatus().equals(MURIENDO)) {
                     character.increaseScore(40);
                 }
 
@@ -524,12 +524,12 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         }
 
         if (boss != null) {
-            if (boss.getEstadoActual().equals(ATACANDO) && boss.checkShoot(x, y, KNIFE_DAMAGE)) {
+            if (boss.getCurrentStatus().equals(ATACANDO) && boss.checkShoot(x, y, KNIFE_DAMAGE)) {
                 character.setBlooded(false);
                 character.getKnife().setEstado(CARGANDO);
                 seEncontro = true;
 
-                if (boss.getEstadoActual().equals(DERROTADO)) {
+                if (boss.getCurrentStatus().equals(DERROTADO)) {
                     character.increaseScore(100);
                     gameStatus = SIN_PARTIDA;
                 }

@@ -1,6 +1,8 @@
 package edu.puj.pattern_design.zombie_killer.gui.panel;
 
 import edu.puj.pattern_design.zombie_killer.gui.ZombieKillerGUI;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -9,45 +11,40 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.URL;
 
-public class PanelComoJugar extends JPanel {
+@Getter
+@Setter
+public class HowToPlayPanel extends JPanel {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
     private static final String SALIR = "Salir";
     private final JButton butSalir;
     private ZombieKillerGUI principal;
 
-    private static PanelComoJugar panelSingleton;
+    private static HowToPlayPanel panelSingleton;
 
-    public PanelComoJugar() {
+    public HowToPlayPanel() {
         setBackground(Color.BLACK);
         setLayout(new BorderLayout());
         this.setBorder(new EmptyBorder(50, 0, 20, 0));
-        PanelDatosCuriosos panelDatosC = new PanelDatosCuriosos();
-        PanelArmas panelArmas = new PanelArmas(principal);
+        FunFactsPanel panelDatosC = new FunFactsPanel();
+        WeaponsPanel weaponsPanel = new WeaponsPanel();
         butSalir = new JButton();
         configurarBoton(butSalir, getClass().getResource("/img/Palabras/volver.png"), SALIR);
         butSalir.setActionCommand(SALIR);
         JPanel aux = new JPanel();
         aux.setLayout(new BorderLayout());
         aux.add(panelDatosC, BorderLayout.NORTH);
-        aux.add(panelArmas, BorderLayout.CENTER);
+        aux.add(weaponsPanel, BorderLayout.CENTER);
         this.add(aux);
         add(butSalir, BorderLayout.SOUTH);
     }
 
-    public static PanelComoJugar getPanel() {
+    public static HowToPlayPanel getPanel() {
         if (panelSingleton == null) {
-            panelSingleton = new PanelComoJugar();
+            panelSingleton = new HowToPlayPanel();
         }
 
         return panelSingleton;
-    }
-
-    public void setPrincipal(ZombieKillerGUI zombieKillerGUI) {
-        principal = zombieKillerGUI;
     }
 
     public void configurarBoton(JButton aEditar, URL rutaImagen, String comando) {

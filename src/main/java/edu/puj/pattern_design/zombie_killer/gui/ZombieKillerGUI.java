@@ -1,11 +1,11 @@
 package edu.puj.pattern_design.zombie_killer.gui;
 
 import edu.puj.pattern_design.zombie_killer.gui.facade.ThreadsFacade;
-import edu.puj.pattern_design.zombie_killer.gui.panel.PanelCamp;
-import edu.puj.pattern_design.zombie_killer.gui.panel.PanelComoJugar;
-import edu.puj.pattern_design.zombie_killer.gui.panel.PanelCreditos;
-import edu.puj.pattern_design.zombie_killer.gui.panel.PanelMenu;
-import edu.puj.pattern_design.zombie_killer.gui.panel.PanelPuntajes;
+import edu.puj.pattern_design.zombie_killer.gui.panel.SurvivorCampPanel;
+import edu.puj.pattern_design.zombie_killer.gui.panel.HowToPlayPanel;
+import edu.puj.pattern_design.zombie_killer.gui.panel.CreditsPanel;
+import edu.puj.pattern_design.zombie_killer.gui.panel.MenuPanel;
+import edu.puj.pattern_design.zombie_killer.gui.panel.ScoresPanel;
 import edu.puj.pattern_design.zombie_killer.service.attack_strategies.AttackStrategyContext;
 import edu.puj.pattern_design.zombie_killer.service.attack_strategies.BossZombieAttackStrategy;
 import edu.puj.pattern_design.zombie_killer.service.attack_strategies.WalkerZombieAttackStrategy;
@@ -51,24 +51,24 @@ public class ZombieKillerGUI extends JFrame {
      * Panel del menu principal cualquier boton muestra otro panel representatitvo a
      * el
      */
-    private final PanelMenu panelMenu;
+    private final MenuPanel menuPanel;
     /**
      * Panel del campo de juego
      */
-    private PanelCamp panelCampo;
+    private SurvivorCampPanel survivorCampoPanel;
     /**
      * Panel que muestra las instrucciones de juego Muestra las estadisticas de las
      * armas
      */
-    private PanelComoJugar panelComoJugar;
+    private HowToPlayPanel howToPlayPanel;
     /**
      * Panel que muestra los puntajes de los jugadores
      */
-    private PanelPuntajes panelPuntajes;
+    private ScoresPanel scoresPanel;
     /**
      * Panel que muestra los creditos de las personas que participaron
      */
-    private PanelCreditos panelCreditos;
+    private CreditsPanel creditsPanel;
     /**
      * Cursor de la mira de la pistola
      */
@@ -107,8 +107,8 @@ public class ZombieKillerGUI extends JFrame {
 
         m1911Cursor = CursorObjectPool.getCursor("/img/Fondo/mira1p.png");
         setCursor(m1911Cursor);
-        panelMenu = new PanelMenu(this);
-        add(panelMenu, BorderLayout.CENTER);
+        menuPanel = new MenuPanel(this);
+        add(menuPanel, BorderLayout.CENTER);
         setSize(ANCHO_PANTALLA, ALTO_PANTALLA);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -164,15 +164,15 @@ public class ZombieKillerGUI extends JFrame {
         camp.updateScores(actual);
         camp.setGameStatus(EN_CURSO);
         currentWeapon = camp.getCharacter().getPrincipalWeapon();
-        panelCampo.actualizarMatador(camp.getCharacter());
-        panelCampo.actualizarEquipada(currentWeapon);
-        panelCampo.actualizarChombis(camp.getZombieFarNode());
-        panelCampo.incorporarJefe(null);
-        add(panelCampo, BorderLayout.CENTER);
-        panelCampo.requestFocusInWindow();
+        survivorCampoPanel.actualizarMatador(camp.getCharacter());
+        survivorCampoPanel.actualizarEquipada(currentWeapon);
+        survivorCampoPanel.actualizarChombis(camp.getZombieFarNode());
+        survivorCampoPanel.incorporarJefe(null);
+        add(survivorCampoPanel, BorderLayout.CENTER);
+        survivorCampoPanel.requestFocusInWindow();
         facade.initializeEnemyThreads();
-        panelMenu.setVisible(false);
-        panelCampo.setVisible(true);
+        menuPanel.setVisible(false);
+        survivorCampoPanel.setVisible(true);
     }
 
     /**
@@ -181,7 +181,7 @@ public class ZombieKillerGUI extends JFrame {
      * @return true si aun se estan cargando
      */
     public boolean estaCargando() {
-        return panelCampo.getDebugGraphicsOptions() == DebugGraphics.BUFFERED_OPTION;
+        return survivorCampoPanel.getDebugGraphicsOptions() == DebugGraphics.BUFFERED_OPTION;
     }
 
     /**
@@ -203,18 +203,18 @@ public class ZombieKillerGUI extends JFrame {
             camp.setGameStatus(SIN_PARTIDA);
             camp = partida;
             camp.updateScores(actuales);
-            panelCampo.actualizarMatador(camp.getCharacter());
-            panelCampo.actualizarChombis(camp.getZombieFarNode());
+            survivorCampoPanel.actualizarMatador(camp.getCharacter());
+            survivorCampoPanel.actualizarChombis(camp.getZombieFarNode());
             currentWeapon = camp.getCharacter().getPrincipalWeapon();
-            panelCampo.actualizarEquipada(currentWeapon);
-            panelCampo.actualizarRonda();
+            survivorCampoPanel.actualizarEquipada(currentWeapon);
+            survivorCampoPanel.actualizarRonda();
             cambiarPuntero();
-            panelMenu.setVisible(false);
-            panelCampo.setVisible(true);
+            menuPanel.setVisible(false);
+            survivorCampoPanel.setVisible(true);
             camp.setGameStatus(EN_CURSO);
-            add(panelCampo, BorderLayout.CENTER);
-            panelCampo.requestFocusInWindow();
-            panelCampo.requestFocusInWindow();
+            add(survivorCampoPanel, BorderLayout.CENTER);
+            survivorCampoPanel.requestFocusInWindow();
+            survivorCampoPanel.requestFocusInWindow();
             facade.initializeEnemyThreads();
             iniciarGemi2();
         } catch (Exception e) {
@@ -238,7 +238,7 @@ public class ZombieKillerGUI extends JFrame {
      * repinta el panelCampo para mostrar los zombies en movimiento
      */
     public void refrescar() {
-        panelCampo.repaint();
+        survivorCampoPanel.repaint();
     }
 
     /**
@@ -277,7 +277,7 @@ public class ZombieKillerGUI extends JFrame {
         reproducir("meDio");
         attackStrategy = new AttackStrategyContext(new BossZombieAttackStrategy());
         attackStrategy.enemyAttacks(camp);
-        panelCampo.zombieAtaco();
+        survivorCampoPanel.zombieAtaco();
     }
 
     /**
@@ -288,16 +288,16 @@ public class ZombieKillerGUI extends JFrame {
 
         if (estado == PAUSADO) {
             terminarGemi2();
-            panelMenu.setVisible(true);
-            panelCampo.setVisible(false);
-            panelMenu.updateUI();
-            panelMenu.requestFocusInWindow();
+            menuPanel.setVisible(true);
+            survivorCampoPanel.setVisible(false);
+            menuPanel.updateUI();
+            menuPanel.requestFocusInWindow();
         } else {
             iniciarGemi2();
-            panelCampo.setVisible(true);
-            panelMenu.setVisible(false);
-            panelCampo.updateUI();
-            panelCampo.requestFocusInWindow();
+            survivorCampoPanel.setVisible(true);
+            menuPanel.setVisible(false);
+            survivorCampoPanel.updateUI();
+            survivorCampoPanel.requestFocusInWindow();
         }
     }
 
@@ -343,7 +343,7 @@ public class ZombieKillerGUI extends JFrame {
      */
     public void terminarEfectoDeSangre() {
         currentWeapon.setBlooded(false);
-        panelCampo.quitarSangreZombie();
+        survivorCampoPanel.quitarSangreZombie();
     }
 
     /**
@@ -363,7 +363,7 @@ public class ZombieKillerGUI extends JFrame {
         reproducir("sirena");
         camp.updateCurrentRound(nivel);
         camp.setGameStatus(INICIANDO_RONDA);
-        panelCampo.actualizarRonda();
+        survivorCampoPanel.actualizarRonda();
     }
 
     /**
@@ -371,7 +371,7 @@ public class ZombieKillerGUI extends JFrame {
      */
     public void generarBoss() {
         boss = camp.generateBoss();
-        panelCampo.incorporarJefe(boss);
+        survivorCampoPanel.incorporarJefe(boss);
         BossZombieAttackStrategy bossZombieAttackStrategy = new BossZombieAttackStrategy();
         attackStrategy = new AttackStrategyContext(bossZombieAttackStrategy);
         bossZombieAttackStrategy.moveInDirection(boss);
@@ -382,13 +382,13 @@ public class ZombieKillerGUI extends JFrame {
      * Muestra el Panel de Como jugar / Lo oculta
      */
     public void mostrarComoJugar() {
-        if (panelMenu.isVisible()) {
-            panelMenu.setVisible(false);
-            panelComoJugar.setVisible(true);
-            add(panelComoJugar, BorderLayout.CENTER);
+        if (menuPanel.isVisible()) {
+            menuPanel.setVisible(false);
+            howToPlayPanel.setVisible(true);
+            add(howToPlayPanel, BorderLayout.CENTER);
         } else {
-            panelComoJugar.setVisible(false);
-            panelMenu.setVisible(true);
+            howToPlayPanel.setVisible(false);
+            menuPanel.setVisible(true);
         }
     }
 
@@ -396,14 +396,14 @@ public class ZombieKillerGUI extends JFrame {
      * Muestra el Panel donde se encuentran los puntjes / lo oculta
      */
     public void mostrarPuntajes() {
-        if (panelMenu.isVisible()) {
-            panelPuntajes.actualizarPuntajes(camp.ordenarPuntajePorScore());
-            panelMenu.setVisible(false);
-            panelPuntajes.setVisible(true);
-            add(panelPuntajes, BorderLayout.CENTER);
+        if (menuPanel.isVisible()) {
+            scoresPanel.actualizarPuntajes(camp.ordenarPuntajePorScore());
+            menuPanel.setVisible(false);
+            scoresPanel.setVisible(true);
+            add(scoresPanel, BorderLayout.CENTER);
         } else {
-            panelPuntajes.setVisible(false);
-            panelMenu.setVisible(true);
+            scoresPanel.setVisible(false);
+            menuPanel.setVisible(true);
         }
     }
 
@@ -411,13 +411,13 @@ public class ZombieKillerGUI extends JFrame {
      * Muestra el Panel donde se encuentran los creditos / lo oculta
      */
     public void mostrarCreditos() {
-        if (panelMenu.isVisible()) {
-            panelMenu.setVisible(false);
-            panelCreditos.setVisible(true);
-            add(panelCreditos, BorderLayout.CENTER);
+        if (menuPanel.isVisible()) {
+            menuPanel.setVisible(false);
+            creditsPanel.setVisible(true);
+            add(creditsPanel, BorderLayout.CENTER);
         } else {
-            panelCreditos.setVisible(false);
-            panelMenu.setVisible(true);
+            creditsPanel.setVisible(false);
+            menuPanel.setVisible(true);
         }
     }
 
@@ -476,8 +476,8 @@ public class ZombieKillerGUI extends JFrame {
             if (aceptoJugar == JOptionPane.YES_OPTION)
                 iniciarNuevaPartida();
             else {
-                panelCampo.setVisible(false);
-                panelMenu.setVisible(true);
+                survivorCampoPanel.setVisible(false);
+                menuPanel.setVisible(true);
             }
         }
 
@@ -507,8 +507,8 @@ public class ZombieKillerGUI extends JFrame {
             victoria();
         }
 
-        panelMenu.setVisible(true);
-        panelCampo.setVisible(false);
+        menuPanel.setVisible(true);
+        survivorCampoPanel.setVisible(false);
         terminarGemi2();
     }
 
@@ -516,14 +516,14 @@ public class ZombieKillerGUI extends JFrame {
      * Llama al metodo de ordenar por bajas
      */
     public void ordenarPorBajas() {
-        panelPuntajes.actualizarPuntajes(camp.ordenarPuntajePorBajas());
+        scoresPanel.actualizarPuntajes(camp.ordenarPuntajePorBajas());
     }
 
     /**
      * Llama al metodo de ordenar por bajas con tiro a la cabeza
      */
     public void ordenarPorHeadshot() {
-        panelPuntajes.actualizarPuntajes(camp.ordenarPuntajePorTirosALaCabeza());
+        scoresPanel.actualizarPuntajes(camp.ordenarPuntajePorTirosALaCabeza());
     }
 
     /**
@@ -532,7 +532,7 @@ public class ZombieKillerGUI extends JFrame {
     public void buscarPorNombre(String nombreBuscado) {
         if (nombreBuscado != null) {
             CharacterScore buscado = camp.buscarPuntajeDe(nombreBuscado);
-            panelPuntajes.mostrarPuntajeDe(buscado);
+            scoresPanel.mostrarPuntajeDe(buscado);
         }
     }
 
@@ -540,7 +540,7 @@ public class ZombieKillerGUI extends JFrame {
      * Llama al metodo de ordenar por puntaje
      */
     public void ordenarPorScore() {
-        panelPuntajes.actualizarPuntajes(camp.ordenarPuntajePorScore());
+        scoresPanel.actualizarPuntajes(camp.ordenarPuntajePorScore());
     }
 
 }
