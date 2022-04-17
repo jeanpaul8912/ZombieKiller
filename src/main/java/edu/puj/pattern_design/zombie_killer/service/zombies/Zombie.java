@@ -37,7 +37,7 @@ public abstract class Zombie extends Enemy {
      * Constructor de un zombie nodo
      */
     protected Zombie() {
-        setEstadoActual(NODO);
+        setCurrentStatus(NODO);
     }
 
     protected Zombie(int posY, String estadoActual, byte frameActual, byte salud, int ronda) {
@@ -48,7 +48,7 @@ public abstract class Zombie extends Enemy {
 
     protected Zombie(short nivel, Zombie inBack) {
         determinarDificultadZombie(nivel);
-        setEstadoActual(CAMINANDO);
+        setCurrentStatus(CAMINANDO);
         this.inBack = inBack;
     }
 
@@ -62,33 +62,33 @@ public abstract class Zombie extends Enemy {
         switch (ronda) {
             case 9:
             case 8:
-                setLentitud(LENTITUD3);
+                setSpeed(LENTITUD3);
                 setHealth(SALUD4);
                 break;
             case 7:
-                setLentitud(LENTITUD4);
+                setSpeed(LENTITUD4);
                 setHealth(SALUD2);
                 break;
             case 6:
-                setLentitud(LENTITUD3);
+                setSpeed(LENTITUD3);
                 setHealth(SALUD3);
                 break;
             case 5:
             case 4:
-                setLentitud(LENTITUD3);
+                setSpeed(LENTITUD3);
                 setHealth(SALUD2);
                 break;
             case 3:
-                setLentitud(LENTITUD2);
+                setSpeed(LENTITUD2);
                 setHealth(SALUD2);
                 break;
             case 2:
-                setLentitud(LENTITUD1);
+                setSpeed(LENTITUD1);
                 setHealth(SALUD2);
                 break;
             case 1:
             default:
-                setLentitud(LENTITUD1);
+                setSpeed(LENTITUD1);
                 setHealth(SALUD1);
                 break;
         }
@@ -121,13 +121,13 @@ public abstract class Zombie extends Enemy {
 
     public void inicialize(short nivel, Zombie atras) {
         determinarDificultadZombie(nivel);
-        setEstadoActual(CAMINANDO);
+        setCurrentStatus(CAMINANDO);
         setPosX();
         this.inBack = atras;
     }
 
     public void setPosX() {
-        this.posX = posAleatoriaX();
+        this.posX = aleatoryPositionX();
     }
 
 }

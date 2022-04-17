@@ -4,11 +4,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class PanelDatosCuriosos extends JPanel {
+public class FunFactsPanel extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JLabel title;
 	private JLabel[] information;
@@ -17,7 +14,7 @@ public class PanelDatosCuriosos extends JPanel {
 	private JPanel panelDerecho;
 	private Font letraTitulos = new Font("Agency FB", Font.BOLD, 30);
 
-	public PanelDatosCuriosos() {
+	public FunFactsPanel() {
 		     setLayout(new GridLayout(1, 2, 50, 0));
 		     this.setBorder(new EmptyBorder(0,80,0,0));
 	         panelIzquierdo();

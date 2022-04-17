@@ -7,13 +7,13 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class PanelCreditos extends JPanel implements KeyListener {
+public class CreditsPanel extends JPanel implements KeyListener {
 
     private ZombieKillerGUI principal;
 
-    private static PanelCreditos panelSingleton;
+    private static CreditsPanel panelSingleton;
 
-    public PanelCreditos() {
+    public CreditsPanel() {
         addKeyListener(this);
         setFocusable(true);
         setBackground(Color.black);
@@ -22,9 +22,9 @@ public class PanelCreditos extends JPanel implements KeyListener {
         add(labCreditos);
     }
 
-    public static PanelCreditos getPanel() {
+    public static CreditsPanel getPanel() {
         if (panelSingleton == null) {
-            panelSingleton = new PanelCreditos();
+            panelSingleton = new CreditsPanel();
         }
 
         return panelSingleton;

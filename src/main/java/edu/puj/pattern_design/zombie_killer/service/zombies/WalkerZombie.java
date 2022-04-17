@@ -17,14 +17,14 @@ public class WalkerZombie extends ZombieZigZag {
         try (Formatter formatter = new Formatter()) {
             String round = "/";
 
-            if (level >= 2 && (getEstadoActual().equals(ATACANDO) || getEstadoActual().equals(GRUNIENDO))) {
+            if (level >= 2 && (getCurrentStatus().equals(ATACANDO) || getCurrentStatus().equals(GRUNIENDO))) {
                 round += "knife/";
-            } else if (level >= 3 && getEstadoActual().equals(CAMINANDO)) {
+            } else if (level >= 3 && getCurrentStatus().equals(CAMINANDO)) {
                 round += "shield/";
             }
 
-            return "/img/" + getClass().getSimpleName() + "/" + getEstadoActual() + round
-                    + formatter.format("%02d", getFrameActual()) + ".png";
+            return "/img/" + getClass().getSimpleName() + "/" + getCurrentStatus() + round
+                    + formatter.format("%02d", getCurrentFrame()) + ".png";
         }
     }
 

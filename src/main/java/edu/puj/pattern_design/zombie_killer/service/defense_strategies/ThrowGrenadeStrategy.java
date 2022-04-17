@@ -28,10 +28,10 @@ public class ThrowGrenadeStrategy extends DefenseStrategy {
     public void throwGranada() {
         Zombie actual = interfaz.getCamp().getZombieNearNode().getInBack();
         interfaz.getCamp().getCharacter().setBlooded(false);
-        while (!actual.getEstadoActual().equals(NODO)) {
+        while (!actual.getCurrentStatus().equals(NODO)) {
 
-            if (!actual.getEstadoActual().equals(MURIENDO) && !actual.getEstadoActual().equals(MURIENDO_INCENDIADO)) {
-                actual.setEstadoActual(MURIENDO_INCENDIADO);
+            if (!actual.getCurrentStatus().equals(MURIENDO) && !actual.getCurrentStatus().equals(MURIENDO_INCENDIADO)) {
+                actual.setCurrentStatus(MURIENDO_INCENDIADO);
                 interfaz.getCamp().getCharacter().increaseScore(50);
                 actual = actual.getInBack();
             }

@@ -28,7 +28,7 @@ public class ShootStrategy extends DefenseStrategy {
             interfaz.reproducir("disparo" + interfaz.getCamp().getCharacter().getPrincipalWeapon().getClass().getSimpleName());
         }
 
-        interfaz.getPanelCampo().incorporarJefe(interfaz.getBoss());
+        interfaz.getSurvivorCampoPanel().incorporarJefe(interfaz.getBoss());
         interfaz.getFacade().initializeWeaponsThread("armaDeFuego");
     }
 
@@ -39,7 +39,7 @@ public class ShootStrategy extends DefenseStrategy {
         boolean leDio = false;
         Zombie actual = interfaz.getCamp().getZombieNearNode().getInBack();
 
-        while (!actual.getEstadoActual().equals(NODO) && !leDio) {
+        while (!actual.getCurrentStatus().equals(NODO) && !leDio) {
             if (actual.checkShoot(xPosition, yPosition, interfaz.getCamp().getCharacter().getPrincipalWeapon().getDamage())) {
                 leDio = true;
                 interfaz.getCamp().getCharacter().getPrincipalWeapon().setBlooded(true);
@@ -47,7 +47,7 @@ public class ShootStrategy extends DefenseStrategy {
                 if (actual.getHealth() <= 0) {
                     interfaz.getCamp().getCharacter().increaseScore(10 + actual.getHealth() * (-10));
 
-                    if (actual.getEstadoActual().equals(MURIENDO_HEADSHOT)) {
+                    if (actual.getCurrentStatus().equals(MURIENDO_HEADSHOT)) {
                         interfaz.getCamp().getCharacter().increaseHeadShoots();
                     }
                 }
@@ -64,7 +64,7 @@ public class ShootStrategy extends DefenseStrategy {
                 interfaz.getCamp().getCharacter().setBlooded(false);
                 leDio = true;
 
-                if (interfaz.getCamp().getBoss().getEstadoActual().equals(DERROTADO)) {
+                if (interfaz.getCamp().getBoss().getCurrentStatus().equals(DERROTADO)) {
                     interfaz.getCamp().getCharacter().increaseScore(20 + interfaz.getCamp().getBoss().getHealth() * (-20));
                     interfaz.getCamp().setGameStatus(interfaz.getCamp().getSinPartida());
                 }

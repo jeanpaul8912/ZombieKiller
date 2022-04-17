@@ -2,7 +2,7 @@ package edu.puj.pattern_design.zombie_killer.gui.command;
 
 import edu.puj.pattern_design.zombie_killer.gui.ZombieKillerGUI;
 import edu.puj.pattern_design.zombie_killer.gui.CursorObjectPool;
-import edu.puj.pattern_design.zombie_killer.gui.panel.PanelCamp;
+import edu.puj.pattern_design.zombie_killer.gui.panel.SurvivorCampPanel;
 import edu.puj.pattern_design.zombie_killer.service.camp.SurvivorCamp;
 
 import java.awt.*;
@@ -14,9 +14,9 @@ public final class CommandUtils {
     }
 
     public static void startGame(ZombieKillerGUI zombieKillerGUI) {
-        PanelCamp panelCamp = PanelCamp.getPanel();
-        panelCamp.setPrincipal(zombieKillerGUI);
-        zombieKillerGUI.setPanelCampo(panelCamp);
+        SurvivorCampPanel survivorCampPanel = SurvivorCampPanel.getPanel();
+        survivorCampPanel.setPrincipal(zombieKillerGUI);
+        zombieKillerGUI.setSurvivorCampoPanel(survivorCampPanel);
         SurvivorCamp campo = zombieKillerGUI.getCamp();
 
         if (campo == null) {

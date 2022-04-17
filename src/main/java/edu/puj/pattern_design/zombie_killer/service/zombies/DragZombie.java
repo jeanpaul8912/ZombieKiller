@@ -39,7 +39,7 @@ public class DragZombie extends Zombie {
         boolean leDio = false;
         int resultDamage = damage;
 
-        if (!getEstadoActual().equals(MURIENDO)) {
+        if (!getCurrentStatus().equals(MURIENDO)) {
             if (x > posX + 36 && x < posX + 118 && y > getPosY() + 120 && y < getPosY() + 196) {
                 if (y < getPosY() + 162) {
                     resultDamage = ((byte) (damage + 2));
@@ -52,7 +52,7 @@ public class DragZombie extends Zombie {
                 setHealth((byte) (getHealth() - resultDamage));
 
                 if (getHealth() <= 0) {
-                    setEstadoActual(MURIENDO);
+                    setCurrentStatus(MURIENDO);
                 }
 
                 leDio = true;
@@ -65,8 +65,8 @@ public class DragZombie extends Zombie {
     @Override
     public String getURL(int level) {
         try (Formatter formatter = new Formatter()) {
-            return "/img/" + getClass().getSimpleName() + "/" + getEstadoActual() + "/"
-                    + formatter.format("%02d", getFrameActual()) + ".png";
+            return "/img/" + getClass().getSimpleName() + "/" + getCurrentStatus() + "/"
+                    + formatter.format("%02d", getCurrentFrame()) + ".png";
         }
     }
 

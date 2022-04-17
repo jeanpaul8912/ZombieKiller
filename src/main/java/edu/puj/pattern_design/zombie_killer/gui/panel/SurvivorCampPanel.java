@@ -10,6 +10,8 @@ import edu.puj.pattern_design.zombie_killer.service.weapons.guns.GunWeapon;
 import edu.puj.pattern_design.zombie_killer.service.zombies.Boss;
 import edu.puj.pattern_design.zombie_killer.service.zombies.Zombie;
 import edu.puj.pattern_design.zombie_killer.service.zombies.ZombieZigZag;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -30,29 +32,43 @@ import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesCons
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.POS_ATAQUE;
 
 @Slf4j
-public class PanelCamp extends JPanel implements MouseListener, KeyListener {
+@Getter
+@Setter
+public class SurvivorCampPanel extends JPanel implements MouseListener, KeyListener {
 
     private static final long serialVersionUID = 3350712174974197350L;
 
     private final JLabel labPuntaje;
+
     private final JLabel labBajas;
+
     private final JLabel labRonda;
+
     private final JProgressBar labVidas;
+
     private final JLabel labGranadas;
+
     private final JLabel labBalas;
+
     private final JPanel mostrador;
+
     private Point ultimoDisparo;
 
     private ZombieKillerGUI principal;
+
     private ZombieZigZag chombiMasLejano;
+
     private Character matador;
+
     private GunWeapon armaEquipada;
+
     private Boss chief;
+
     private DefenseStrategyContext defenseStrategy;
 
-    private static PanelCamp panelSingleton;
+    private static SurvivorCampPanel panelSingleton;
 
-    public PanelCamp() {
+    public SurvivorCampPanel() {
         setLayout(new BorderLayout());
         Font tipo = new Font("Chiller", Font.PLAIN, 34);
 
@@ -111,16 +127,12 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
         add(mostrador, BorderLayout.CENTER);
     }
 
-    public static PanelCamp getPanel() {
+    public static SurvivorCampPanel getPanel() {
         if (panelSingleton == null) {
-            panelSingleton = new PanelCamp();
+            panelSingleton = new SurvivorCampPanel();
         }
 
         return panelSingleton;
-    }
-
-    public void setPrincipal(ZombieKillerGUI zombieKillerGUI) {
-        principal = zombieKillerGUI;
     }
 
     public void actualizarChombis(ZombieZigZag chombi) {
@@ -160,7 +172,6 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
                 .getImage(this.getClass().getResource("/img/Fondo/escenario-fondo-azul.png"));
         arg0.drawImage(fondo, 0, 0, null);
 
-        // System.out.println(chombis.size());
         if (getDebugGraphicsOptions() == DebugGraphics.BUFFERED_OPTION) {
             requestFocusInWindow();
             cargarImagenes();
@@ -170,11 +181,10 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
         Zombie aPintar = chombiMasLejano.getInFront();
 
         if (aPintar != null)
-            while (!aPintar.getEstadoActual().equals(NODO)) {
+            while (!aPintar.getCurrentStatus().equals(NODO)) {
                 try {
                     int posX = aPintar.getPosX();
                     int posY = aPintar.getPosY();
-
                     Image imgZombie = Toolkit.getDefaultToolkit()
                             .getImage(this.getClass().getResource(aPintar.getURL(principal.getCamp().getCurrentRound())));
                     arg0.drawImage(imgZombie, posX, posY, null);
@@ -184,6 +194,7 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
                     principal.pausarJuego();
                 }
             }
+
         if (chief != null) {
             Image chiefAPintar = Toolkit.getDefaultToolkit().getImage(getClass().getResource(
                     chief.getURL(principal.getCamp().getCurrentRound())));
@@ -192,10 +203,12 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
 
         int ataqueX = (int) ultimoDisparo.getX();
         int ataqueY = (int) ultimoDisparo.getY();
+
         if (armaEquipada.isBlooded()) {
             fondo = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("/img/Fondo/sangre.png"));
             arg0.drawImage(fondo, ataqueX - 33, ataqueY - 35, null);
         }
+
         if (matador.getKnife().getEstado().equals(CARGANDO)) {
             fondo = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/Fondo/punialada.png"));
             arg0.drawImage(fondo, ataqueX - 160, ataqueY - 30, null);
@@ -207,10 +220,12 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
             fondo = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/Fondo/explosion.png"));
             arg0.drawImage(fondo, 250, 133, null);
         }
+
         if (matador.isBlooded()) {
             fondo = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/Fondo/boss_ataca.png"));
             arg0.drawImage(fondo, 0, 0, null);
         }
+
         if (principal.getEstadoPartida() == INICIANDO_RONDA) {
             fondo = Toolkit.getDefaultToolkit()
                     .getImage(getClass().getResource("/img/Palabras/ronda" + principal.darRondaActual() + ".png"));
@@ -224,18 +239,21 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
         int contador = 0;
         // 31 es la mayor cantidad de imagenes de una animacion
         Formatter formato;
+
         for (int i = 0; i <= 31; i++) {
             formato = new Formatter();
             actual = new ImageIcon(
                     getClass().getResource("/img/DragZombie/caminando/" + formato.format("%02d", i) + ".png"));
             imagenesCargadas[contador] = actual;
             contador++;
+
             if (i <= 24) {
                 formato = new Formatter();
                 actual = new ImageIcon(
                         getClass().getResource("/img/WalkerZombie/caminando/" + formato.format("%02d", i) + ".png"));
                 imagenesCargadas[contador] = actual;
                 contador++;
+
                 if (i <= 21) {
                     formato = new Formatter();
                     // System.out.println(chief.getURL());
@@ -243,55 +261,12 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
                             getClass().getResource("/img/Boss/atacando/" + formato.format("%02d", i) + ".png"));
                     imagenesCargadas[contador] = actual;
                     contador++;
-                    if (i <= 17) {
-                        formato = new Formatter();
-                        actual = new ImageIcon(getClass()
-                                .getResource("/img/WalkerZombie/muriendo/" + formato.format("%02d", i) + ".png"));
-                        imagenesCargadas[contador] = actual;
-                        contador++;
-                        formato = new Formatter();
-                        actual = new ImageIcon(getClass().getResource(
-                                "/img/WalkerZombie/muriendoIncendiado/" + formato.format("%02d", i) + ".png"));
-                        imagenesCargadas[contador] = actual;
-                        contador++;
-                        formato = new Formatter();
-                        actual = new ImageIcon(getClass()
-                                .getResource("/img/WalkerZombie/gruniendo/" + formato.format("%02d", i) + ".png"));
-                        imagenesCargadas[contador] = actual;
-                        contador++;
-                        if (i <= 13) {
-                            formato = new Formatter();
-                            actual = new ImageIcon(
-                                    getClass().getResource("/img/Boss/volando/" + formato.format("%02d", i) + ".png"));
-                            imagenesCargadas[contador] = actual;
-                            contador++;
-                            formato = new Formatter();
-                            actual = new ImageIcon(getClass()
-                                    .getResource("/img/WalkerZombie/atacando/" + formato.format("%02d", i) + ".png"));
-                            imagenesCargadas[contador] = actual;
-                            contador++;
-                            formato = new Formatter();
-                            actual = new ImageIcon(getClass()
-                                    .getResource("/img/DragZombie/atacando/" + formato.format("%02d", i) + ".png"));
-                            imagenesCargadas[contador] = actual;
-                            contador++;
-                            if (i <= 11) {
-                                formato = new Formatter();
-                                actual = new ImageIcon(getClass()
-                                        .getResource("/img/DragZombie/muriendo/" + formato.format("%02d", i) + ".png"));
-                                imagenesCargadas[contador] = actual;
-                                contador++;
-                                formato = new Formatter();
-                                actual = new ImageIcon(getClass().getResource(
-                                        "/img/DragZombie/muriendoIncendiado/" + formato.format("%02d", i) + ".png"));
-                                imagenesCargadas[contador] = actual;
-                                contador++;
-                            }
-                        }
-                    }
+
+                    contador = loadWalkerZombieImages(imagenesCargadas, contador, i);
                 }
             }
         }
+
         actual = new ImageIcon(getClass().getResource("/img/Fondo/sangre.png"));
         imagenesCargadas[contador] = actual;
         contador++;
@@ -310,6 +285,74 @@ public class PanelCamp extends JPanel implements MouseListener, KeyListener {
         actual = new ImageIcon(getClass().getResource("/img/Fondo/escenario-fondo-azul.png"));
         imagenesCargadas[contador] = actual;
         contador++;
+    }
+
+    private int loadWalkerZombieImages(ImageIcon[] imagenesCargadas, int contador, int i) {
+        ImageIcon actual;
+        Formatter formato;
+        if (i <= 17) {
+            formato = new Formatter();
+            actual = new ImageIcon(getClass()
+                    .getResource("/img/WalkerZombie/muriendo/" + formato.format("%02d", i) + ".png"));
+            imagenesCargadas[contador] = actual;
+            contador++;
+            formato = new Formatter();
+            actual = new ImageIcon(getClass().getResource(
+                    "/img/WalkerZombie/muriendoIncendiado/" + formato.format("%02d", i) + ".png"));
+            imagenesCargadas[contador] = actual;
+            contador++;
+            formato = new Formatter();
+            actual = new ImageIcon(getClass()
+                    .getResource("/img/WalkerZombie/gruniendo/" + formato.format("%02d", i) + ".png"));
+            imagenesCargadas[contador] = actual;
+            contador++;
+
+            contador = loadBossImages(imagenesCargadas, contador, i);
+        }
+        return contador;
+    }
+
+    private int loadBossImages(ImageIcon[] imagenesCargadas, int contador, int i) {
+        Formatter formato;
+        ImageIcon actual;
+        if (i <= 13) {
+            formato = new Formatter();
+            actual = new ImageIcon(
+                    getClass().getResource("/img/Boss/volando/" + formato.format("%02d", i) + ".png"));
+            imagenesCargadas[contador] = actual;
+            contador++;
+            formato = new Formatter();
+            actual = new ImageIcon(getClass()
+                    .getResource("/img/WalkerZombie/atacando/" + formato.format("%02d", i) + ".png"));
+            imagenesCargadas[contador] = actual;
+            contador++;
+            formato = new Formatter();
+            actual = new ImageIcon(getClass()
+                    .getResource("/img/DragZombie/atacando/" + formato.format("%02d", i) + ".png"));
+            imagenesCargadas[contador] = actual;
+            contador++;
+
+            contador = loadDragZombieImages(imagenesCargadas, contador, i);
+        }
+        return contador;
+    }
+
+    private int loadDragZombieImages(ImageIcon[] imagenesCargadas, int contador, int i) {
+        ImageIcon actual;
+        Formatter formato;
+        if (i <= 11) {
+            formato = new Formatter();
+            actual = new ImageIcon(getClass()
+                    .getResource("/img/DragZombie/muriendo/" + formato.format("%02d", i) + ".png"));
+            imagenesCargadas[contador] = actual;
+            contador++;
+            formato = new Formatter();
+            actual = new ImageIcon(getClass().getResource(
+                    "/img/DragZombie/muriendoIncendiado/" + formato.format("%02d", i) + ".png"));
+            imagenesCargadas[contador] = actual;
+            contador++;
+        }
+        return contador;
     }
 
     @Override

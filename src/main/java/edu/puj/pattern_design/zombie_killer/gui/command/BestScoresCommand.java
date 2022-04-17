@@ -1,7 +1,7 @@
 package edu.puj.pattern_design.zombie_killer.gui.command;
 
 import edu.puj.pattern_design.zombie_killer.gui.ZombieKillerGUI;
-import edu.puj.pattern_design.zombie_killer.gui.panel.PanelPuntajes;
+import edu.puj.pattern_design.zombie_killer.gui.panel.ScoresPanel;
 import edu.puj.pattern_design.zombie_killer.service.camp.SurvivorCamp;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,9 +14,9 @@ public class BestScoresCommand implements Command {
     @Override
     public void execute(ZombieKillerGUI zombieKillerGUI) {
         try {
-            PanelPuntajes panelPuntajes = PanelPuntajes.getPanel();
-            panelPuntajes.setPrincipal(zombieKillerGUI);
-            zombieKillerGUI.setPanelPuntajes(panelPuntajes);
+            ScoresPanel scoresPanel = ScoresPanel.getPanel();
+            scoresPanel.setPrincipal(zombieKillerGUI);
+            zombieKillerGUI.setScoresPanel(scoresPanel);
             SurvivorCamp camp = zombieKillerGUI.getCamp();
 
             if (camp == null) {

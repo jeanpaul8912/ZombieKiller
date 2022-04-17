@@ -22,7 +22,7 @@ import java.net.URL;
 
 import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.PAUSADO;
 
-public class PanelMenu extends JPanel implements KeyListener, ActionListener, MouseListener {
+public class MenuPanel extends JPanel implements KeyListener, ActionListener, MouseListener {
 
     private static final long serialVersionUID = 6794669918135042094L;
 
@@ -43,7 +43,7 @@ public class PanelMenu extends JPanel implements KeyListener, ActionListener, Mo
     private final JButton butCreditos;
     private final JButton butPuntajes;
 
-    public PanelMenu(ZombieKillerGUI interfazZombieKiller) {
+    public MenuPanel(ZombieKillerGUI interfazZombieKiller) {
         setFocusable(true);
         setLayout(new GridLayout(9, 2));
         principal = interfazZombieKiller;
