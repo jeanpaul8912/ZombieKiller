@@ -96,6 +96,14 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
     private final Enemigo enemigoCaminante;
 
     private Enemigo enemigoRastero;
+    
+    private Memento memento;
+    
+    private SurvivorCamp survivorCampData;
+    
+    private Caretaker caretaker;
+    
+    private Originador originador;
 
     /**
      * Constructor de la clase principal del mundo
@@ -113,6 +121,8 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
         mejoresPuntajes = new ArrayList<>();
         enemigoRastero = new Rastrero((short) 0, zombNodoLejano);
         jefe = new Boss();
+        caretaker = new Caretaker();
+        originador = new Originador();
     }
 
     /**
@@ -159,6 +169,15 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
     public void actualizarRondaActual(int rondaActual) {
         this.rondaActual = rondaActual;
         improveGuns(rondaActual);
+        
+        if(rondaActual == 3) {
+        	setData(this);
+        	crearMemento();
+        }
+    }
+    
+    public void actualizarRonda(int rondaActual) {
+    	this.rondaActual = rondaActual;
     }
 
     private void improveGuns(int rondaActual) {
@@ -169,7 +188,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
         if (rondaActual % (LEVELS_TO_IMPROVE_GUNS * 2) == 0) {
             personaje.getPrincipal().improveGun();
             personaje.getGranadas().improveGun();
-        }
+        }              
     }
 
     /**
@@ -179,6 +198,11 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
      */
     public Personaje getPersonaje() {
         return personaje;
+    }
+    
+    
+    public void setPersonaje(Personaje personaje) {
+        this.personaje = personaje;
     }
 
     /**
@@ -796,6 +820,26 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
 
     public char getSinPartida() {
         return SIN_PARTIDA;
+    }  
+    
+    private void setData(SurvivorCamp survivorCamp) {
+		SurvivorCamp survivorCampNuevo = new SurvivorCamp();
+		survivorCampNuevo = survivorCamp;
+		System.out.println("memento creado, ronda actual: "+survivorCampNuevo.getRondaActual());
+		try {
+			originador.setEstado((SurvivorCamp)survivorCampNuevo.clone());
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+	}
+    
+    private void crearMemento() {    	
+    	caretaker.addMemento(originador.guardar());
+    }
+    
+    public SurvivorCamp obtenerMemento() {
+    	originador.restaurar(caretaker.getMemento(0));
+    	return originador.getEstado();
     }
 
 }

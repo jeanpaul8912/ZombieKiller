@@ -191,32 +191,69 @@ public class InterfazZombieKiller extends JFrame {
 
     /**
      * Carga la partida guardada y actualiza todos los componentes que la usan
+     * @throws Exception 
      */
-    public void cargarJuego() {
-        try {
-            Puntaje actuales = campo.getRaizPuntajes();
-            SurvivorCamp partida = campo.cargarPartida();
-            campo.setEstadoJuego(SIN_PARTIDA);
-            campo = partida;
-            campo.actualizarPuntajes(actuales);
-            panelCampo.actualizarMatador(campo.getPersonaje());
-            panelCampo.actualizarChombis(campo.getZombNodoLejano());
-            armaActual = campo.getPersonaje().getPrincipal();
-            panelCampo.actualizarEquipada(armaActual);
-            panelCampo.actualizarRonda();
-            cambiarPuntero();
-            panelMenu.setVisible(false);
-            panelCampo.setVisible(true);
-            campo.setEstadoJuego(EN_CURSO);
-            add(panelCampo, BorderLayout.CENTER);
-            panelCampo.requestFocusInWindow();
-            panelCampo.requestFocusInWindow();
-            facade.initializeEnemyThreads();
-            iniciarGemi2();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-    }
+	public void cargarJuego() {
+		try {
+			SurvivorCamp partida = campo.cargarPartida();
+			datosPartida(partida);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
+	}
+    
+	public void datosPartida(SurvivorCamp partida) {
+		try {
+			Puntaje actuales = campo.getRaizPuntajes();
+			campo.setEstadoJuego(SIN_PARTIDA);
+			campo = partida;
+			campo.actualizarPuntajes(actuales);
+			panelCampo.actualizarMatador(campo.getPersonaje());
+			panelCampo.actualizarChombis(campo.getZombNodoLejano());
+			armaActual = campo.getPersonaje().getPrincipal();			
+			panelCampo.actualizarEquipada(armaActual);
+			panelCampo.actualizarRonda();
+			cambiarPuntero();
+			panelMenu.setVisible(false);
+			panelCampo.setVisible(true);
+			campo.setEstadoJuego(EN_CURSO);
+			add(panelCampo, BorderLayout.CENTER);
+			panelCampo.requestFocusInWindow();
+			facade.initializeEnemyThreads();
+			iniciarGemi2();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
+	}
+	
+	public void datosPartida2(SurvivorCamp partida) {
+		try {			
+			setCursor(cursorCuchillo);
+	        Puntaje actual = partida.getRaizPuntajes();
+	        campo = new SurvivorCamp();
+	        campo.actualizarPuntajes(actual);
+	        campo.setEstadoJuego(EN_CURSO);
+	        armaActual = partida.getPersonaje().getPrincipal();
+	        partida.getPersonaje().setEnsangrentado(false);
+	        panelCampo.actualizarMatador(partida.getPersonaje());
+	        
+	        panelCampo.actualizarEquipada(armaActual);
+	        campo.actualizarRonda(partida.getRondaActual());
+	        panelCampo.actualizarRonda();
+	        cambiarPuntero();
+	        panelCampo.actualizarChombis(campo.getZombNodoLejano());
+	        panelCampo.incorporarJefe(null);
+	        add(panelCampo, BorderLayout.CENTER);
+	        panelCampo.requestFocusInWindow();
+	        facade.initializeEnemyThreads();
+	        panelMenu.setVisible(false);
+	        panelCampo.setVisible(true);
+	        iniciarGemi2();
+			panelCampo.repaint();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}
+	}
 
     /**
      * Guarda la partida que esta en curso
@@ -453,7 +490,8 @@ public class InterfazZombieKiller extends JFrame {
         int aceptoGuardarScore = JOptionPane.showConfirmDialog(this,
                 "Su puntaje fue: " + campo.getPersonaje().getScore() + ", con " + campo.getPersonaje().getMatanza()
                         + " bajas y en la Ronda " + campo.getRondaActual() + ". Desea guardar su puntaje?",
-                "Juego Terminado", JOptionPane.YES_NO_OPTION);
+                "Juego Terminado", JOptionPane.YES_NO_OPTION);       
+        
         if (aceptoGuardarScore == JOptionPane.YES_OPTION) {
             String nombrePlayer = JOptionPane.showInputDialog(this, "Escribe tu nombre");
 
@@ -473,8 +511,13 @@ public class InterfazZombieKiller extends JFrame {
                 juegoTerminado();
             }
         }
-
-        if (!seLlamoDeNuevo) {
+        
+        if(cargarCheckpoint()) {
+        	SurvivorCamp survivorCamp = new SurvivorCamp();
+        	survivorCamp = campo.obtenerMemento();
+        	System.out.println("memento obtenido, ronda actual: "+survivorCamp.getRondaActual());
+        	datosPartida2(survivorCamp);//campo.obtenerMemento());
+        } else if(!seLlamoDeNuevo) {
             int aceptoJugar = JOptionPane.showConfirmDialog(this, "Desea volver a jugar?", "Juego Terminado",
                     JOptionPane.YES_NO_OPTION);
             if (aceptoJugar == JOptionPane.YES_OPTION)
@@ -486,6 +529,16 @@ public class InterfazZombieKiller extends JFrame {
         }
 
         terminarGemi2();
+    }
+    
+    private boolean cargarCheckpoint() {
+    	int aceptoJugarDesdeUltimoCheckPoint = JOptionPane.showConfirmDialog(this, "Desea volver a jugar desde el ultimo Checkpoint?", "Juego Terminado",
+                JOptionPane.YES_NO_OPTION);
+        if (aceptoJugarDesdeUltimoCheckPoint == JOptionPane.YES_OPTION) {
+        	return true;
+        }
+        
+        return false;
     }
 
     /**
