@@ -33,7 +33,7 @@ public class WeaponThread extends Thread {
                     principal.terminarEfectoDeSangre();
                 }
 
-                if (weapon.getEstado().equals(RECHARGING)) {
+                if (weapon.getStatus().equals(RECHARGING)) {
                     // descanso mientras suena el disparo
                     sleep(200);
                     if (weapon instanceof Remington && armaDeFuego.getAvailableBullets() > NumberUtils.INTEGER_ZERO) {
@@ -44,8 +44,8 @@ public class WeaponThread extends Thread {
                 }
             }
 
-            sleep(weapon.calcularDescanso());
-            weapon.setEstado(LISTA);
+            sleep(weapon.calculatePause());
+            weapon.setStatus(LISTA);
             principal.cambiarPuntero();
         } catch (InterruptedException e) {
             log.error(e.getMessage(), e);

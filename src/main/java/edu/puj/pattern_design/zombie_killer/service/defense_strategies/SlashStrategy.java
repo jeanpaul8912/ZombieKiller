@@ -50,7 +50,7 @@ public class SlashStrategy extends DefenseStrategy {
                     interfaz.getCamp().getCharacter().increaseScore(40);
                 seEncontro = true;
                 interfaz.getCamp().getCharacter().setBlooded(false);
-                interfaz.getCamp().getCharacter().getKnife().setEstado(CARGANDO);
+                interfaz.getCamp().getCharacter().getKnife().setStatus(CARGANDO);
             }
             aAcuchillar = aAcuchillar.getInBack();
         }
@@ -59,7 +59,7 @@ public class SlashStrategy extends DefenseStrategy {
             if (interfaz.getCamp().getBoss().getCurrentStatus().equals(ATACANDO) &&
                     interfaz.getCamp().getBoss().checkShoot(xPosition, yPosition, KNIFE_DAMAGE)) {
                 interfaz.getCamp().getCharacter().setBlooded(false);
-                interfaz.getCamp().getCharacter().getKnife().setEstado(CARGANDO);
+                interfaz.getCamp().getCharacter().getKnife().setStatus(CARGANDO);
                 seEncontro = true;
 
                 if (interfaz.getCamp().getBoss().getCurrentStatus().equals(DERROTADO)) {

@@ -14,41 +14,25 @@ public abstract class GunWeapon extends Weapon {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * estado temporal para dibujar la sangre del zombie en pantalla
-     */
     private boolean blooded;
 
     protected Ammunition ammunition;
 
-    /**
-     * Constructor abstracto del arma de fuego
-     */
     public GunWeapon() {
     }
 
     @Override
-    public long calcularDescanso() {
-        long descanso = 0;
+    public long calculatePause() {
+        long pause = 0;
 
-        if (getEstado().equals(RECHARGING)) {
-            descanso = ammunition.getRechargeTime();
-        } else if (getEstado().equals(CARGANDO)) {
-            descanso = getRetroceso();
+        if (getStatus().equals(RECHARGING)) {
+            pause = ammunition.getRechargeTime();
+        } else if (getStatus().equals(CARGANDO)) {
+            pause = getBackward();
         }
 
-        return descanso;
+        return pause;
     }
-
-    /**
-     * pregunta si el arma presente acaba de darle a algun enemigo
-     *
-     * @return ensangrentada
-     */
-    public boolean isBlooded() {
-        return blooded;
-    }
-
 
     public void shoot() {
         ammunition.setAvailableBullets(ammunition.getAvailableBullets() - 1);

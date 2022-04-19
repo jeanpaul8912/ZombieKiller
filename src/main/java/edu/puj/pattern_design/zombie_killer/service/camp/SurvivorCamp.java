@@ -51,60 +51,30 @@ import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesCons
 @Slf4j
 public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
 
-    /**
-     * Zombie que no aparece en el juego pero sirve como nodo para modificar la
-     * lista facilmente nodo mas cercano al personaje (abajo)
-     */
     private ZombieZigZag zombieFarNode;
-    /**
-     * Zombie que no aparece en el juego pero sirve como nodo para modificar la
-     * lista facilmente nodo mas lejano al personaje (arriba)
-     */
+
     private ZombieZigZag zombieNearNode;
-    /**
-     * Personaje en el campo de batalla que esta disparando
-     */
+
     private Character character;
-    /**
-     * Enemigo final, aparece en la ronda 10
-     */
+
     private Boss boss;
-    /**
-     * estado del juego, puede ser pausado, en curso, sin partida o iniciando
-     * ronda
-     */
+
     private char gameStatus;
-    /**
-     * ronda en la que se encuentra la partida actual, varia desde 1 a 10, en la
-     * 10 solo puede estar el jefe
-     */
+
     private int currentRound;
-    /**
-     * numero de zombies que han salido a dar la cara en el juego
-     */
+
     private int zombiesGeneratedCount;
-    /**
-     * numero que representa el arma que se esta mostrando en las
-     * especificaciones del arma (panelArmas)
-     */
+
     private int showedWeapon;
-    /**
-     * arreglo de puntajes obtenidos por lo jugadores
-     */
+
     private ArrayList<CharacterScore> bestCharacterScores;
-    /**
-     * raiz del arbol binario de puntajes, tiene los mismos datos del arreglo
-     * mejoresPuntajes pero estan ordenados por Score
-     */
+
     private CharacterScore rootScores;
 
     private final Enemy enemyWalker;
 
     private Enemy enemyDrag;
 
-    /**
-     * Constructor de la clase principal del mundo
-     */
     public SurvivorCamp() {
         enemyWalker = new WalkerZombie();
         character = new Character();
@@ -120,10 +90,6 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         boss = new Boss();
     }
 
-    /**
-     * cambia la ronda en la que se encuentra, en general sube una ronda, pero
-     * si se carga una partida puede variar
-     */
     public void updateCurrentRound(int rondaActual) {
         this.currentRound = rondaActual;
         improveGuns(rondaActual);
@@ -140,25 +106,11 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         }
     }
 
-
-    /**
-     * crea el jefe de la ronda 10
-     *
-     * @return jefe creado
-     */
     public Boss generateBoss() {
         boss = (Boss) boss.cloneEnemy();
         return boss;
     }
 
-    /**
-     * Genera un zombie respecto al level en que se encuentra
-     * </pre>
-     * la ronda va de 1 a 9
-     *
-     * @param level o ronda en el que se genera
-     * @return zombie creado
-     */
     public Zombie generateZombie(int level) {
         short newLevel = (short) level;
         Zombie zombie;
@@ -182,11 +134,6 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         return zombie;
     }
 
-    /**
-     * verifica el numero de zombies que se encuentra en la partida
-     *
-     * @return numero de zombies
-     */
     public int contarZombies() {
         Zombie actual = zombieNearNode.getInBack();
         int contador = 0;
@@ -199,11 +146,6 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         return contador;
     }
 
-    /**
-     * cambia el estado del juego de pausado a en curso o viceversa
-     *
-     * @return estado final
-     */
     public char pauseGame() {
         if (gameStatus == PAUSADO) {
             gameStatus = EN_CURSO;
@@ -214,12 +156,6 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         return gameStatus;
     }
 
-    /**
-     * carga el Puntaje que se guarda en forma de raiz de AB
-     *
-     * @throws IOException            en caso de que no se haya guardado algun puntaje
-     * @throws ClassNotFoundException en caso de que haya ocurrido un error al guardar los datos
-     */
     public void loadScores() throws IOException, ClassNotFoundException {
         File directory = new File(System.getProperty("user.dir") + "/PartidasGuardadas");
         File scoresFile = new File(directory.getAbsolutePath() + "/puntajes.txt");
@@ -230,11 +166,6 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         }
     }
 
-    /**
-     * asigna la raiz del arbol binario y llena el arreglo de mejores puntajes
-     *
-     * @param root
-     */
     public void updateScores(CharacterScore root) {
         rootScores = root;
 
@@ -244,13 +175,6 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         }
     }
 
-    /**
-     * carga la ultima partida guardada devuelve la partida clonada porque la
-     * actual pasa a estar sin juego y asi elimina los hilos en ejecucion
-     *
-     * @return una partida con las caracteristicas de la nueva partida
-     * @throws Exception de cualquier tipo para mostrar en pantalla
-     */
     public SurvivorCamp loadGame() throws Exception {
         File directory = new File(System.getProperty("user.dir") + "/PartidasGuardadas");
         File characterFile = new File(directory.getAbsolutePath() + "/personaje.txt");
@@ -273,13 +197,6 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         return (SurvivorCamp) clone();
     }
 
-    /**
-     * carga los datos de los enemigos del archivo de texto plano
-     *
-     * @param carpeta
-     * @param character para asignarselo a la partida si todos los datos son validos
-     * @throws Exception si hay informacion invalida
-     */
     private void loadCampData(File carpeta, Character character) throws Exception {
         File zombieData = new File(carpeta.getAbsolutePath() + "/zombies.txt");
 
@@ -354,13 +271,6 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         }
     }
 
-    /**
-     * metodo auxiliar para generar un boss con respecto a la salud que le entra
-     * por parametro
-     *
-     * @param ronda
-     * @param salud
-     */
     private void cargaBossSiExiste(int ronda, byte salud) {
         if (ronda == 10) {
             boss = new Boss(salud);
@@ -369,12 +279,6 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         }
     }
 
-    /**
-     * conecta los zombies cargados a los nodos para que sean parte del juego
-     *
-     * @param masCercano
-     * @param ultimoAgregado
-     */
     private void enlazaZombiesSiHabian(Zombie masCercano, Zombie ultimoAgregado) {
         if (ultimoAgregado != null) {
             zombieNearNode.setInBack(masCercano);
@@ -385,30 +289,12 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         }
     }
 
-    /**
-     * metodo auxiliar que verifica las direcciones a las que se mueven los
-     * caminantes la suma de sus direcciones no puede ser menor a 4
-     *
-     * @param direccionX
-     * @param direccionY
-     * @throws DatosErroneosException
-     */
     private void verificarDatosCaminante(int direccionX, int direccionY) throws DatosErroneosException {
         if (Math.abs(direccionX) + direccionY < 4) {
             throw new DatosErroneosException();
         }
     }
 
-    /**
-     * verifica que los datos generales de loz zombies estan dentro de los
-     * limites del juego
-     *
-     * @param posX
-     * @param posY
-     * @param estadoActual
-     * @param frameActual
-     * @throws DatosErroneosException
-     */
     private void verificarDatosZombie(int posX, int posY, String estadoActual, byte frameActual)
             throws DatosErroneosException {
         if (posX > ANCHO_PANTALLA - ANCHO_IMAGEN || posX < 0 || posY > POS_ATAQUE
@@ -419,21 +305,16 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         }
     }
 
-    /**
-     * guarda la partida actual
-     *
-     * @throws IOException en caso de que el jugador abra el ejecutable desde una
-     *                     carpeta invalida
-     */
     public void guardarPartida() throws IOException {
         File carpeta = new File(System.getProperty("user.dir") + "/PartidasGuardadas");
         File archivoPersonaje = new File(carpeta.getAbsolutePath() + "/personaje.txt");
-        if (!carpeta.exists())
+
+        if (!carpeta.exists()) {
             carpeta.mkdirs();
-        ObjectOutputStream escritor = new ObjectOutputStream(new FileOutputStream(archivoPersonaje));
-        escritor.writeObject(character);
-        escritor.close();
-        try {
+        }
+
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(archivoPersonaje))) {
+            objectOutputStream.writeObject(character);
             guardarDatosCampo(carpeta);
         } catch (IOException e) {
             throw new IOException(
@@ -441,69 +322,42 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         }
     }
 
-    /**
-     * escribe los datos de los enemigos
-     *
-     * @param carpeta carpeta en la que se va a guardar el archivo
-     * @throws IOException en caso de que ocurra un error inesperado
-     */
     private void guardarDatosCampo(File carpeta) throws IOException {
         File datosZombie = new File(carpeta.getAbsolutePath() + "/zombies.txt");
-        BufferedWriter bW = new BufferedWriter(new FileWriter(datosZombie));
-        String texto = "/salud/posX/posY/estado/frame/dirX/dirY";
-        if (boss != null)
-            texto += "\n" + boss.getHealth();
-        else
-            texto = escribirDatosZombie(texto, zombieNearNode.getInBack());
 
-        bW.write(texto);
-        bW.close();
+        try (BufferedWriter bW = new BufferedWriter(new FileWriter(datosZombie))) {
+            String texto = "/salud/posX/posY/estado/frame/dirX/dirY";
+
+            if (boss != null) {
+                texto += "\n" + boss.getHealth();
+            } else {
+                texto = escribirDatosZombie(texto, zombieNearNode.getInBack());
+            }
+
+            bW.write(texto);
+        }
     }
 
-    /**
-     * escribe los datos de los zombies de manera recursiva
-     *
-     * @param datos
-     * @param actual
-     * @return el texto con la informacion de los zombies
-     */
     private String escribirDatosZombie(String datos, Zombie actual) {
-        if (actual.getCurrentStatus().equals(NODO))
+        if (actual.getCurrentStatus().equals(NODO)) {
             return datos;
+        }
+
         datos += "\n" + actual.getHealth() + "_" + actual.getPosX() + "_" + actual.getPosY() + "_"
                 + actual.getCurrentStatus() + "_" + actual.getCurrentFrame();
+
         if (actual instanceof WalkerZombie) {
-            datos += "_" + ((WalkerZombie) actual).getDirectionX();
-            datos += "_" + ((WalkerZombie) actual).getDirectionY();
+            datos += "_" + actual.getDirectionX();
+            datos += "_" + actual.getDirectionY();
         }
+
         return escribirDatosZombie(datos, actual.getInBack());
     }
 
-    /**
-     * cambia el arma del personaje, en esta version solo tiene 2 armas em total
-     */
     public void cambiarArma() {
         character.changeWeapon();
     }
 
-    /**
-     * el enemigo hace lo que le pertenece despues de terminar su golpe
-     *
-     * @param enemy el enemigo que acaba de atacar
-     */
-    public void enemigoTerminaSuGolpe(Enemy enemy) {
-        character.setBlooded(false);
-        //enemy.terminaDeAtacar();
-    }
-
-    /**
-     * verifica las posiciones de los zombies cercanos y su estado para saber si
-     * puede acuchillar
-     *
-     * @param x
-     * @param y
-     * @return true si logra achuchillar a alguno
-     */
     public boolean acuchilla(int x, int y) {
         Zombie aAcuchillar = zombieNearNode.getInBack();
         boolean seEncontro = false;
@@ -517,7 +371,7 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
 
                 seEncontro = true;
                 character.setBlooded(false);
-                character.getKnife().setEstado(CARGANDO);
+                character.getKnife().setStatus(CARGANDO);
             }
 
             aAcuchillar = aAcuchillar.getInBack();
@@ -526,7 +380,7 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         if (boss != null) {
             if (boss.getCurrentStatus().equals(ATACANDO) && boss.checkShoot(x, y, KNIFE_DAMAGE)) {
                 character.setBlooded(false);
-                character.getKnife().setEstado(CARGANDO);
+                character.getKnife().setStatus(CARGANDO);
                 seEncontro = true;
 
                 if (boss.getCurrentStatus().equals(DERROTADO)) {
@@ -539,21 +393,10 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         return seEncontro;
     }
 
-    /**
-     * obtiene la cantidad de zombies que han salido en toda la partida
-     *
-     * @return cantidad de zombies generados
-     */
     public int getZombiesGeneratedCount() {
         return zombiesGeneratedCount;
     }
 
-    /**
-     * devuelve el numero de referencia al arma que se encuentra a la derecha de
-     * la actual
-     *
-     * @return numero del arma Mostrada
-     */
     public int moverArmaVisibleDerecha() {
         if (showedWeapon == 3) {
             showedWeapon = 0;
@@ -564,12 +407,6 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         return showedWeapon;
     }
 
-    /**
-     * devuelve el numero de referencia al arma que se encuentra a la izquierda
-     * de la actual
-     *
-     * @return numero del arma Mostrada
-     */
     public int moverArmaVisibleIzquierda() {
         if (showedWeapon == 0) {
             showedWeapon = 3;
@@ -580,22 +417,10 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         return showedWeapon;
     }
 
-    /**
-     * obtiene el arma que se muestra actualmente en el panelArmas
-     *
-     * @return numero del arma mostrada
-     */
     public int getShowedWeapon() {
         return showedWeapon;
     }
 
-    /**
-     * aniade un puntaje obtenido por el jugador
-     *
-     * @param nombreJugador
-     * @throws IOException en caso de que ocurra un problema al guardar el puntaje
-     *                     serializado
-     */
     public void aniadirMejoresPuntajes(String nombreJugador) throws IOException {
         CharacterScore characterScore = new CharacterScore(character.getScore(), character.getHeadShots(), character.getKilling(),
                 nombreJugador);
@@ -607,12 +432,6 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         guardarPuntajes();
     }
 
-    /**
-     * guarda el Puntaje raiz en la carpeta
-     *
-     * @throws IOException en caso de que ocurra un problema al guardar la raiz con las
-     *                     nuevas asociaciones
-     */
     private void guardarPuntajes() throws IOException {
         File carpeta = new File(System.getProperty("user.dir") + "/PartidasGuardadas");
         File archivoPuntajes = new File(carpeta.getAbsolutePath() + "/puntajes.txt");
@@ -623,11 +442,6 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         escritor.close();
     }
 
-    /**
-     * ordena el arreglo con corde a la cantidad de kill con tiros a la cabeza
-     *
-     * @return arreglo de puntajes
-     */
     public List<CharacterScore> ordenarPuntajePorTirosALaCabeza() {
         for (int i = 0; i < bestCharacterScores.size(); i++) {
             CharacterScore masHeadShot = bestCharacterScores.get(i);
@@ -652,11 +466,6 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         return bestCharacterScores;
     }
 
-    /**
-     * ordena el arreglo con corde a la cantidad de kill
-     *
-     * @return arreglo de puntajes
-     */
     public List<CharacterScore> ordenarPuntajePorBajas() {
         for (int i = 0; i < bestCharacterScores.size(); i++) {
             CharacterScore masKill = bestCharacterScores.get(i);
@@ -676,11 +485,6 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         return bestCharacterScores;
     }
 
-    /**
-     * crea un arreglo con el arbol binario usando el metodo inOrden
-     *
-     * @return arreglo de puntajes
-     */
     public List<CharacterScore> ordenarPuntajePorScore() {
         List<CharacterScore> ordenados = new ArrayList<>();
         if (rootScores != null)
@@ -699,12 +503,6 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         return o1.compareTo(o2);
     }
 
-    /**
-     * busca el puntaje del nombre ingresado por parametro con busqueda binaria
-     *
-     * @param nombre
-     * @return mejor puntaje del nombre buscado
-     */
     public CharacterScore buscarPuntajeDe(String nombre) {
         bestCharacterScores.sort(new CompareScoresByName());
         int inicio = 0;
@@ -738,12 +536,6 @@ public class SurvivorCamp implements Cloneable, Comparator<CharacterScore> {
         return characterScoreBuscado;
     }
 
-    /**
-     * Verifica que el nombre pasado por parametro sea completamente alfabetico
-     *
-     * @param nombrePlayer
-     * @throws NombreInvalidoException
-     */
     public void verificarNombre(String nombrePlayer) throws NombreInvalidoException {
         for (int i = 0; i < nombrePlayer.length(); i++) {
             char caracter = nombrePlayer.charAt(i);

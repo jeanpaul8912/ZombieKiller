@@ -18,23 +18,12 @@ import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesCons
 @Setter
 public class Boss extends Enemy implements ZigzagMoving {
 
-
-    /**
-     * valor numerico entero que representa la direccion o velocidad en el eje X
-     */
     private int directionX;
-    /**
-     * valor numerico entero que representa la direccion o velocidad en el eje Y
-     */
+
     private int directionY;
-    /**
-     * valor que representa la posicion en el eje X del jefe
-     */
+
     private int posHorizontal;
 
-    /**
-     * Constructor del jefe al iniciar la ronda 10
-     */
     public Boss() {
         super();
         setCurrentStatus(VOLANDO);
@@ -42,12 +31,6 @@ public class Boss extends Enemy implements ZigzagMoving {
         setSpeed(LENTITUD_BOSS);
     }
 
-    /**
-     * Constructor del jefe al cargar la partida si fue guardada en la ronda del
-     * jefe
-     *
-     * @param salud
-     */
     public Boss(byte salud) {
         super();
         setCurrentStatus(VOLANDO);

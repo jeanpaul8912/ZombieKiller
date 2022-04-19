@@ -58,7 +58,7 @@ public class Character implements LivingBeing, Serializable {
 
     public void reloadPrincipalWeapon() {
         principalWeapon.reload();
-        principalWeapon.setEstado(CARGANDO);
+        principalWeapon.setStatus(CARGANDO);
     }
 
     public void changeWeapon() {

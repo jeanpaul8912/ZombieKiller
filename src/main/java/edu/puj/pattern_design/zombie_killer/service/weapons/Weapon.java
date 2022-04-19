@@ -14,39 +14,21 @@ public abstract class Weapon implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * valor numerico entero que muestra el tiempo de carga en milisegundos
-     */
-    private int retroceso;
+    private int backward;
 
-    /**
-     * valor numerico entero que representa el danio causado por un arma
-     */
     private int damage;
 
-    /**
-     * cadena de caracteres que representa el estado del arma
-     */
-    private String estado;
+    private String status;
 
-    /**
-     * Constructor abstracto de un arma que pone el estado del arma Lista
-     */
     public Weapon() {
-        estado = LISTA;
+        status = LISTA;
     }
 
-    /**
-     * metodo que calcula el tiempo de espera en el hilo del arma con respecto al
-     * estado
-     *
-     * @return tiempo de sleep en milisegundos
-     */
-    public long calcularDescanso() {
+    public long calculatePause() {
         long descanso = 0;
 
-        if (getEstado().equals(CARGANDO)) {
-            descanso = retroceso;
+        if (getStatus().equals(CARGANDO)) {
+            descanso = backward;
         }
 
         return descanso;

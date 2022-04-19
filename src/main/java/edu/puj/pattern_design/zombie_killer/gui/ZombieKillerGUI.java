@@ -39,47 +39,25 @@ import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstan
 public class ZombieKillerGUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    /**
-     * Campo de juego que contiene a todo el mundo
-     */
+
     private SurvivorCamp camp;
-    /**
-     * Arma que el jugador tiene equipada
-     */
+
     private GunWeapon currentWeapon;
-    /**
-     * Panel del menu principal cualquier boton muestra otro panel representatitvo a
-     * el
-     */
+
     private final MenuPanel menuPanel;
-    /**
-     * Panel del campo de juego
-     */
+
     private SurvivorCampPanel survivorCampoPanel;
-    /**
-     * Panel que muestra las instrucciones de juego Muestra las estadisticas de las
-     * armas
-     */
+
     private HowToPlayPanel howToPlayPanel;
-    /**
-     * Panel que muestra los puntajes de los jugadores
-     */
+
     private ScoresPanel scoresPanel;
-    /**
-     * Panel que muestra los creditos de las personas que participaron
-     */
+
     private CreditsPanel creditsPanel;
-    /**
-     * Cursor de la mira de la pistola
-     */
+
     private final Cursor m1911Cursor;
-    /**
-     * Cursor de la mira de la escopeta
-     */
+
     private Cursor remingtonCursor;
-    /**
-     * Cursor temporal del cuchillo
-     */
+
     private Cursor knifeCursor;
 
     private Boss boss;
@@ -92,10 +70,6 @@ public class ZombieKillerGUI extends JFrame {
 
     private AttackStrategyContext attackStrategy;
 
-    /**
-     * Constructor de la clase principal del juego Aqui se inicializan todos los
-     * componentes necesarios para empezar a jugar
-     */
     public ZombieKillerGUI() throws IOException {
         long start = System.currentTimeMillis();
 
@@ -122,11 +96,6 @@ public class ZombieKillerGUI extends JFrame {
         facade = new ThreadsFacade(this);
     }
 
-    /**
-     * Obtiene el estado actual de la partida
-     *
-     * @return estado
-     */
     public char getEstadoPartida() {
         if (camp == null) {
             return SIN_PARTIDA;
@@ -135,9 +104,6 @@ public class ZombieKillerGUI extends JFrame {
         return camp.getGameStatus();
     }
 
-    /**
-     * Inicia una partida desde 0
-     */
     public void iniciarNuevaPartida() {
         if (camp.getGameStatus() != SIN_PARTIDA) {
             int respuesta = JOptionPane.showConfirmDialog(this,
@@ -153,10 +119,6 @@ public class ZombieKillerGUI extends JFrame {
         }
     }
 
-    /**
-     * Metodo auxiliar que inicializa y actualiza la informacion en los componentes
-     * visibles
-     */
     private void partidaIniciada() {
         setCursor(knifeCursor);
         CharacterScore actual = camp.getRootScores();
@@ -175,27 +137,10 @@ public class ZombieKillerGUI extends JFrame {
         survivorCampoPanel.setVisible(true);
     }
 
-    /**
-     * pregunta si en el PanelCamp se estan cargando las imagenes
-     *
-     * @return true si aun se estan cargando
-     */
     public boolean estaCargando() {
         return survivorCampoPanel.getDebugGraphicsOptions() == DebugGraphics.BUFFERED_OPTION;
     }
 
-    /**
-     * obtiene el puntaje/score actual del personaje
-     *
-     * @return puntaje
-     */
-    public int getPuntajeActual() {
-        return camp.getCharacter().getScore();
-    }
-
-    /**
-     * Carga la partida guardada y actualiza todos los componentes que la usan
-     */
     public void cargarJuego() {
         try {
             CharacterScore actuales = camp.getRootScores();
@@ -222,9 +167,6 @@ public class ZombieKillerGUI extends JFrame {
         }
     }
 
-    /**
-     * Guarda la partida que esta en curso
-     */
     public void guardarJuego() {
         try {
             camp.guardarPartida();
@@ -234,32 +176,18 @@ public class ZombieKillerGUI extends JFrame {
         }
     }
 
-    /**
-     * repinta el panelCampo para mostrar los zombies en movimiento
-     */
     public void refrescar() {
         survivorCampoPanel.repaint();
     }
 
-    /**
-     * inicia el sonido de los zombies
-     */
     public void iniciarGemi2() {
         facade.initializeZombieSoundThread("zombies");
     }
 
-    /**
-     * termina el sonido de los zombies
-     */
     public void terminarGemi2() {
         facade.soundStop();
     }
 
-    /**
-     * genera un zombie en la partida dada la ronda actual
-     *
-     * @param nivel
-     */
     public void generarZombie(int nivel) {
         Zombie chombi = camp.generateZombie(nivel);
 
@@ -270,9 +198,6 @@ public class ZombieKillerGUI extends JFrame {
         }
     }
 
-    /**
-     * Ejecuta los efectos tras ser atacado por un enemigo
-     */
     public void leDaAPersonaje() {
         reproducir("meDio");
         attackStrategy = new AttackStrategyContext(new BossZombieAttackStrategy());
@@ -280,9 +205,6 @@ public class ZombieKillerGUI extends JFrame {
         survivorCampoPanel.zombieAtaco();
     }
 
-    /**
-     * Pausa y despausa el juego
-     */
     public void pausarJuego() {
         char estado = camp.pauseGame();
 
@@ -301,36 +223,22 @@ public class ZombieKillerGUI extends JFrame {
         }
     }
 
-    /**
-     * reabastece la carga del arma principal
-     */
     public void cargarArmaPersonaje() {
         camp.getCharacter().reloadPrincipalWeapon();
         reproducir("carga" + currentWeapon.getClass().getSimpleName());
         facade.initializeWeaponsThread("armaDeFuego");
     }
 
-    /**
-     * reproduce cualquier sonido que se encuentre en la carpeta sonidos
-     *
-     * @param ruta
-     */
     public void reproducir(String ruta) {
         facade.initializeGeneralSoundThread(ruta);
     }
 
-    /**
-     * cambia el arma del personaje y actualiza aqui
-     */
     public void cambiarArma() {
         camp.cambiarArma();
         currentWeapon = camp.getCharacter().getPrincipalWeapon();
         cambiarPuntero();
     }
 
-    /**
-     * cambia el cursor de acuerdo al arma principal
-     */
     public void cambiarPuntero() {
         if (currentWeapon instanceof Remington)
             setCursor(remingtonCursor);
@@ -338,26 +246,15 @@ public class ZombieKillerGUI extends JFrame {
             setCursor(m1911Cursor);
     }
 
-    /**
-     * termina el efecto del disparo con sangre
-     */
     public void terminarEfectoDeSangre() {
         currentWeapon.setBlooded(false);
         survivorCampoPanel.quitarSangreZombie();
     }
 
-    /**
-     * obtiene la ronda en la que se encuentra
-     */
     public int darRondaActual() {
         return camp.getCurrentRound();
     }
 
-    /**
-     * sube la ronda actual, suena la sirena al avanzar
-     *
-     * @param nivel
-     */
     public void subirDeRonda(int nivel) {
         terminarGemi2();
         reproducir("sirena");
@@ -366,9 +263,6 @@ public class ZombieKillerGUI extends JFrame {
         survivorCampoPanel.actualizarRonda();
     }
 
-    /**
-     * genera el jefe con su respectivo hilo
-     */
     public void generarBoss() {
         boss = camp.generateBoss();
         survivorCampoPanel.incorporarJefe(boss);
@@ -378,9 +272,6 @@ public class ZombieKillerGUI extends JFrame {
         facade.initializeBossThread();
     }
 
-    /**
-     * Muestra el Panel de Como jugar / Lo oculta
-     */
     public void mostrarComoJugar() {
         if (menuPanel.isVisible()) {
             menuPanel.setVisible(false);
@@ -392,9 +283,6 @@ public class ZombieKillerGUI extends JFrame {
         }
     }
 
-    /**
-     * Muestra el Panel donde se encuentran los puntjes / lo oculta
-     */
     public void mostrarPuntajes() {
         if (menuPanel.isVisible()) {
             scoresPanel.actualizarPuntajes(camp.ordenarPuntajePorScore());
@@ -407,9 +295,6 @@ public class ZombieKillerGUI extends JFrame {
         }
     }
 
-    /**
-     * Muestra el Panel donde se encuentran los creditos / lo oculta
-     */
     public void mostrarCreditos() {
         if (menuPanel.isVisible()) {
             menuPanel.setVisible(false);
@@ -421,28 +306,6 @@ public class ZombieKillerGUI extends JFrame {
         }
     }
 
-    /**
-     * Cambia el arma que se esta viendo por el de la derecha
-     *
-     * @return numero de referencia al arma de la derecha
-     */
-    public int cambiarArmaVisibleDerecha() {
-        return camp.moverArmaVisibleDerecha();
-    }
-
-    /**
-     * Cambia el arma que se esta viendo por el de la izquierda
-     *
-     * @return numero de referencia al arma de la izquierda
-     */
-    public int cambiarArmaVisibleIzquierda() {
-        return camp.moverArmaVisibleIzquierda();
-    }
-
-    /**
-     * Metodo llamado cuando el personaje muere para verificar si el jugador desea
-     * seguir o no
-     */
     public void juegoTerminado() {
         boolean seLlamoDeNuevo = false;
         int aceptoGuardarScore = JOptionPane.showConfirmDialog(this,
@@ -484,9 +347,6 @@ public class ZombieKillerGUI extends JFrame {
         terminarGemi2();
     }
 
-    /**
-     * Metodo que se ejecuta cuando el Boss muere
-     */
     public void victoria() {
         String nombrePlayer = JOptionPane.showInputDialog(this,
                 "Enhorabuena, has pasado todas los niveles de dificultad. Su puntaje final es: "
@@ -512,23 +372,14 @@ public class ZombieKillerGUI extends JFrame {
         terminarGemi2();
     }
 
-    /**
-     * Llama al metodo de ordenar por bajas
-     */
     public void ordenarPorBajas() {
         scoresPanel.actualizarPuntajes(camp.ordenarPuntajePorBajas());
     }
 
-    /**
-     * Llama al metodo de ordenar por bajas con tiro a la cabeza
-     */
     public void ordenarPorHeadshot() {
         scoresPanel.actualizarPuntajes(camp.ordenarPuntajePorTirosALaCabeza());
     }
 
-    /**
-     * busca el mejor puntaje del nombre
-     */
     public void buscarPorNombre(String nombreBuscado) {
         if (nombreBuscado != null) {
             CharacterScore buscado = camp.buscarPuntajeDe(nombreBuscado);
@@ -536,9 +387,6 @@ public class ZombieKillerGUI extends JFrame {
         }
     }
 
-    /**
-     * Llama al metodo de ordenar por puntaje
-     */
     public void ordenarPorScore() {
         scoresPanel.actualizarPuntajes(camp.ordenarPuntajePorScore());
     }

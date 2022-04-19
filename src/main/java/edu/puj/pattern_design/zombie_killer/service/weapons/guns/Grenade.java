@@ -15,7 +15,7 @@ public class Grenade extends GunWeapon {
 
     private Grenade() {
         super();
-        setRetroceso(0);
+        setBackward(0);
     }
 
     public static Grenade getInstance() {

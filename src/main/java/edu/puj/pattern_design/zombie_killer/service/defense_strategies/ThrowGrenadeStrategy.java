@@ -38,6 +38,6 @@ public class ThrowGrenadeStrategy extends DefenseStrategy {
         }
 
         interfaz.getCamp().getCharacter().getGrenades().shoot();
-        interfaz.getCamp().getCharacter().getGrenades().setEstado(CARGANDO);
+        interfaz.getCamp().getCharacter().getGrenades().setStatus(CARGANDO);
     }
 }

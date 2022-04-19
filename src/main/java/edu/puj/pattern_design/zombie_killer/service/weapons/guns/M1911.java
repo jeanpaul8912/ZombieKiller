@@ -15,7 +15,7 @@ public class M1911 extends GunWeapon {
 
     private M1911() {
         super();
-        setRetroceso(M1911_INITIAL_RECHARGE_TIME);
+        setBackward(M1911_INITIAL_RECHARGE_TIME);
     }
 
     public static M1911 getInstance() {

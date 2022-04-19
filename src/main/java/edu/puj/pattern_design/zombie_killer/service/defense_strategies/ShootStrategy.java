@@ -35,7 +35,7 @@ public class ShootStrategy extends DefenseStrategy {
 
     public boolean shoot() {
         interfaz.getCamp().getCharacter().getPrincipalWeapon().shoot();
-        interfaz.getCamp().getCharacter().getPrincipalWeapon().setEstado(RECHARGING);
+        interfaz.getCamp().getCharacter().getPrincipalWeapon().setStatus(RECHARGING);
         boolean leDio = false;
         Zombie actual = interfaz.getCamp().getZombieNearNode().getInBack();
 

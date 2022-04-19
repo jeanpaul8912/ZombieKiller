@@ -209,14 +209,14 @@ public class SurvivorCampPanel extends JPanel implements MouseListener, KeyListe
             arg0.drawImage(fondo, ataqueX - 33, ataqueY - 35, null);
         }
 
-        if (matador.getKnife().getEstado().equals(CARGANDO)) {
+        if (matador.getKnife().getStatus().equals(CARGANDO)) {
             fondo = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/Fondo/punialada.png"));
             arg0.drawImage(fondo, ataqueX - 160, ataqueY - 30, null);
-        } else if (armaEquipada.getEstado().equals(RECHARGING)) {
+        } else if (armaEquipada.getStatus().equals(RECHARGING)) {
             fondo = Toolkit.getDefaultToolkit().getImage(this.getClass()
                     .getResource("/img/Fondo/disparo" + armaEquipada.getClass().getSimpleName() + ".png"));
             arg0.drawImage(fondo, ataqueX - 33, ataqueY - 35, null);
-        } else if (matador.getGrenades().getEstado().equals(CARGANDO)) {
+        } else if (matador.getGrenades().getStatus().equals(CARGANDO)) {
             fondo = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/img/Fondo/explosion.png"));
             arg0.drawImage(fondo, 250, 133, null);
         }
@@ -378,11 +378,11 @@ public class SurvivorCampPanel extends JPanel implements MouseListener, KeyListe
             if (arg0.getButton() == MouseEvent.BUTTON1) {
                 int xPosition = arg0.getX();
                 int yPosition = arg0.getY();
-                if (armaEquipada.getEstado().equals(LISTA) && armaEquipada.getAvailableBullets() > 0) {
+                if (armaEquipada.getStatus().equals(LISTA) && armaEquipada.getAvailableBullets() > 0) {
                     ultimoDisparo = arg0.getPoint();
                     defenseStrategy = new DefenseStrategyContext(new ShootStrategy(principal, xPosition, yPosition));
                     defenseStrategy.executeDefense();
-                } else if (yPosition > POS_ATAQUE && matador.getKnife().getEstado().equals(LISTA)) {
+                } else if (yPosition > POS_ATAQUE && matador.getKnife().getStatus().equals(LISTA)) {
                     ultimoDisparo = arg0.getPoint();
                     defenseStrategy = new DefenseStrategyContext(new SlashStrategy(principal, xPosition, yPosition));
                     defenseStrategy.executeDefense();

@@ -15,7 +15,7 @@ public class Remington extends GunWeapon {
 
     private Remington() {
         super();
-        setRetroceso(REMINGTON_INITIAL_RECHARGE_TIME);
+        setBackward(REMINGTON_INITIAL_RECHARGE_TIME);
     }
 
     public static Remington getInstance() {

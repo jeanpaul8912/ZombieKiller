@@ -9,26 +9,10 @@ import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesCons
 
 public class DragZombie extends Zombie {
 
-    /**
-     * Constructor del zombie rastrero con sus caracteristicas con corde a la ronda
-     *
-     * @param ronda
-     * @param siguiente
-     */
     public DragZombie(short ronda, Zombie siguiente) {
         super(ronda, siguiente);
     }
 
-    /**
-     * Constructor que carga las caracteristicas que se guardaron en texto plano
-     *
-     * @param posX
-     * @param posY
-     * @param estadoActual
-     * @param frameActual
-     * @param salud
-     * @param ronda
-     */
     public DragZombie(int posX, int posY, String estadoActual, byte frameActual, byte salud, int ronda) {
         super(posY, estadoActual, frameActual, salud, ronda);
         this.posX = posX;

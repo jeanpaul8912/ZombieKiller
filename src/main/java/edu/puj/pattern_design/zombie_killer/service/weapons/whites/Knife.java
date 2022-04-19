@@ -10,8 +10,8 @@ public class Knife extends Weapon {
 
     private static Knife knife;
 
-    public Knife() {
-        setRetroceso(200);
+    private Knife() {
+        setBackward(200);
         setDamage(KNIFE_DAMAGE);
     }
 
