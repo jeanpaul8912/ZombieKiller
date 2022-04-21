@@ -3,6 +3,7 @@ package edu.puj.pattern_design.zombie_killer.gui.command;
 import edu.puj.pattern_design.zombie_killer.gui.ZombieKillerGUI;
 import edu.puj.pattern_design.zombie_killer.gui.panel.ScoresPanel;
 import edu.puj.pattern_design.zombie_killer.service.camp.SurvivorCamp;
+import edu.puj.pattern_design.zombie_killer.service.camp.impl.SurvivorCampImpl;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -20,12 +21,12 @@ public class BestScoresCommand implements Command {
             SurvivorCamp camp = zombieKillerGUI.getCamp();
 
             if (camp == null) {
-                camp = new SurvivorCamp();
+                camp = new SurvivorCampImpl();
                 zombieKillerGUI.setCamp(camp);
             }
 
             camp.loadScores();
-            zombieKillerGUI.mostrarPuntajes();
+            zombieKillerGUI.showScores();
         } catch (ClassNotFoundException e) {
             log.error(e.getMessage(), e);
             JOptionPane.showMessageDialog(null, "Hubo un error al guardar los ultimos puntajes.");

@@ -6,6 +6,7 @@ public class GrenadeAmmunition extends Ammunition {
         super(rechargeTime, maxBullets, damage);
     }
 
+    @Override
     public void improveAmmunition() {
         maxBullets += 1;
         availableBullets = maxBullets;

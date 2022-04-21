@@ -3,7 +3,7 @@ package edu.puj.pattern_design.zombie_killer.service.zombies;
 import lombok.Getter;
 import lombok.Setter;
 
-import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.ANCHO_PANTALLA;
+import static edu.puj.pattern_design.zombie_killer.service.constants.SurvivorCampConstants.ANCHO_PANTALLA;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.POS_INICIAL;
 
 @Getter
@@ -20,11 +20,11 @@ public abstract class Enemy implements LivingBeing, Cloneable {
 
     private byte health;
 
-    public Enemy() {
+    protected Enemy() {
         posY = POS_INICIAL;
     }
 
-    public Enemy(int posY, String currentStatus, byte currentFrame) {
+    protected Enemy(int posY, String currentStatus, byte currentFrame) {
         this.posY = posY;
         this.currentStatus = currentStatus;
         this.currentFrame = currentFrame;

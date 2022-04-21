@@ -6,7 +6,7 @@ public class ContinueGameCommand implements Command {
 
     @Override
     public void execute(ZombieKillerGUI zombieKillerGUI) {
-        zombieKillerGUI.pausarJuego();
+        zombieKillerGUI.pauseGame();
     }
 
 }

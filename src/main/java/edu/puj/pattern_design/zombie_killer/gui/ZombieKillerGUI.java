@@ -1,17 +1,18 @@
 package edu.puj.pattern_design.zombie_killer.gui;
 
 import edu.puj.pattern_design.zombie_killer.gui.facade.ThreadsFacade;
-import edu.puj.pattern_design.zombie_killer.gui.panel.SurvivorCampPanel;
-import edu.puj.pattern_design.zombie_killer.gui.panel.HowToPlayPanel;
 import edu.puj.pattern_design.zombie_killer.gui.panel.CreditsPanel;
+import edu.puj.pattern_design.zombie_killer.gui.panel.HowToPlayPanel;
 import edu.puj.pattern_design.zombie_killer.gui.panel.MenuPanel;
 import edu.puj.pattern_design.zombie_killer.gui.panel.ScoresPanel;
+import edu.puj.pattern_design.zombie_killer.gui.panel.SurvivorCampPanel;
 import edu.puj.pattern_design.zombie_killer.service.attack_strategies.AttackStrategyContext;
 import edu.puj.pattern_design.zombie_killer.service.attack_strategies.BossZombieAttackStrategy;
 import edu.puj.pattern_design.zombie_killer.service.attack_strategies.WalkerZombieAttackStrategy;
-import edu.puj.pattern_design.zombie_killer.service.camp.CharacterScore;
 import edu.puj.pattern_design.zombie_killer.service.camp.SurvivorCamp;
-import edu.puj.pattern_design.zombie_killer.service.exceptions.NombreInvalidoException;
+import edu.puj.pattern_design.zombie_killer.service.camp.impl.CharacterScore;
+import edu.puj.pattern_design.zombie_killer.service.camp.impl.SurvivorCampImpl;
+import edu.puj.pattern_design.zombie_killer.service.exceptions.InvalidNameException;
 import edu.puj.pattern_design.zombie_killer.service.weapons.Weapon;
 import edu.puj.pattern_design.zombie_killer.service.weapons.guns.GunWeapon;
 import edu.puj.pattern_design.zombie_killer.service.weapons.guns.Remington;
@@ -25,13 +26,14 @@ import lombok.extern.slf4j.Slf4j;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.Objects;
 
-import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.ALTO_PANTALLA;
-import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.ANCHO_PANTALLA;
-import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.EN_CURSO;
-import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.INICIANDO_RONDA;
-import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.PAUSADO;
-import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.SIN_PARTIDA;
+import static edu.puj.pattern_design.zombie_killer.service.constants.SurvivorCampConstants.ALTO_PANTALLA;
+import static edu.puj.pattern_design.zombie_killer.service.constants.SurvivorCampConstants.ANCHO_PANTALLA;
+import static edu.puj.pattern_design.zombie_killer.service.constants.SurvivorCampConstants.EN_CURSO;
+import static edu.puj.pattern_design.zombie_killer.service.constants.SurvivorCampConstants.INICIANDO_RONDA;
+import static edu.puj.pattern_design.zombie_killer.service.constants.SurvivorCampConstants.PAUSADO;
+import static edu.puj.pattern_design.zombie_killer.service.constants.SurvivorCampConstants.SIN_PARTIDA;
 
 @Slf4j
 @Getter
@@ -76,8 +78,8 @@ public class ZombieKillerGUI extends JFrame {
         BorderLayout custom = new BorderLayout();
         setLayout(custom);
 
-        new ImageIcon(getClass().getResource("/img/Fondo/iconozombie.png"));
-        new ImageIcon(getClass().getResource("/img/Fondo/fondoMenu.png"));
+        new ImageIcon(Objects.requireNonNull(getClass().getResource("/img/Fondo/iconozombie.png")));
+        new ImageIcon(Objects.requireNonNull(getClass().getResource("/img/Fondo/fondoMenu.png")));
 
         m1911Cursor = CursorObjectPool.getCursor("/img/Fondo/mira1p.png");
         setCursor(m1911Cursor);
@@ -92,7 +94,7 @@ public class ZombieKillerGUI extends JFrame {
 
         long finish = System.currentTimeMillis();
         double elapsed = (finish - start) / 1000.0;
-        System.out.printf("Elapsed: %1$f, Start = %2$d, Finish = %3$d%n", elapsed, start, finish);
+        log.info("Elapsed: {}, Start = {}, Finish = {}", elapsed, start, finish);
         facade = new ThreadsFacade(this);
     }
 
@@ -122,7 +124,7 @@ public class ZombieKillerGUI extends JFrame {
     private void partidaIniciada() {
         setCursor(knifeCursor);
         CharacterScore actual = camp.getRootScores();
-        camp = new SurvivorCamp();
+        camp = new SurvivorCampImpl();
         camp.updateScores(actual);
         camp.setGameStatus(EN_CURSO);
         currentWeapon = camp.getCharacter().getPrincipalWeapon();
@@ -153,7 +155,7 @@ public class ZombieKillerGUI extends JFrame {
             currentWeapon = camp.getCharacter().getPrincipalWeapon();
             survivorCampoPanel.actualizarEquipada(currentWeapon);
             survivorCampoPanel.actualizarRonda();
-            cambiarPuntero();
+            changeCursor();
             menuPanel.setVisible(false);
             survivorCampoPanel.setVisible(true);
             camp.setGameStatus(EN_CURSO);
@@ -161,61 +163,61 @@ public class ZombieKillerGUI extends JFrame {
             survivorCampoPanel.requestFocusInWindow();
             survivorCampoPanel.requestFocusInWindow();
             facade.initializeEnemyThreads();
-            iniciarGemi2();
+            startZombieSounds();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
-    public void guardarJuego() {
+    public void saveGame() {
         try {
-            camp.guardarPartida();
+            camp.saveGame();
             JOptionPane.showMessageDialog(this, "Partida Guardada");
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
-    public void refrescar() {
+    public void refresh() {
         survivorCampoPanel.repaint();
     }
 
-    public void iniciarGemi2() {
+    public void startZombieSounds() {
         facade.initializeZombieSoundThread("zombies");
     }
 
-    public void terminarGemi2() {
+    public void endZombieSounds() {
         facade.soundStop();
     }
 
-    public void generarZombie(int nivel) {
-        Zombie chombi = camp.generateZombie(nivel);
+    public void generateZombie(int level) {
+        Zombie zombie = camp.generateZombie(level);
 
-        if (chombi instanceof WalkerZombie) {
+        if (zombie instanceof WalkerZombie) {
             attackStrategy = new AttackStrategyContext(new WalkerZombieAttackStrategy());
             WalkerZombieAttackStrategy walkerZombieAttackStrategy = new WalkerZombieAttackStrategy();
-            walkerZombieAttackStrategy.moveInDirection(chombi);
+            walkerZombieAttackStrategy.moveInDirection(zombie);
         }
     }
 
-    public void leDaAPersonaje() {
-        reproducir("meDio");
+    public void shootOnCharacter() {
+        reproduceSound("meDio");
         attackStrategy = new AttackStrategyContext(new BossZombieAttackStrategy());
         attackStrategy.enemyAttacks(camp);
         survivorCampoPanel.zombieAtaco();
     }
 
-    public void pausarJuego() {
-        char estado = camp.pauseGame();
+    public void pauseGame() {
+        char status = camp.pauseGame();
 
-        if (estado == PAUSADO) {
-            terminarGemi2();
+        if (status == PAUSADO) {
+            endZombieSounds();
             menuPanel.setVisible(true);
             survivorCampoPanel.setVisible(false);
             menuPanel.updateUI();
             menuPanel.requestFocusInWindow();
         } else {
-            iniciarGemi2();
+            startZombieSounds();
             survivorCampoPanel.setVisible(true);
             menuPanel.setVisible(false);
             survivorCampoPanel.updateUI();
@@ -223,30 +225,31 @@ public class ZombieKillerGUI extends JFrame {
         }
     }
 
-    public void cargarArmaPersonaje() {
+    public void loadCharacterWeapon() {
         camp.getCharacter().reloadPrincipalWeapon();
-        reproducir("carga" + currentWeapon.getClass().getSimpleName());
+        reproduceSound("carga" + currentWeapon.getClass().getSimpleName());
         facade.initializeWeaponsThread("armaDeFuego");
     }
 
-    public void reproducir(String ruta) {
+    public void reproduceSound(String ruta) {
         facade.initializeGeneralSoundThread(ruta);
     }
 
-    public void cambiarArma() {
-        camp.cambiarArma();
+    public void changeWeapon() {
+        camp.changeWeapon();
         currentWeapon = camp.getCharacter().getPrincipalWeapon();
-        cambiarPuntero();
+        changeCursor();
     }
 
-    public void cambiarPuntero() {
-        if (currentWeapon instanceof Remington)
+    public void changeCursor() {
+        if (currentWeapon instanceof Remington) {
             setCursor(remingtonCursor);
-        else
+        } else {
             setCursor(m1911Cursor);
+        }
     }
 
-    public void terminarEfectoDeSangre() {
+    public void endBloodEffect() {
         currentWeapon.setBlooded(false);
         survivorCampoPanel.quitarSangreZombie();
     }
@@ -255,15 +258,15 @@ public class ZombieKillerGUI extends JFrame {
         return camp.getCurrentRound();
     }
 
-    public void subirDeRonda(int nivel) {
-        terminarGemi2();
-        reproducir("sirena");
-        camp.updateCurrentRound(nivel);
+    public void subirDeRonda(int level) {
+        endZombieSounds();
+        reproduceSound("sirena");
+        camp.updateCurrentRound(level);
         camp.setGameStatus(INICIANDO_RONDA);
         survivorCampoPanel.actualizarRonda();
     }
 
-    public void generarBoss() {
+    public void generateBoss() {
         boss = camp.generateBoss();
         survivorCampoPanel.incorporarJefe(boss);
         BossZombieAttackStrategy bossZombieAttackStrategy = new BossZombieAttackStrategy();
@@ -272,7 +275,7 @@ public class ZombieKillerGUI extends JFrame {
         facade.initializeBossThread();
     }
 
-    public void mostrarComoJugar() {
+    public void showHowToPlay() {
         if (menuPanel.isVisible()) {
             menuPanel.setVisible(false);
             howToPlayPanel.setVisible(true);
@@ -283,9 +286,9 @@ public class ZombieKillerGUI extends JFrame {
         }
     }
 
-    public void mostrarPuntajes() {
+    public void showScores() {
         if (menuPanel.isVisible()) {
-            scoresPanel.actualizarPuntajes(camp.ordenarPuntajePorScore());
+            scoresPanel.actualizarPuntajes(camp.sortScoresByScores());
             menuPanel.setVisible(false);
             scoresPanel.setVisible(true);
             add(scoresPanel, BorderLayout.CENTER);
@@ -295,7 +298,7 @@ public class ZombieKillerGUI extends JFrame {
         }
     }
 
-    public void mostrarCreditos() {
+    public void showCredits() {
         if (menuPanel.isVisible()) {
             menuPanel.setVisible(false);
             creditsPanel.setVisible(true);
@@ -306,7 +309,7 @@ public class ZombieKillerGUI extends JFrame {
         }
     }
 
-    public void juegoTerminado() {
+    public void gameEnded() {
         boolean seLlamoDeNuevo = false;
         int aceptoGuardarScore = JOptionPane.showConfirmDialog(this,
                 "Su puntaje fue: " + camp.getCharacter().getScore() + ", con " + camp.getCharacter().getKilling()
@@ -315,21 +318,21 @@ public class ZombieKillerGUI extends JFrame {
         if (aceptoGuardarScore == JOptionPane.YES_OPTION) {
             String nombrePlayer = JOptionPane.showInputDialog(this, "Escribe tu nombre");
 
-            if (nombrePlayer != null && !nombrePlayer.equals(""))
+            if (nombrePlayer != null && !nombrePlayer.equals("")) {
                 try {
-                    camp.verificarNombre(nombrePlayer);
-                    camp.aniadirMejoresPuntajes(nombrePlayer);
+                    camp.verifyName(nombrePlayer);
+                    camp.addToBestScores(nombrePlayer);
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(this,
                             "Error al guardar el puntaje, es posible que haya abierto el juego desde \"Acceso rapido\"");
-                } catch (NombreInvalidoException e) {
+                } catch (InvalidNameException e) {
                     log.error(e.getMessage(), e);
                     JOptionPane.showMessageDialog(this, e.getMessage());
-                    juegoTerminado();
+                    gameEnded();
                 }
-            else {
+            } else {
                 seLlamoDeNuevo = true;
-                juegoTerminado();
+                gameEnded();
             }
         }
 
@@ -344,51 +347,51 @@ public class ZombieKillerGUI extends JFrame {
             }
         }
 
-        terminarGemi2();
+        endZombieSounds();
     }
 
-    public void victoria() {
+    public void victory() {
         String nombrePlayer = JOptionPane.showInputDialog(this,
                 "Enhorabuena, has pasado todas los niveles de dificultad. Su puntaje final es: "
                         + camp.getCharacter().getScore() + ". Escribe tu nombre");
 
-        if (nombrePlayer != null && !nombrePlayer.equals(""))
+        if (nombrePlayer != null && !nombrePlayer.equals("")) {
             try {
-                camp.verificarNombre(nombrePlayer);
-                camp.aniadirMejoresPuntajes(nombrePlayer);
+                camp.verifyName(nombrePlayer);
+                camp.addToBestScores(nombrePlayer);
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this,
                         "Error al guardar el puntaje, es posible que haya abierto el juego desde \"Acceso rapido\"");
-            } catch (NombreInvalidoException e) {
+            } catch (InvalidNameException e) {
                 JOptionPane.showMessageDialog(this, e.getMessage());
-                victoria();
+                victory();
             }
-        else {
-            victoria();
+        } else {
+            victory();
         }
 
         menuPanel.setVisible(true);
         survivorCampoPanel.setVisible(false);
-        terminarGemi2();
+        endZombieSounds();
     }
 
-    public void ordenarPorBajas() {
-        scoresPanel.actualizarPuntajes(camp.ordenarPuntajePorBajas());
+    public void sortByDeadZombies() {
+        scoresPanel.actualizarPuntajes(camp.sortScoresByDeadZombies());
     }
 
-    public void ordenarPorHeadshot() {
-        scoresPanel.actualizarPuntajes(camp.ordenarPuntajePorTirosALaCabeza());
+    public void sortByHeadshots() {
+        scoresPanel.actualizarPuntajes(camp.sortScoresByHeadShots());
     }
 
-    public void buscarPorNombre(String nombreBuscado) {
+    public void searchByName(String nombreBuscado) {
         if (nombreBuscado != null) {
-            CharacterScore buscado = camp.buscarPuntajeDe(nombreBuscado);
+            CharacterScore buscado = camp.searchByScoreOfPlayerName(nombreBuscado);
             scoresPanel.mostrarPuntajeDe(buscado);
         }
     }
 
-    public void ordenarPorScore() {
-        scoresPanel.actualizarPuntajes(camp.ordenarPuntajePorScore());
+    public void sortByScore() {
+        scoresPanel.actualizarPuntajes(camp.sortScoresByScores());
     }
 
 }

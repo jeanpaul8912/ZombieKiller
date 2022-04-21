@@ -4,9 +4,9 @@ import edu.puj.pattern_design.zombie_killer.gui.ZombieKillerGUI;
 import edu.puj.pattern_design.zombie_killer.service.camp.SurvivorCamp;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.EN_CURSO;
-import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.PAUSADO;
-import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.SIN_PARTIDA;
+import static edu.puj.pattern_design.zombie_killer.service.constants.SurvivorCampConstants.EN_CURSO;
+import static edu.puj.pattern_design.zombie_killer.service.constants.SurvivorCampConstants.PAUSADO;
+import static edu.puj.pattern_design.zombie_killer.service.constants.SurvivorCampConstants.SIN_PARTIDA;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.MURIENDO_INCENDIADO;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.NODO;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.NUMERO_ZOMBIES_RONDA;
@@ -28,7 +28,7 @@ public class ZombieGeneratorThread extends Thread {
                 sleep(5000);
             }
 
-            principal.cambiarPuntero();
+            principal.changeCursor();
             int contadorZombiesPorNivel = campo.getZombiesGeneratedCount();
             int nivel = campo.getCurrentRound();
 
@@ -47,18 +47,18 @@ public class ZombieGeneratorThread extends Thread {
                         nivel++;
                         principal.subirDeRonda(nivel);
                         sleep(2000);
-                        principal.iniciarGemi2();
+                        principal.startZombieSounds();
                         campo.setGameStatus(EN_CURSO);
                     }
                 }
 
                 if (nivel < 10 && campo.getGameStatus() != SIN_PARTIDA) {
                     if (!campo.getZombieFarNode().getInFront().getCurrentStatus().equals(MURIENDO_INCENDIADO))
-                        principal.generarZombie(nivel);
+                        principal.generateZombie(nivel);
                     contadorZombiesPorNivel++;
                     sleep(1400);
                 } else if (nivel == 10) {
-                    principal.generarBoss();
+                    principal.generateBoss();
 
                     while (campo.getGameStatus() != SIN_PARTIDA) {
                         sleep(500);
@@ -71,10 +71,10 @@ public class ZombieGeneratorThread extends Thread {
             }
 
             if (campo.getCharacter().getHealth() <= 0) {
-                principal.reproducir("meMuero");
-                principal.juegoTerminado();
+                principal.reproduceSound("meMuero");
+                principal.gameEnded();
             } else if (campo.getBoss() != null && campo.getBoss().getHealth() <= 0) {
-                principal.victoria();
+                principal.victory();
             }
         } catch (InterruptedException e1) {
             e1.printStackTrace();

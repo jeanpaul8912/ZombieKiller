@@ -1,6 +1,5 @@
 package edu.puj.pattern_design.zombie_killer.gui.panel;
 
-import edu.puj.pattern_design.zombie_killer.gui.ZombieKillerGUI;
 import lombok.Getter;
 import lombok.Setter;
 

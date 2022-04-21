@@ -2,20 +2,22 @@ package edu.puj.pattern_design.zombie_killer.gui.thread;
 
 import edu.puj.pattern_design.zombie_killer.gui.ZombieKillerGUI;
 import edu.puj.pattern_design.zombie_killer.service.attack_strategies.AttackStrategyContext;
-import edu.puj.pattern_design.zombie_killer.service.attack_strategies.WalkerZombieAttackStrategy;
 import edu.puj.pattern_design.zombie_killer.service.attack_strategies.DragZombieAttackStrategy;
+import edu.puj.pattern_design.zombie_killer.service.attack_strategies.WalkerZombieAttackStrategy;
 import edu.puj.pattern_design.zombie_killer.service.camp.SurvivorCamp;
-import edu.puj.pattern_design.zombie_killer.service.zombies.WalkerZombie;
 import edu.puj.pattern_design.zombie_killer.service.zombies.DragZombie;
+import edu.puj.pattern_design.zombie_killer.service.zombies.WalkerZombie;
 import edu.puj.pattern_design.zombie_killer.service.zombies.Zombie;
+import lombok.extern.slf4j.Slf4j;
 
-import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.PAUSADO;
-import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.SIN_PARTIDA;
+import static edu.puj.pattern_design.zombie_killer.service.constants.SurvivorCampConstants.PAUSADO;
+import static edu.puj.pattern_design.zombie_killer.service.constants.SurvivorCampConstants.SIN_PARTIDA;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.ATACANDO;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.MURIENDO;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.MURIENDO_INCENDIADO;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.NODO;
 
+@Slf4j
 public class EnemyThread extends Thread {
 
     private final ZombieKillerGUI principal;
@@ -48,13 +50,13 @@ public class EnemyThread extends Thread {
                     if (estado.equals(ATACANDO)) {
                         if (enMovimiento instanceof WalkerZombie) {
                             if (enMovimiento.getCurrentFrame() == 8) {
-                                principal.leDaAPersonaje();
+                                principal.shootOnCharacter();
                             } else if (enMovimiento.getCurrentFrame() == 13) {
                                 attackStrategy.enemyFinishAttack(campo);
                             }
                         } else if (enMovimiento instanceof DragZombie) {
                             if (enMovimiento.getCurrentFrame() == 13) {
-                                principal.leDaAPersonaje();
+                                principal.shootOnCharacter();
                             } else if (enMovimiento.getCurrentFrame() == 16) {
                                 attackStrategy.enemyFinishAttack(campo);
                             }
@@ -91,10 +93,11 @@ public class EnemyThread extends Thread {
                 }
 
                 sleep(nodoCercano.getInBack().getSpeed());
-                principal.refrescar();
+                principal.refresh();
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            Thread.currentThread().interrupt();
         }
     }
 }

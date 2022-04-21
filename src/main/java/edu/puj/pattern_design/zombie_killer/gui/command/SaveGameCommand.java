@@ -6,7 +6,7 @@ public class SaveGameCommand implements Command {
 
     @Override
     public void execute(ZombieKillerGUI zombieKillerGUI) {
-        zombieKillerGUI.guardarJuego();
+        zombieKillerGUI.saveGame();
     }
 
 }

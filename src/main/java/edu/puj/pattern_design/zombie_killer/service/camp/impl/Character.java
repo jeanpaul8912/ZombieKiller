@@ -1,4 +1,4 @@
-package edu.puj.pattern_design.zombie_killer.service.camp;
+package edu.puj.pattern_design.zombie_killer.service.camp.impl;
 
 import edu.puj.pattern_design.zombie_killer.service.weapons.Weapon;
 import edu.puj.pattern_design.zombie_killer.service.weapons.WeaponFactory;

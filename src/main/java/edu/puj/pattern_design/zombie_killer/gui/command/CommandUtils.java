@@ -4,6 +4,7 @@ import edu.puj.pattern_design.zombie_killer.gui.ZombieKillerGUI;
 import edu.puj.pattern_design.zombie_killer.gui.CursorObjectPool;
 import edu.puj.pattern_design.zombie_killer.gui.panel.SurvivorCampPanel;
 import edu.puj.pattern_design.zombie_killer.service.camp.SurvivorCamp;
+import edu.puj.pattern_design.zombie_killer.service.camp.impl.SurvivorCampImpl;
 
 import java.awt.*;
 
@@ -20,7 +21,7 @@ public final class CommandUtils {
         SurvivorCamp campo = zombieKillerGUI.getCamp();
 
         if (campo == null) {
-            SurvivorCamp survivorCamp = new SurvivorCamp();
+            SurvivorCamp survivorCamp = new SurvivorCampImpl();
             zombieKillerGUI.setCamp(survivorCamp);
         }
 

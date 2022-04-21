@@ -43,8 +43,11 @@ public class SoundThread extends Thread {
                     sleep(500);
                 }
             }
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e) {
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             log.error(e.getMessage(), e);
+        } catch (InterruptedException e) {
+            log.error(e.getMessage(), e);
+            Thread.currentThread().interrupt();
         }
     }
 
