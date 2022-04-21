@@ -145,19 +145,19 @@ public class ZombieKillerGUI extends JFrame {
 
     public void cargarJuego() {
         try {
-            SurvivorCamp partida = camp.loadGame();
-            datosPartida(partida);
+            SurvivorCamp survivorCamp = camp.loadGame();
+            gameDate(survivorCamp);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
-    public void datosPartida(SurvivorCamp partida) {
+    public void gameDate(SurvivorCamp partida) {
         try {
-            CharacterScore actuales = camp.getRootScores();
+            CharacterScore currentScore = camp.getRootScores();
             camp.setGameStatus(SIN_PARTIDA);
             camp = partida;
-            camp.updateScores(actuales);
+            camp.updateScores(currentScore);
             survivorCampoPanel.actualizarMatador(camp.getCharacter());
             survivorCampoPanel.actualizarChombis(camp.getZombieFarNode());
             currentWeapon = camp.getCharacter().getPrincipalWeapon();
@@ -176,18 +176,18 @@ public class ZombieKillerGUI extends JFrame {
         }
     }
 
-    public void datosPartidaRecuperada(SurvivorCamp partida) {
+    public void gameRestoreData(SurvivorCamp survivorCamp) {
         try {
             setCursor(knifeCursor);
-            CharacterScore actual = partida.getRootScores();
+            CharacterScore actual = survivorCamp.getRootScores();
             camp = new SurvivorCampImpl();
             camp.updateScores(actual);
             camp.setGameStatus(EN_CURSO);
-            currentWeapon = partida.getCharacter().getPrincipalWeapon();
-            partida.getCharacter().setBlooded(false);
-            survivorCampoPanel.actualizarMatador(partida.getCharacter());
+            currentWeapon = survivorCamp.getCharacter().getPrincipalWeapon();
+            survivorCamp.getCharacter().setBlooded(false);
+            survivorCampoPanel.actualizarMatador(survivorCamp.getCharacter());
             survivorCampoPanel.actualizarEquipada(currentWeapon);
-            camp.updateRound(partida.getCurrentRound());
+            camp.updateRound(survivorCamp.getCurrentRound());
             survivorCampoPanel.actualizarRonda();
             changeCursor();
             survivorCampoPanel.actualizarChombis(camp.getZombieFarNode());
@@ -371,10 +371,10 @@ public class ZombieKillerGUI extends JFrame {
             }
         }
 
-        if(cargarCheckpoint()) {
-            SurvivorCamp survivorCamp = camp.obtenerMemento();
+        if(loadCheckpoint()) {
+            SurvivorCamp survivorCamp = camp.getMemento();
             System.out.println("memento obtenido, ronda actual: "+survivorCamp.getCurrentRound());
-            datosPartidaRecuperada(survivorCamp);
+            gameRestoreData(survivorCamp);
         } else if(!seLlamoDeNuevo) {
             int aceptoJugar = JOptionPane.showConfirmDialog(this, "Desea volver a jugar?", "Juego Terminado",
                     JOptionPane.YES_NO_OPTION);
@@ -389,10 +389,10 @@ public class ZombieKillerGUI extends JFrame {
         endZombieSounds();
     }
 
-    private boolean cargarCheckpoint() {
-        int aceptoJugarDesdeUltimoCheckPoint = JOptionPane.showConfirmDialog(this, "Desea volver a jugar desde el ultimo Checkpoint?", "Juego Terminado",
+    private boolean loadCheckpoint() {
+        int playFromLastCheckPoint = JOptionPane.showConfirmDialog(this, "Desea volver a jugar desde el ultimo Checkpoint?", "Juego Terminado",
                 JOptionPane.YES_NO_OPTION);
-        if (aceptoJugarDesdeUltimoCheckPoint == JOptionPane.YES_OPTION) {
+        if (playFromLastCheckPoint == JOptionPane.YES_OPTION) {
             return true;
         }
 

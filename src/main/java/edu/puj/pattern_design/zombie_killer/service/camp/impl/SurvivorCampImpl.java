@@ -107,7 +107,7 @@ public class SurvivorCampImpl implements Cloneable, Comparator<CharacterScore>, 
 
         if(currentRound % 4 == 1) {
             setData(this);
-            crearMemento();
+            createMemento();
         }
     }
 
@@ -539,7 +539,7 @@ public class SurvivorCampImpl implements Cloneable, Comparator<CharacterScore>, 
         survivorCampNuevo = survivorCamp;
         System.out.println("memento creado, ronda actual: "+survivorCampNuevo.getCurrentRound());
         try {
-            originador.setEstado((SurvivorCamp)survivorCampNuevo.clone());
+            originador.setStatus((SurvivorCamp)survivorCampNuevo.clone());
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
@@ -549,19 +549,19 @@ public class SurvivorCampImpl implements Cloneable, Comparator<CharacterScore>, 
         return currentRound;
     }
 
-    private void crearMemento() {
-        caretaker.addMemento(originador.guardar());
+    private void createMemento() {
+        caretaker.addMemento(originador.save());
     }
 
-    public SurvivorCamp obtenerMemento() {
+    public SurvivorCamp getMemento() {
         Memento memento = caretaker.getMemento();
 
         if(memento == null) {
             return new SurvivorCampImpl();
         }
 
-        originador.restaurar(memento);
-        return originador.getEstado();
+        originador.restore(memento);
+        return originador.getStatus();
     }
 
 }

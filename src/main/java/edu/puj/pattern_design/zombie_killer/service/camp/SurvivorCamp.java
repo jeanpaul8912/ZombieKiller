@@ -66,5 +66,5 @@ public interface SurvivorCamp {
 
     void loadScores() throws IOException, ClassNotFoundException;
 
-    public SurvivorCamp obtenerMemento();
+    public SurvivorCamp getMemento();
 }
