@@ -1,4 +1,4 @@
-package mundo.camp;
+package edu.puj.pattern_design.zombie_killer.service.camp.impl;
 
 import java.util.ArrayList;
 import java.util.List;

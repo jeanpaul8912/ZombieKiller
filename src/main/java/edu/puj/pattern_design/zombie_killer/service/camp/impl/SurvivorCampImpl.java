@@ -79,6 +79,10 @@ public class SurvivorCampImpl implements Cloneable, Comparator<CharacterScore>, 
     private final Enemy enemyWalker;
 
     private Enemy enemyDrag;
+    private Memento memento;
+    private SurvivorCamp survivorCampData;
+    private Caretaker caretaker;
+    private Originador originador;
 
     public SurvivorCampImpl() {
         enemyWalker = new WalkerZombie();
@@ -93,11 +97,22 @@ public class SurvivorCampImpl implements Cloneable, Comparator<CharacterScore>, 
         bestCharacterScores = new ArrayList<>();
         enemyDrag = new DragZombie((short) 0, zombieFarNode);
         boss = new Boss();
+        caretaker = new Caretaker();
+        originador = new Originador();
     }
 
     public void updateCurrentRound(int level) {
         this.currentRound = level;
         improveGuns(level);
+
+        if(currentRound % 4 == 1) {
+            setData(this);
+            crearMemento();
+        }
+    }
+
+    public void updateRound(int currentRound) {
+        this.currentRound = currentRound;
     }
 
     private void improveGuns(int rondaActual) {
@@ -517,6 +532,36 @@ public class SurvivorCampImpl implements Cloneable, Comparator<CharacterScore>, 
                 throw new InvalidNameException(caracter);
             }
         }
+    }
+
+    private void setData(SurvivorCampImpl survivorCamp) {
+        SurvivorCampImpl survivorCampNuevo = new SurvivorCampImpl();
+        survivorCampNuevo = survivorCamp;
+        System.out.println("memento creado, ronda actual: "+survivorCampNuevo.getCurrentRound());
+        try {
+            originador.setEstado((SurvivorCamp)survivorCampNuevo.clone());
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getCurrentRound() {
+        return currentRound;
+    }
+
+    private void crearMemento() {
+        caretaker.addMemento(originador.guardar());
+    }
+
+    public SurvivorCamp obtenerMemento() {
+        Memento memento = caretaker.getMemento();
+
+        if(memento == null) {
+            return new SurvivorCampImpl();
+        }
+
+        originador.restaurar(memento);
+        return originador.getEstado();
     }
 
 }

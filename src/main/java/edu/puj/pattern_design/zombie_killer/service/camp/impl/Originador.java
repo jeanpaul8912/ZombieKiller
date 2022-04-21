@@ -1,4 +1,7 @@
-package mundo.camp;
+package edu.puj.pattern_design.zombie_killer.service.camp.impl;
+
+import edu.puj.pattern_design.zombie_killer.service.camp.SurvivorCamp;
+import edu.puj.pattern_design.zombie_killer.service.camp.impl.Memento;
 
 public class Originador {
 	

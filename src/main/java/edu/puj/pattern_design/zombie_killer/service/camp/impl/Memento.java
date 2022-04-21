@@ -1,4 +1,6 @@
-package mundo.camp;
+package edu.puj.pattern_design.zombie_killer.service.camp.impl;
+
+import edu.puj.pattern_design.zombie_killer.service.camp.SurvivorCamp;
 
 public class Memento {
 

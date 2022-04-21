@@ -48,6 +48,8 @@ public interface SurvivorCamp {
 
     void updateCurrentRound(int level);
 
+    void updateRound(int currentRound);
+
     Boss generateBoss();
 
     List<CharacterScore> sortScoresByScores();
@@ -63,4 +65,6 @@ public interface SurvivorCamp {
     int getZombiesGeneratedCount();
 
     void loadScores() throws IOException, ClassNotFoundException;
+
+    public SurvivorCamp obtenerMemento();
 }
