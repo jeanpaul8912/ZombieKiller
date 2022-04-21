@@ -170,7 +170,7 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
         this.rondaActual = rondaActual;
         improveGuns(rondaActual);
         
-        if(rondaActual == 3) {
+        if(rondaActual % 4 == 1) {
         	setData(this);
         	crearMemento();
         }
@@ -838,7 +838,13 @@ public class SurvivorCamp implements Cloneable, Comparator<Puntaje> {
     }
     
     public SurvivorCamp obtenerMemento() {
-    	originador.restaurar(caretaker.getMemento(0));
+    	Memento memento = caretaker.getMemento();
+    	
+    	if(memento == null) {
+    		return new SurvivorCamp();
+    	}
+    	
+    	originador.restaurar(memento);
     	return originador.getEstado();
     }
 

@@ -11,7 +11,13 @@ public class Caretaker {
 		estadosGuardados.add(m);
 	}
 
-	public Memento getMemento(int index) {
-		return estadosGuardados.get(index);
+	public Memento getMemento() {
+		
+		if(estadosGuardados == null || estadosGuardados.isEmpty()) {
+			return null;
+		}
+		
+		int size = estadosGuardados.size();
+		return estadosGuardados.get(size - 1);
 	}
 }

@@ -226,7 +226,7 @@ public class InterfazZombieKiller extends JFrame {
 		}
 	}
 	
-	public void datosPartida2(SurvivorCamp partida) {
+	public void datosPartidaRecuperada(SurvivorCamp partida) {
 		try {			
 			setCursor(cursorCuchillo);
 	        Puntaje actual = partida.getRaizPuntajes();
@@ -235,8 +235,7 @@ public class InterfazZombieKiller extends JFrame {
 	        campo.setEstadoJuego(EN_CURSO);
 	        armaActual = partida.getPersonaje().getPrincipal();
 	        partida.getPersonaje().setEnsangrentado(false);
-	        panelCampo.actualizarMatador(partida.getPersonaje());
-	        
+	        panelCampo.actualizarMatador(partida.getPersonaje());	        
 	        panelCampo.actualizarEquipada(armaActual);
 	        campo.actualizarRonda(partida.getRondaActual());
 	        panelCampo.actualizarRonda();
@@ -513,10 +512,9 @@ public class InterfazZombieKiller extends JFrame {
         }
         
         if(cargarCheckpoint()) {
-        	SurvivorCamp survivorCamp = new SurvivorCamp();
-        	survivorCamp = campo.obtenerMemento();
+        	 SurvivorCamp survivorCamp = campo.obtenerMemento();
         	System.out.println("memento obtenido, ronda actual: "+survivorCamp.getRondaActual());
-        	datosPartida2(survivorCamp);//campo.obtenerMemento());
+        	datosPartidaRecuperada(survivorCamp);
         } else if(!seLlamoDeNuevo) {
             int aceptoJugar = JOptionPane.showConfirmDialog(this, "Desea volver a jugar?", "Juego Terminado",
                     JOptionPane.YES_NO_OPTION);

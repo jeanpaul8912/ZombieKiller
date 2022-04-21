@@ -7,5 +7,4 @@ public class ZombieKillerApplication {
 		inter.setVisible(true);
 		inter.setLocationRelativeTo(null);
 	}
-
 }
