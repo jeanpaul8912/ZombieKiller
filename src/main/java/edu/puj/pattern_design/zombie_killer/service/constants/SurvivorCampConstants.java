@@ -1,6 +1,6 @@
 package edu.puj.pattern_design.zombie_killer.service.constants;
 
-public final class CampConstants {
+public final class SurvivorCampConstants {
 
     public static final int ANCHO_PANTALLA = 1000;
 
@@ -14,7 +14,11 @@ public final class CampConstants {
 
     public static final char INICIANDO_RONDA = 'I';
 
-    private CampConstants() {
+    public static final String USER_DIR = "user.dir";
+
+    public static final String PARTIDAS_GUARDADAS = "/PartidasGuardadas";
+
+    private SurvivorCampConstants() {
 
     }
 }

@@ -1,7 +1,7 @@
 package edu.puj.pattern_design.zombie_killer.gui.panel;
 
 import edu.puj.pattern_design.zombie_killer.gui.ZombieKillerGUI;
-import edu.puj.pattern_design.zombie_killer.service.camp.CharacterScore;
+import edu.puj.pattern_design.zombie_killer.service.camp.impl.CharacterScore;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -13,6 +13,7 @@ import java.awt.event.MouseListener;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ScoresPanel extends JPanel implements ActionListener {
 
@@ -22,6 +23,7 @@ public class ScoresPanel extends JPanel implements ActionListener {
     private static final String ORDEN_SCORE = "Filtrar por puntaje";
     private static final String BUSCAR_NOMBRE = "Buscar por nombre: ";
     private static final String SALIR = "salir";
+    public static final String AGENCY_FB = "Agency FB";
 
     private final JLabel titulo;
     private final JButton butFiltroHeadShot;
@@ -36,7 +38,7 @@ public class ScoresPanel extends JPanel implements ActionListener {
     public ScoresPanel() {
         setBackground(Color.BLACK);
         this.setBorder(new EmptyBorder(0, 0, 20, 0));
-        Font f = new Font("Agency FB", Font.BOLD, 50);
+        Font f = new Font(AGENCY_FB, Font.BOLD, 50);
         titulo = new JLabel("Puntajes");
         titulo.setForeground(Color.WHITE);
         butFiltroHeadShot = new JButton(ORDEN_HEADSHOT);
@@ -107,7 +109,7 @@ public class ScoresPanel extends JPanel implements ActionListener {
         JLabel[] labBajas = new JLabel[characterScores.size()];
         JPanel auxPuntajes = new JPanel();
         auxPuntajes.setBorder(new EmptyBorder(0, 150, 0, 50));
-        Font font = new Font("Agency FB", Font.BOLD, 24);
+        Font font = new Font(AGENCY_FB, Font.BOLD, 24);
         auxPuntajes.setBackground(Color.black);
 
         if (characterScores.size() > 10) {
@@ -137,16 +139,16 @@ public class ScoresPanel extends JPanel implements ActionListener {
         for (int i = 0; i < characterScores.size() && i < 10; i++) {
             labScores[i] = new JLabel(characterScores.get(i).getScore() + "");
             labScores[i].setForeground(Color.WHITE);
-            labScores[i].setVerticalAlignment(JLabel.TOP);
+            labScores[i].setVerticalAlignment(SwingConstants.TOP);
             labNombres[i] = new JLabel(characterScores.get(i).getKillerName());
             labNombres[i].setForeground(Color.WHITE);
-            labNombres[i].setVerticalAlignment(JLabel.TOP);
+            labNombres[i].setVerticalAlignment(SwingConstants.TOP);
             labHeadShots[i] = new JLabel(characterScores.get(i).getHeadShoots() + "");
             labHeadShots[i].setForeground(Color.WHITE);
-            labHeadShots[i].setVerticalAlignment(JLabel.TOP);
+            labHeadShots[i].setVerticalAlignment(SwingConstants.TOP);
             labBajas[i] = new JLabel(characterScores.get(i).getDowns() + "");
             labBajas[i].setForeground(Color.WHITE);
-            labBajas[i].setVerticalAlignment(JLabel.TOP);
+            labBajas[i].setVerticalAlignment(SwingConstants.TOP);
             auxPuntajes.add(labNombres[i]);
             auxPuntajes.add(labScores[i]);
             auxPuntajes.add(labBajas[i]);
@@ -178,7 +180,7 @@ public class ScoresPanel extends JPanel implements ActionListener {
     public void mostrarPuntajeDe(CharacterScore buscado) {
         if (buscado != null) {
             JLabel encontrado = new JLabel("Mejor puntaje del nombre buscado");
-            Font f = new Font("Agency FB", Font.BOLD, 50);
+            Font f = new Font(AGENCY_FB, Font.BOLD, 50);
             encontrado.setFont(f);
             encontrado.setForeground(Color.WHITE);
             removeAll();
@@ -198,13 +200,13 @@ public class ScoresPanel extends JPanel implements ActionListener {
         String c = arg0.getActionCommand();
         switch (c) {
             case ORDEN_BAJAS:
-                principal.ordenarPorBajas();
+                principal.sortByDeadZombies();
                 break;
             case ORDEN_HEADSHOT:
-                principal.ordenarPorHeadshot();
+                principal.sortByHeadshots();
                 break;
             case ORDEN_SCORE:
-                principal.ordenarPorScore();
+                principal.sortByScore();
                 break;
         }
     }
@@ -227,34 +229,32 @@ public class ScoresPanel extends JPanel implements ActionListener {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                ImageIcon iI = new ImageIcon(getClass().getResource("/img/Palabras/volver.png"));
+                ImageIcon iI = new ImageIcon(Objects.requireNonNull(getClass().getResource("/img/Palabras/volver.png")));
                 butSalir.setIcon(iI);
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                ImageIcon iI = new ImageIcon(getClass().getResource("/img/Palabras/volver_p.png"));
+                ImageIcon iI = new ImageIcon(Objects.requireNonNull(getClass().getResource("/img/Palabras/volver_p.png")));
                 butSalir.setIcon(iI);
             }
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                principal.mostrarPuntajes();
+                principal.showScores();
             }
         });
     }
 
     public void configurarCampoBusqueda(JTextField nombreBuscado) {
-        nombreBuscado.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String nombre = nombreBuscado.getText();
-                principal.buscarPorNombre(nombre);
-            }
+        nombreBuscado.addActionListener(e -> {
+            String nombre = nombreBuscado.getText();
+            principal.searchByName(nombre);
         });
     }
 
     public void actualizarPuntajes(List<CharacterScore> characterScores) {
-        if (characterScores.size() != 0) {
+        if (!characterScores.isEmpty()) {
             removeAll();
             agregarPanelSuperior(titulo);
             generaryAgregarLabels(characterScores);

@@ -45,7 +45,7 @@ public final class ZombiesConstants {
 
     public static final short LENTITUD_BOSS = 14;
 
-    public static final int NUMERO_ZOMBIES_RONDA = 1;
+    public static final int NUMERO_ZOMBIES_RONDA = 2;
 
     public static final short POS_INICIAL = 140;
 

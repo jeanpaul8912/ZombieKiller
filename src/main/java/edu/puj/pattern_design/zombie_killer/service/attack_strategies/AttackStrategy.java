@@ -4,7 +4,7 @@ import edu.puj.pattern_design.zombie_killer.service.camp.SurvivorCamp;
 import edu.puj.pattern_design.zombie_killer.service.zombies.Enemy;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.SIN_PARTIDA;
+import static edu.puj.pattern_design.zombie_killer.service.constants.SurvivorCampConstants.SIN_PARTIDA;
 
 public abstract class AttackStrategy {
 

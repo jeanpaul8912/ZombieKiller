@@ -4,10 +4,12 @@ import edu.puj.pattern_design.zombie_killer.gui.ZombieKillerGUI;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.awt.*;
 
 @SpringBootApplication
+@ComponentScan(basePackages = "edu.puj.pattern_design.zombie_killer.*")
 public class ZombieKillerApp {
 
     public static void main(String[] args) {

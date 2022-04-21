@@ -22,7 +22,7 @@ public class ThrowGrenadeStrategy extends DefenseStrategy {
         throwGranada();
         interfaz.setGrenade(interfaz.getCamp().getCharacter().getGrenades());
         interfaz.getFacade().initializeWeaponsThread("granada");
-        interfaz.reproducir("bomba");
+        interfaz.reproduceSound("bomba");
     }
 
     public void throwGranada() {

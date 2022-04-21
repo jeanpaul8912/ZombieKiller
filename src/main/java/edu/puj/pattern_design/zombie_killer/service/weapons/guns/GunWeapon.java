@@ -18,7 +18,7 @@ public abstract class GunWeapon extends Weapon {
 
     protected Ammunition ammunition;
 
-    public GunWeapon() {
+    protected GunWeapon() {
     }
 
     @Override

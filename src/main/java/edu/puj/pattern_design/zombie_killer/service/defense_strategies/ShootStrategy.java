@@ -3,6 +3,7 @@ package edu.puj.pattern_design.zombie_killer.service.defense_strategies;
 import edu.puj.pattern_design.zombie_killer.gui.ZombieKillerGUI;
 import edu.puj.pattern_design.zombie_killer.service.zombies.Zombie;
 
+import static edu.puj.pattern_design.zombie_killer.service.constants.SurvivorCampConstants.SIN_PARTIDA;
 import static edu.puj.pattern_design.zombie_killer.service.constants.WeaponsConstants.RECHARGING;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.DERROTADO;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.MURIENDO_HEADSHOT;
@@ -23,9 +24,9 @@ public class ShootStrategy extends DefenseStrategy {
     @Override
     public void executeDefense() {
         if (shoot()) {
-            interfaz.reproducir("leDio" + interfaz.getCamp().getCharacter().getPrincipalWeapon().getClass().getSimpleName());
+            interfaz.reproduceSound("leDio" + interfaz.getCamp().getCharacter().getPrincipalWeapon().getClass().getSimpleName());
         } else {
-            interfaz.reproducir("disparo" + interfaz.getCamp().getCharacter().getPrincipalWeapon().getClass().getSimpleName());
+            interfaz.reproduceSound("disparo" + interfaz.getCamp().getCharacter().getPrincipalWeapon().getClass().getSimpleName());
         }
 
         interfaz.getSurvivorCampoPanel().incorporarJefe(interfaz.getBoss());
@@ -66,7 +67,7 @@ public class ShootStrategy extends DefenseStrategy {
 
                 if (interfaz.getCamp().getBoss().getCurrentStatus().equals(DERROTADO)) {
                     interfaz.getCamp().getCharacter().increaseScore(20 + interfaz.getCamp().getBoss().getHealth() * (-20));
-                    interfaz.getCamp().setGameStatus(interfaz.getCamp().getSinPartida());
+                    interfaz.getCamp().setGameStatus(SIN_PARTIDA);
                 }
             }
 

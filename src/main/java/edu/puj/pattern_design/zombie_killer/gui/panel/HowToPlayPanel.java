@@ -77,7 +77,7 @@ public class HowToPlayPanel extends JPanel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                principal.mostrarComoJugar();
+                principal.showHowToPlay();
             }
         });
     }

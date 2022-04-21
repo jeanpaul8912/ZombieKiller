@@ -30,23 +30,23 @@ public class WeaponThread extends Thread {
 
                 if (armaDeFuego.isBlooded()) {
                     sleep(100);
-                    principal.terminarEfectoDeSangre();
+                    principal.endBloodEffect();
                 }
 
                 if (weapon.getStatus().equals(RECHARGING)) {
                     // descanso mientras suena el disparo
                     sleep(200);
                     if (weapon instanceof Remington && armaDeFuego.getAvailableBullets() > NumberUtils.INTEGER_ZERO) {
-                        principal.reproducir("recarga_escopeta");
+                        principal.reproduceSound("recarga_escopeta");
                     }
                 } else {
-                    principal.reproducir(CARGANDO + weapon.getClass().getSimpleName());
+                    principal.reproduceSound(CARGANDO + weapon.getClass().getSimpleName());
                 }
             }
 
             sleep(weapon.calculatePause());
             weapon.setStatus(LISTA);
-            principal.cambiarPuntero();
+            principal.changeCursor();
         } catch (InterruptedException e) {
             log.error(e.getMessage(), e);
         }

@@ -4,6 +4,7 @@ import edu.puj.pattern_design.zombie_killer.gui.ZombieKillerGUI;
 import edu.puj.pattern_design.zombie_killer.service.zombies.Zombie;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import static edu.puj.pattern_design.zombie_killer.service.constants.SurvivorCampConstants.SIN_PARTIDA;
 import static edu.puj.pattern_design.zombie_killer.service.constants.WeaponsConstants.CARGANDO;
 import static edu.puj.pattern_design.zombie_killer.service.constants.WeaponsConstants.KNIFE_DAMAGE;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.ATACANDO;
@@ -31,10 +32,10 @@ public class SlashStrategy extends DefenseStrategy {
 
         if (slash()) {
             interfaz.setCursor(interfaz.getKnifeCursor());
-            interfaz.reproducir("leDioCuchillo");
+            interfaz.reproduceSound("leDioCuchillo");
             interfaz.getFacade().initializeWeaponsThread("cuchillo");
         } else if (interfaz.getCamp().getCharacter().getPrincipalWeapon().getAvailableBullets() == NumberUtils.INTEGER_ZERO) {
-            interfaz.reproducir("sin_balas");
+            interfaz.reproduceSound("sin_balas");
         }
     }
 
@@ -64,7 +65,7 @@ public class SlashStrategy extends DefenseStrategy {
 
                 if (interfaz.getCamp().getBoss().getCurrentStatus().equals(DERROTADO)) {
                     interfaz.getCamp().getCharacter().increaseScore(100);
-                    interfaz.getCamp().setGameStatus(interfaz.getCamp().getSinPartida());
+                    interfaz.getCamp().setGameStatus(SIN_PARTIDA);
                 }
             }
         }

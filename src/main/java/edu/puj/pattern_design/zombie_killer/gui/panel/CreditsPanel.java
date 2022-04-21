@@ -37,7 +37,7 @@ public class CreditsPanel extends JPanel implements KeyListener {
     @Override
     public void keyPressed(KeyEvent arg0) {
         if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE)
-            principal.mostrarCreditos();
+            principal.showCredits();
     }
 
     @Override

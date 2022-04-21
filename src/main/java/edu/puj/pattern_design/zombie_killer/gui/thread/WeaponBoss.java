@@ -6,8 +6,8 @@ import edu.puj.pattern_design.zombie_killer.service.attack_strategies.BossZombie
 import edu.puj.pattern_design.zombie_killer.service.camp.SurvivorCamp;
 import edu.puj.pattern_design.zombie_killer.service.zombies.Boss;
 
-import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.PAUSADO;
-import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.SIN_PARTIDA;
+import static edu.puj.pattern_design.zombie_killer.service.constants.SurvivorCampConstants.PAUSADO;
+import static edu.puj.pattern_design.zombie_killer.service.constants.SurvivorCampConstants.SIN_PARTIDA;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.ATACANDO;
 
 public class WeaponBoss extends Thread {
@@ -34,7 +34,7 @@ public class WeaponBoss extends Thread {
 
                 if (estado.equals(ATACANDO)) {
                     if (jefe.getCurrentFrame() == 19) {
-                        principal.leDaAPersonaje();
+                        principal.shootOnCharacter();
                     } else if (jefe.getCurrentFrame() == 21) {
                         attackStrategy.enemyFinishAttack(campo);
                     }
@@ -45,7 +45,7 @@ public class WeaponBoss extends Thread {
                 }
 
                 sleep(jefe.getSpeed());
-                principal.refrescar();
+                principal.refresh();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

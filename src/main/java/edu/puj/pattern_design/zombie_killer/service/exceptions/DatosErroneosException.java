@@ -11,4 +11,8 @@ public class DatosErroneosException extends Exception {
     public DatosErroneosException(int excedente) {
         super("El archivo ha excedido el numero de Zombies generados en " + excedente);
     }
+
+    public DatosErroneosException(String message) {
+        super(message);
+    }
 }

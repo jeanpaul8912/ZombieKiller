@@ -1,4 +1,4 @@
-package edu.puj.pattern_design.zombie_killer.service.camp;
+package edu.puj.pattern_design.zombie_killer.service.camp.impl;
 
 import lombok.Getter;
 import lombok.Setter;

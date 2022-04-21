@@ -1,0 +1,10 @@
+-------------------------------------------------------------------------------
+Test set: edu.puj.pattern_design.zombie_killer.ZombieKillerGUITests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.605 s <<< FAILURE! - in edu.puj.pattern_design.zombie_killer.ZombieKillerGUITests
+contextLoads  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'zombieKillerGUI' defined in file [/Users/richardmejia/Documents/Repositories/ZombieKiller/target/classes/edu/puj/pattern_design/zombie_killer/gui/ZombieKillerGUI.class]: Bean instantiation via constructor failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [edu.puj.pattern_design.zombie_killer.gui.ZombieKillerGUI]: Constructor threw exception; nested exception is java.awt.HeadlessException
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [edu.puj.pattern_design.zombie_killer.gui.ZombieKillerGUI]: Constructor threw exception; nested exception is java.awt.HeadlessException
+Caused by: java.awt.HeadlessException
+

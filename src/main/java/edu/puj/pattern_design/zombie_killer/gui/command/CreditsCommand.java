@@ -10,7 +10,7 @@ public class CreditsCommand implements Command {
         CreditsPanel creditsPanel = CreditsPanel.getPanel();
         creditsPanel.setPrincipal(zombieKillerGUI);
         zombieKillerGUI.setCreditsPanel(creditsPanel);
-        zombieKillerGUI.mostrarCreditos();
+        zombieKillerGUI.showCredits();
     }
 
 }

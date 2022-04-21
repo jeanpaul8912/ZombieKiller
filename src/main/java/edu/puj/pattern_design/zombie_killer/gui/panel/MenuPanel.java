@@ -20,7 +20,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.URL;
 
-import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.PAUSADO;
+import static edu.puj.pattern_design.zombie_killer.service.constants.SurvivorCampConstants.PAUSADO;
 
 public class MenuPanel extends JPanel implements KeyListener, ActionListener, MouseListener {
 
@@ -126,7 +126,7 @@ public class MenuPanel extends JPanel implements KeyListener, ActionListener, Mo
     @Override
     public void keyPressed(KeyEvent arg0) {
         if (arg0.getKeyCode() == 80 && principal.getEstadoPartida() == PAUSADO)
-            principal.pausarJuego();
+            principal.pauseGame();
     }
 
     @Override

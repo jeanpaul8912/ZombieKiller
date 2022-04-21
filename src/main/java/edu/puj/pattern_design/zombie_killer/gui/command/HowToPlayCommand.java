@@ -10,7 +10,7 @@ public class HowToPlayCommand implements Command {
         HowToPlayPanel howToPlayPanel = HowToPlayPanel.getPanel();
         howToPlayPanel.setPrincipal(zombieKillerGUI);
         zombieKillerGUI.setHowToPlayPanel(howToPlayPanel);
-        zombieKillerGUI.mostrarComoJugar();
+        zombieKillerGUI.showHowToPlay();
     }
 
 }

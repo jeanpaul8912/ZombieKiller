@@ -3,7 +3,7 @@ package edu.puj.pattern_design.zombie_killer.service.attack_strategies;
 import edu.puj.pattern_design.zombie_killer.service.zombies.Boss;
 import edu.puj.pattern_design.zombie_killer.service.zombies.Enemy;
 
-import static edu.puj.pattern_design.zombie_killer.service.constants.CampConstants.ANCHO_PANTALLA;
+import static edu.puj.pattern_design.zombie_killer.service.constants.SurvivorCampConstants.ANCHO_PANTALLA;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.ANCHO_IMAGEN;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.ATACANDO;
 import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesConstants.POS_ATAQUE;
