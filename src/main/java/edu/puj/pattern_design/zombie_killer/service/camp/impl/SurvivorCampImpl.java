@@ -5,12 +5,7 @@ import edu.puj.pattern_design.zombie_killer.service.constants.SurvivorCampConsta
 import edu.puj.pattern_design.zombie_killer.service.exceptions.DatosErroneosException;
 import edu.puj.pattern_design.zombie_killer.service.exceptions.InvalidNameException;
 import edu.puj.pattern_design.zombie_killer.service.exceptions.SurvivorCampException;
-import edu.puj.pattern_design.zombie_killer.service.zombies.Boss;
-import edu.puj.pattern_design.zombie_killer.service.zombies.DragZombie;
-import edu.puj.pattern_design.zombie_killer.service.zombies.Enemy;
-import edu.puj.pattern_design.zombie_killer.service.zombies.WalkerZombie;
-import edu.puj.pattern_design.zombie_killer.service.zombies.Zombie;
-import edu.puj.pattern_design.zombie_killer.service.zombies.ZombieZigZag;
+import edu.puj.pattern_design.zombie_killer.service.zombies.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -57,35 +52,22 @@ public class SurvivorCampImpl implements Cloneable, Comparator<CharacterScore>, 
 
 
     private ZombieZigZag zombieFarNode;
-
     private ZombieZigZag zombieNearNode;
-
     private Character character;
-
     private Boss boss;
-
     private char gameStatus;
-
     private int currentRound;
-
     private int zombiesGeneratedCount;
-
     private int showedWeapon;
-
     private ArrayList<CharacterScore> bestCharacterScores;
-
     private CharacterScore rootScores;
-
-    private final Enemy enemyWalker;
-
-    private Enemy enemyDrag;
     private Memento memento;
     private SurvivorCamp survivorCampData;
     private Caretaker caretaker;
     private Originador originador;
+    private IZombie zombieProxy;
 
     public SurvivorCampImpl() {
-        enemyWalker = new WalkerZombie();
         character = new Character();
         gameStatus = SIN_PARTIDA;
         currentRound = 0;
@@ -95,10 +77,10 @@ public class SurvivorCampImpl implements Cloneable, Comparator<CharacterScore>, 
         zombieFarNode.setInFront(zombieNearNode);
         zombieNearNode.setInBack(zombieFarNode);
         bestCharacterScores = new ArrayList<>();
-        enemyDrag = new DragZombie((short) 0, zombieFarNode);
         boss = new Boss();
         caretaker = new Caretaker();
         originador = new Originador();
+        zombieProxy = new ZombieProxy();
     }
 
     public void updateCurrentRound(int level) {
@@ -132,24 +114,8 @@ public class SurvivorCampImpl implements Cloneable, Comparator<CharacterScore>, 
     }
 
     public Zombie generateZombie(int level) {
-        short newLevel = (short) level;
-        Zombie zombie;
-        int zombieType = 0;
-
-        if ((newLevel == 3 || newLevel == 4 || newLevel == 8)) {
-            zombieType = (int) (Math.random() * 2);
-        } else if (newLevel == 6 || newLevel == 9) {
-            zombieType = CREEPING_ZOMBIE;
-        }
-
-        if (zombieType == CREEPING_ZOMBIE) {
-            zombie = (DragZombie) enemyDrag.cloneEnemy();
-        } else {
-            zombie = (WalkerZombie) enemyWalker.cloneEnemy();
-        }
-
-        zombie.inicialize(newLevel, zombieFarNode);
-        zombie.introduce(zombieFarNode.getInFront(), zombieFarNode);
+        Zombie zombie = null;
+        zombie = zombieProxy.inicialize((short)level,zombieFarNode,zombieFarNode.getInFront());
         zombiesGeneratedCount++;
         return zombie;
     }

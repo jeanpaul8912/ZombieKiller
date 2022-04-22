@@ -16,7 +16,7 @@ import static edu.puj.pattern_design.zombie_killer.service.constants.ZombiesCons
 
 @Getter
 @Setter
-public abstract class Zombie extends Enemy {
+public abstract class Zombie extends Enemy implements IZombie {
 
     private Zombie inFront;
 
@@ -95,11 +95,13 @@ public abstract class Zombie extends Enemy {
         zombAtras.inFront = this;
     }
 
-    public void inicialize(short nivel, Zombie atras) {
+    public Zombie inicialize(short nivel, Zombie atras, Zombie zombieAlFrente) {
         determinarDificultadZombie(nivel);
         setCurrentStatus(CAMINANDO);
         setPosX();
         this.inBack = atras;
+        introduce(zombieAlFrente, atras);
+        return this;
     }
 
     public void setPosX() {
